@@ -38,8 +38,11 @@
     <ClCompile Include="unibet.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\common\casinointerface.h">
-      <Filter>Header Files</Filter>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Debug\unibet\moc_casinointerface.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Release\unibet\moc_casinointerface.cpp">
+      <Filter>Generated Files\Release</Filter>
     </ClCompile>
     <ClCompile Include="..\..\temp\GeneratedFiles\Debug\unibet\moc_unibet.cpp">
       <Filter>Generated Files\Debug</Filter>
@@ -50,6 +53,9 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="unibet.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\common\casinointerface.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
