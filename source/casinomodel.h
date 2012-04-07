@@ -6,12 +6,17 @@
 
 class CasinoModel : public QAbstractItemModel
 {
+	Q_OBJECT
+
 	public:
-		CasinoModel(const CasinoPlugins *pCasinos, QObject *pParent = NULL);
+		CasinoModel(QObject *pParent = NULL);
+
+		const void SetCasinos(const CasinoPlugins *pCasinos);
 
 	private:
 		enum eColumn {
 			ColumnName,
+			ColumnActive,
 			ColumnCount
 		}; // eColumn
 
@@ -23,6 +28,9 @@ class CasinoModel : public QAbstractItemModel
 		virtual QModelIndex index(int row, int column, const QModelIndex &parent = QModelIndex()) const;
 		virtual QModelIndex parent(const QModelIndex &index) const;
 		virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
+
+	private slots:
+		const void on_ciCasino_GameActiveChanged(const bool &pActive);
 }; // CasinoModel
 
 #endif // CASINOMODEL_H
