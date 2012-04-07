@@ -6,4 +6,12 @@ MainWindow::MainWindow(QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 
 
 	_cpCasinos.Load();
 	_qmwmMainWindow.qtvCasinos->setModel(&_cmCasinos);
+
+	connect(_qmwmMainWindow.qtvCasinos->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &, const QItemSelection &)));
 } // MainWindow
+
+const void MainWindow::on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const
+{
+	_qmwmMainWindow.qpbPlay->setEnabled(_qmwmMainWindow.qtvCasinos->selectionModel()->hasSelection());
+	_qmwmMainWindow.qpbConfigure->setEnabled(_qmwmMainWindow.qtvCasinos->selectionModel()->hasSelection());
+} // on_qtvCasinosSelectionModel_selectionChanged
