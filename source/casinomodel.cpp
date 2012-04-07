@@ -54,6 +54,7 @@ const void CasinoModel::on_ciCasino_GameActiveChanged(const bool &pActive)
 		QModelIndex qmiIndex = index(iRow, ColumnActive);
 		if (qmiIndex.internalPointer() == sender()) {
 			emit dataChanged(qmiIndex, qmiIndex);
+			emit ActiveChanged(iRow, pActive);
 		} // if
 	} // for
 } // on_ciCasino_GameActiveChanged
