@@ -39,6 +39,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="qpbPlay">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>&amp;Play</string>
         </property>
@@ -46,6 +49,9 @@
       </item>
       <item>
        <widget class="QPushButton" name="qpbConfigure">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
         <property name="text">
          <string>&amp;Configure</string>
         </property>

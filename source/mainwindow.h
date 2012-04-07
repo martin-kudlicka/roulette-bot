@@ -17,6 +17,9 @@ class MainWindow : public QMainWindow
 		CasinoModel _cmCasinos;
 		CasinoPlugins _cpCasinos;
 		Ui::qmwMain _qmwmMainWindow;
+
+	private slots:
+		const void on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;
 }; // MainWindow
 
 #endif // MAINWINDOW_H
