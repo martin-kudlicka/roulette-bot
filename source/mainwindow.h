@@ -21,6 +21,7 @@ class MainWindow : public QMainWindow
 		Ui::qmwMain _qmwmMainWindow;
 
 	private slots:
+		const void on_cdCasinoDialog_finished(int result);
 		const void on_cmCasinos_ActiveChanged(const int &pRow, const bool &pActive) const;
 		const void on_qpbPlay_clicked(bool checked = false);
 		const void on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;
