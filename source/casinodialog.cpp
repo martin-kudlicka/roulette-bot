@@ -5,4 +5,13 @@ CasinoDialog::CasinoDialog(const CasinoInterface *pCasino, QWidget *pParent /* N
 	_ciCasino = pCasino;
 
 	_qdcCasinoDialog.setupUi(this);
+
+	setWindowTitle(windowTitle() += pCasino->GetName());
+
+	RefreshStatus();
 } // CasinoDialog
+
+const void CasinoDialog::RefreshStatus() const
+{
+	_qdcCasinoDialog.qlCash->setText(QString::number(_ciCasino->GetCash()));
+} // RefreshStatus
