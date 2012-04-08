@@ -16,15 +16,19 @@ const int CasinoPlugins::GetCount() const
 
 const void CasinoPlugins::Load()
 {
-	QDir qdCasino(QCoreApplication::applicationDirPath());
-	qdCasino.cd("casino");
+	QDir qdCasinos(QCoreApplication::applicationDirPath());
+	qdCasinos.cd("casino");
 
-	foreach (QFileInfo qfiCasino, qdCasino.entryInfoList(QDir::Files)) {
-		QPluginLoader qplLoader(qfiCasino.filePath());
+	foreach (QFileInfo qfiCasinoDir, qdCasinos.entryInfoList(QDir::Dirs)) {
+		QDir qdCasino(qfiCasinoDir.filePath());
 
-		CasinoInterface *ciCasino = qobject_cast<CasinoInterface *>(qplLoader.instance());
-		if (ciCasino) {
-			_qlCasinos.append(ciCasino);
-		} // if
+		foreach (QFileInfo qfiCasino, qdCasino.entryInfoList(QDir::Files)) {
+			QPluginLoader qplLoader(qfiCasino.filePath());
+
+			CasinoInterface *ciCasino = qobject_cast<CasinoInterface *>(qplLoader.instance());
+			if (ciCasino) {
+				_qlCasinos.append(ciCasino);
+			} // if
+		} // foreach
 	} // foreach
 } // Load
