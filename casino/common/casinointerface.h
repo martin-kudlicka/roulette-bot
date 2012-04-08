@@ -11,6 +11,7 @@ class CasinoInterface : public QObject
 
 	public:
 		virtual const bool GameActive() const = 0;
+		virtual const float GetCash() const = 0;
 		virtual const QString GetName() const = 0;
 
 	signals:
