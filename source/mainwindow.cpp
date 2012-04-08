@@ -12,6 +12,13 @@ MainWindow::MainWindow(QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 
 	connect(_qmwmMainWindow.qtvCasinos->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &, const QItemSelection &)));
 } // MainWindow
 
+const void MainWindow::on_cdCasinoDialog_finished(int result)
+{
+	CasinoDialog *cdCasino = qobject_cast<CasinoDialog *>(sender());
+	int iRow = _qhOpenedCasinos.key(cdCasino);
+	_qhOpenedCasinos.remove(iRow);
+} // on_cdCasinoDialog_finished
+
 const void MainWindow::on_cmCasinos_ActiveChanged(const int &pRow, const bool &pActive) const
 {
 	if (_qmwmMainWindow.qtvCasinos->selectionModel()->hasSelection() && _qmwmMainWindow.qtvCasinos->currentIndex().row() == pRow) {
@@ -30,6 +37,9 @@ const void MainWindow::on_qpbPlay_clicked(bool checked /* false */)
 	} else {
 		const CasinoInterface *ciCasino = _cpCasinos.GetCasino(iRow);
 		cdCasino = new CasinoDialog(ciCasino);
+
+		connect(cdCasino, SIGNAL(finished(int)), SLOT(on_cdCasinoDialog_finished(int)));
+
 		_qhOpenedCasinos.insert(iRow, cdCasino);
 
 		cdCasino->show();
