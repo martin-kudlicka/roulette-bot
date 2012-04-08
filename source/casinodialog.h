@@ -16,6 +16,8 @@ class CasinoDialog : public QDialog
 	private:
 		const CasinoInterface *_ciCasino;
 		Ui::qdCasino _qdcCasinoDialog;
+
+		const void RefreshStatus() const;
 }; // CasinoDialog
 
 #endif // CASINODIALOG_H
