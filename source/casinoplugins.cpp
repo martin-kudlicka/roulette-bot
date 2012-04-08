@@ -3,6 +3,9 @@
 #include <QtCore/QDir>
 #include <QtCore/QCoreApplication>
 #include <QtCore/QPluginLoader>
+#ifdef Q_WS_WIN
+# include <Windows.h>
+#endif
 
 CasinoInterface *CasinoPlugins::GetCasino(const int &pIndex) const
 {
@@ -19,8 +22,13 @@ const void CasinoPlugins::Load()
 	QDir qdCasinos(QCoreApplication::applicationDirPath());
 	qdCasinos.cd("casino");
 
-	foreach (QFileInfo qfiCasinoDir, qdCasinos.entryInfoList(QDir::Dirs)) {
+	foreach (QFileInfo qfiCasinoDir, qdCasinos.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot)) {
 		QDir qdCasino(qfiCasinoDir.filePath());
+#ifdef Q_WS_WIN
+		TCHAR tcCurrentDir[MAX_PATH];
+		GetCurrentDirectory(sizeof(tcCurrentDir) / sizeof(TCHAR), tcCurrentDir);
+		SetCurrentDirectory(qdCasino.path().utf16());
+#endif
 
 		foreach (QFileInfo qfiCasino, qdCasino.entryInfoList(QDir::Files)) {
 			QPluginLoader qplLoader(qfiCasino.filePath());
@@ -30,5 +38,9 @@ const void CasinoPlugins::Load()
 				_qlCasinos.append(ciCasino);
 			} // if
 		} // foreach
+
+#ifdef Q_WS_WIN
+		SetCurrentDirectory(tcCurrentDir);
+#endif
 	} // foreach
 } // Load
