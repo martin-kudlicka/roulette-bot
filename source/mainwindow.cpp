@@ -19,6 +19,23 @@ const void MainWindow::on_cmCasinos_ActiveChanged(const int &pRow, const bool &p
 	} // if
 } // on_cmCasinos_ActiveChanged
 
+const void MainWindow::on_qpbPlay_clicked(bool checked /* false */)
+{
+	int iRow = _qmwmMainWindow.qtvCasinos->currentIndex().row();
+
+	CasinoDialog *cdCasino;
+	if (_qhOpenedCasinos.contains(iRow)) {
+		cdCasino = _qhOpenedCasinos.value(iRow);
+		cdCasino->raise();
+	} else {
+		const CasinoInterface *ciCasino = _cpCasinos.GetCasino(iRow);
+		cdCasino = new CasinoDialog(ciCasino);
+		_qhOpenedCasinos.insert(iRow, cdCasino);
+
+		cdCasino->show();
+	} // if else
+} // on_qpbPlay_clicked
+
 const void MainWindow::on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const
 {
 	const CasinoInterface *ciCasino = _cpCasinos.GetCasino(_qmwmMainWindow.qtvCasinos->currentIndex().row());
