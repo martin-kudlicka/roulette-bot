@@ -11,16 +11,19 @@ class SettingsDialog : public QDialog
 	Q_OBJECT
 
 	public:
-		SettingsDialog(const Settings *pSettings, const CasinoPlugins *pCasinos, QWidget *pParent = NULL, Qt::WindowFlags pFlags = 0);
+		SettingsDialog(Settings *pSettings, const CasinoPlugins *pCasinos, QWidget *pParent = NULL, Qt::WindowFlags pFlags = 0);
 
 	private:
 		CasinoSettingsModel _csmCasinos;
 		const CasinoPlugins *_cpCasinos;
-		const Settings *_sSettings;
+		Settings *_sSettings;
 		Ui::qdSettings _qdsSettingsDialog;
 
+		const void CloseCasinoSettings(const bool &pSave) const;
 		virtual void done(int r);
-		const void InitCasinoSettings() const;
+		const void GetCasinoSettings() const;
+		const void LoadSettings() const;
+		const void SaveSettings() const;
 
 	private slots:
 		const void on_csmCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;

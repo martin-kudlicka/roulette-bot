@@ -8,6 +8,9 @@ class Settings
 	public:
 		Settings();
 
+		const int GetTokensPerBet();
+		const void SetTokensPerBet(const int &pTokens);
+
 	private:
 		QSettings _qsSettings;
 }; // Settings
