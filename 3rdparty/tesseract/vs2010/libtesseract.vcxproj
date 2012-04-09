@@ -254,8 +254,8 @@
       <AdditionalDependencies>ws2_32.lib;libpng-static-mtdll.lib;libjpeg-static-mtdll.lib;libtiff-static-mtdll.lib;giflib-static-mtdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
     <PostBuildEvent>
-      <Command>
-      </Command>
+      <Command>md "$(SolutionDir)\output\Debug\casinos\unibet\tessdata"
+copy "$(SolutionDir)\3rdparty\tesseract-ocr-eng\tessdata" "$(SolutionDir)\output\Debug\casinos\unibet\tessdata"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -307,6 +307,10 @@
       <AdditionalLibraryDirectories>..\vs2008\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>ws2_32.lib;giflib-static-mtdll.lib;libjpeg-static-mtdll.lib;libpng-static-mtdll.lib;libtiff-static-mtdll.lib;zlib-static-mtdll.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
+    <PostBuildEvent>
+      <Command>md "$(SolutionDir)\output\Debug\casinos\unibet\tessdata"
+copy "$(SolutionDir)\3rdparty\tesseract-ocr-eng\tessdata" "$(SolutionDir)\output\Debug\casinos\unibet\tessdata"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
