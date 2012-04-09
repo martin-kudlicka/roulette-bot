@@ -1,5 +1,7 @@
 #include "mainwindow.h"
 
+#include "settingsdialog.h"
+
 MainWindow::MainWindow(QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QMainWindow(pParent, pFlags)
 {
 	_qmwmMainWindow.setupUi(this);
@@ -26,6 +28,12 @@ const void MainWindow::on_cmCasinos_ActiveChanged(const int &pRow, const bool &p
 	} // if
 } // on_cmCasinos_ActiveChanged
 
+const void MainWindow::on_qaSettings_triggered(bool checked /* false */)
+{
+	SettingsDialog sdSettings(&_sSettings, &_cpCasinos, this);
+	sdSettings.exec();
+} // on_qaSettings_triggered
+
 const void MainWindow::on_qpbPlay_clicked(bool checked /* false */)
 {
 	int iRow = _qmwmMainWindow.qtvCasinos->currentIndex().row();
@@ -51,5 +59,4 @@ const void MainWindow::on_qtvCasinosSelectionModel_selectionChanged(const QItemS
 	const CasinoInterface *ciCasino = _cpCasinos.GetCasino(_qmwmMainWindow.qtvCasinos->currentIndex().row());
 
 	_qmwmMainWindow.qpbPlay->setEnabled(_qmwmMainWindow.qtvCasinos->selectionModel()->hasSelection() && ciCasino->GameActive());
-	_qmwmMainWindow.qpbConfigure->setEnabled(_qmwmMainWindow.qtvCasinos->selectionModel()->hasSelection());
 } // on_qtvCasinosSelectionModel_selectionChanged
