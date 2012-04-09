@@ -1,7 +1,7 @@
 #ifndef CASINOPLUGINS_H
 #define CASINOPLUGINS_H
 
-#include "../casino/common/casinointerface.h"
+#include "../casinos/common/casinointerface.h"
 
 class CasinoPlugins
 {

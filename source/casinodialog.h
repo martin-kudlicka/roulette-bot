@@ -4,7 +4,7 @@
 #include <QtGui/QDialog>
 #include "ui_casinodialog.h"
 
-#include "../casino/common/casinointerface.h"
+#include "../casinos/common/casinointerface.h"
 
 class CasinoDialog : public QDialog
 {

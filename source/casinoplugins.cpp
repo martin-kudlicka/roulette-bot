@@ -20,7 +20,7 @@ const int CasinoPlugins::GetCount() const
 const void CasinoPlugins::Load()
 {
 	QDir qdCasinos(QCoreApplication::applicationDirPath());
-	qdCasinos.cd("casino");
+	qdCasinos.cd("casinos");
 
 	foreach (QFileInfo qfiCasinoDir, qdCasinos.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot)) {
 		QDir qdCasino(qfiCasinoDir.filePath());

@@ -188,7 +188,7 @@
     <IntDir>$(SolutionDir)\temp\$(Configuration)\$(ProjectName)\</IntDir>
     <TargetName>$(ProjectName)-debug</TargetName>
     <TargetExt>.dll</TargetExt>
-    <OutDir>$(SolutionDir)\output\Debug\casino\unibet\</OutDir>
+    <OutDir>$(SolutionDir)\output\Debug\casinos\unibet\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
@@ -198,7 +198,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release.dll|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IntDir>$(SolutionDir)\temp\$(Configuration)\$(ProjectName)\</IntDir>
-    <OutDir>$(SolutionDir)\output\Release\casino\unibet\</OutDir>
+    <OutDir>$(SolutionDir)\output\Release\casinos\unibet\</OutDir>
     <TargetExt>.dll</TargetExt>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
   </PropertyGroup>
