@@ -71,6 +71,21 @@
     <ClCompile Include="..\temp\GeneratedFiles\Release\RouletteBot\moc_casinodialog.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="settingsdialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Debug\RouletteBot\moc_settingsdialog.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Release\RouletteBot\moc_settingsdialog.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="settings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="settingsdialog\casinosettingsmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -91,6 +106,12 @@
     <CustomBuild Include="casinodialog.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="settingsdialog.ui">
+      <Filter>Generated Files\Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="settingsdialog.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\temp\GeneratedFiles\RouletteBot\ui_mainwindow.h">
@@ -101,6 +122,18 @@
     </ClInclude>
     <ClInclude Include="..\temp\GeneratedFiles\RouletteBot\ui_casinodialog.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\temp\GeneratedFiles\RouletteBot\ui_settingsdialog.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="settings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\settingscmn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="settingsdialog\casinosettingsmodel.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
