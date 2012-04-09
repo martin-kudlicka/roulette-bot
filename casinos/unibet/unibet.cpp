@@ -9,6 +9,7 @@
 #include "../../3rdparty/tesseract/api/baseapi.h"
 #include "../../3rdparty/tesseract/vs2010/include/leptonica/allheaders.h"
 #include "../../3rdparty/tesseract/ccutil/strngs.h"
+#include "unibetsettingswidget.h"
 
 #ifdef Q_WS_WIN
 LPCTSTR CAPTION_ROULETTE = _T("Roulette");
@@ -23,6 +24,17 @@ BOOL WINAPI DllMain(__in HINSTANCE hinstDLL, __in DWORD fdwReason, __in LPVOID l
 
 	return TRUE;
 } // DllMain
+
+const void Unibet::CloseSettings(const QWidget *pSettings, const bool &pSave) const
+{
+	const UnibetSettingsWidget *uswSettings = qobject_cast<const UnibetSettingsWidget *>(pSettings);
+
+	if (pSave) {
+		uswSettings->SaveSettings();
+	} // if
+
+	delete uswSettings;
+} // CloseSettings
 
 BOOL CALLBACK Unibet::EnumWindowsProc(__in HWND hwnd, __in LPARAM lParam)
 {
@@ -81,6 +93,11 @@ const QString Unibet::GetName() const
 {
 	return "Unibet";
 } // GetName
+
+QWidget *Unibet::GetSettings()
+{
+	return new UnibetSettingsWidget(&_usSettings);
+} // GetSettings
 
 const QPixmap Unibet::GrabWindow(const eGrab &pPart) const
 {

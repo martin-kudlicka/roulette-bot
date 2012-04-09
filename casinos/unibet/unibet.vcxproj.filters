@@ -50,6 +50,21 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\unibet\moc_unibet.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="unibetsettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\common\casinosettings.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Debug\unibet\moc_unibetsettingswidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Release\unibet\moc_unibetsettingswidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="unibetsettingswidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="unibet.h">
@@ -58,5 +73,25 @@
     <CustomBuild Include="..\common\casinointerface.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="unibetsettingswidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="unibetsettingswidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\common\settingscmn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="unibetsettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\common\casinosettings.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\temp\GeneratedFiles\unibet\ui_unibetsettingswidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
