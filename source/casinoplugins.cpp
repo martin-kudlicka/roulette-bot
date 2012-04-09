@@ -7,6 +7,8 @@
 # include <Windows.h>
 #endif
 
+const QString DIR_CASINOS = "casinos";
+
 CasinoInterface *CasinoPlugins::GetCasino(const int &pIndex) const
 {
 	return _qlCasinos.at(pIndex);
@@ -20,7 +22,7 @@ const int CasinoPlugins::GetCount() const
 const void CasinoPlugins::Load()
 {
 	QDir qdCasinos(QCoreApplication::applicationDirPath());
-	qdCasinos.cd("casinos");
+	qdCasinos.cd(DIR_CASINOS);
 
 	foreach (QFileInfo qfiCasinoDir, qdCasinos.entryInfoList(QDir::Dirs | QDir::NoDotAndDotDot)) {
 		QDir qdCasino(qfiCasinoDir.filePath());
