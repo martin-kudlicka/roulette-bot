@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Roulette Bot", "source\Roulette Bot.vcxproj", "{D5AB7DD1-ADA2-4D77-A9D0-F3F993FBF1A4}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unibet", "casino\unibet\unibet.vcxproj", "{69DBB4D9-4563-4B25-A250-3492E56124FF}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unibet", "casinos\unibet\unibet.vcxproj", "{69DBB4D9-4563-4B25-A250-3492E56124FF}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "casino", "casino", "{1466E0EB-BEA5-4481-8D78-340216FBE24C}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "casinos", "casinos", "{1466E0EB-BEA5-4481-8D78-340216FBE24C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3rdparty", "3rdparty", "{68F7C511-B9A0-4444-9847-E89B6A92F227}"
 EndProject
