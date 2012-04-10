@@ -1,5 +1,23 @@
 #include "system63.h"
 
+#include "system63settingswidget.h"
+
+const void System63::CloseSettings(const QWidget *pSettings, const bool &pSave) const
+{
+	const System63SettingsWidget *s63swSettings = qobject_cast<const System63SettingsWidget *>(pSettings);
+
+	if (pSave) {
+		s63swSettings->SaveSettings();
+	} // if
+
+	delete s63swSettings;
+} // CloseSettings
+
+QWidget *System63::GetSettings()
+{
+	return new System63SettingsWidget(&_s63sSettings);
+} // GetSettings
+
 const void System63::Reset()
 {
 } // Reset
