@@ -5,6 +5,8 @@
 
 #include "system63settings.h"
 
+const QChar PROGRESSION_SEQUENCE_SEPARATOR = ';';
+
 class System63SettingsWidget : public QWidget
 {
 	Q_OBJECT
@@ -19,6 +21,11 @@ class System63SettingsWidget : public QWidget
 		System63Settings *_s63sSettings;
 
 		const void LoadSettings() const;
+
+	private slots:
+		const void on_qrbProgressionAuto_clicked(bool checked = false) const;
+		const void on_qrbProgressionManual_clicked(bool checked = false) const;
+		const void on_qsbProgression_valueChanged(int i) const;
 }; // System63SettingsWidget
 
 #endif // SYSTEM63SETTINGSWIDGET_H
