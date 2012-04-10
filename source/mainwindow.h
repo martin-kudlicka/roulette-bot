@@ -6,6 +6,7 @@
 #include "casinomodel.h"
 #include "casinodialog.h"
 #include "settings.h"
+#include "systemplugins.h"
 
 class MainWindow : public QMainWindow
 {
@@ -19,6 +20,7 @@ class MainWindow : public QMainWindow
 		CasinoPlugins _cpCasinos;
 		QHash<int, CasinoDialog *> _qhOpenedCasinos;
 		Settings _sSettings;
+		SystemPlugins _spSystems;
 		Ui::qmwMain _qmwmMainWindow;
 
 	private slots:

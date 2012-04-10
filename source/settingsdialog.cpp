@@ -11,6 +11,17 @@ const void SettingsDialog::CloseCasinoSettings(const bool &pSave) const
 	} // for
 } // CloseCasinoSettings
 
+const void SettingsDialog::CloseSystemSettings(const bool &pSave) const
+{
+	for (int iSystem = 0; iSystem < _ssmSystems.rowCount(); iSystem++) {
+		QModelIndex qmiIndex = _ssmSystems.index(iSystem, SystemSettingsModel::ColumnName);
+		const SystemInterface *siSystem = static_cast<const SystemInterface *>(qmiIndex.internalPointer());
+		const QWidget *qwSettings = _qdsSettingsDialog.qswSystemSettings->widget(iSystem);
+
+		siSystem->CloseSettings(qwSettings, pSave);
+	} // for
+} // CloseSystemSettings
+
 void SettingsDialog::done(int r)
 {
 	if (r == QDialog::Accepted) {
@@ -32,6 +43,17 @@ const void SettingsDialog::GetCasinoSettings() const
 	} // for
 } // GetCasinoSettings
 
+const void SettingsDialog::GetSystemSettings() const
+{
+	for (int iSystem = 0; iSystem < _ssmSystems.rowCount(); iSystem++) {
+		QModelIndex qmiIndex = _ssmSystems.index(iSystem, SystemSettingsModel::ColumnName);
+		SystemInterface *siSystem = static_cast<SystemInterface *>(qmiIndex.internalPointer());
+		QWidget *qwSettings = siSystem->GetSettings();
+
+		_qdsSettingsDialog.qswSystemSettings->addWidget(qwSettings);
+	} // for
+} // GetSystemSettings
+
 const void SettingsDialog::LoadSettings() const
 {
 	_qdsSettingsDialog.qsbTokensPerBet->setValue(_sSettings->GetTokensPerBet());
@@ -43,24 +65,35 @@ const void SettingsDialog::on_csmCasinosSelectionModel_selectionChanged(const QI
 	_qdsSettingsDialog.qswCasinoSettings->setCurrentIndex(qmiIndex.row());
 } // on_csmCasinosSelectionModel_selectionChanged
 
+const void SettingsDialog::on_csmSystemsSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const
+{
+	QModelIndex qmiIndex = _qdsSettingsDialog.qtvSystems->currentIndex();
+	_qdsSettingsDialog.qswSystemSettings->setCurrentIndex(qmiIndex.row());
+} // on_csmSystemsSelectionModel_selectionChanged
+
 const void SettingsDialog::SaveSettings() const
 {
 	_sSettings->SetTokensPerBet(_qdsSettingsDialog.qsbTokensPerBet->value());
 } // SaveSettings
 
-SettingsDialog::SettingsDialog(Settings *pSettings, const CasinoPlugins *pCasinos, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags), _csmCasinos(pCasinos)
+SettingsDialog::SettingsDialog(Settings *pSettings, const CasinoPlugins *pCasinos, const SystemPlugins *pSystems, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags), _csmCasinos(pCasinos), _ssmSystems(pSystems)
 {
 	_sSettings = pSettings;
 	_cpCasinos = pCasinos;
+	_spSystems = pSystems;
 
 	_qdsSettingsDialog.setupUi(this);
 
 	_qdsSettingsDialog.qtvCasinos->setModel(&_csmCasinos);
+	_qdsSettingsDialog.qtvSystems->setModel(&_ssmSystems);
 
 	LoadSettings();
 	GetCasinoSettings();
+	GetSystemSettings();
 
 	connect(_qdsSettingsDialog.qtvCasinos->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(on_csmCasinosSelectionModel_selectionChanged(const QItemSelection &, const QItemSelection &)));
+	connect(_qdsSettingsDialog.qtvSystems->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(on_csmSystemsSelectionModel_selectionChanged(const QItemSelection &, const QItemSelection &)));
 
 	_qdsSettingsDialog.qtvCasinos->setCurrentIndex(_csmCasinos.index(0, CasinoSettingsModel::ColumnName));
+	_qdsSettingsDialog.qtvSystems->setCurrentIndex(_ssmSystems.index(0, SystemSettingsModel::ColumnName));
 } // SettingsDialog

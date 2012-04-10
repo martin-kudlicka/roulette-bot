@@ -61,6 +61,23 @@
        </item>
       </layout>
      </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Systems</string>
+      </attribute>
+      <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <item>
+        <widget class="QTreeView" name="qtvSystems">
+         <property name="rootIsDecorated">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QStackedWidget" name="qswSystemSettings"/>
+       </item>
+      </layout>
+     </widget>
     </widget>
    </item>
    <item>
