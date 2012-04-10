@@ -28,6 +28,7 @@ void SettingsDialog::done(int r)
 		SaveSettings();
 	} // if
 	CloseCasinoSettings(r == QDialog::Accepted);
+	CloseSystemSettings(r == QDialog::Accepted);
 
 	QDialog::done(r);
 } // done
