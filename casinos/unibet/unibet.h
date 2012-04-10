@@ -24,6 +24,10 @@ class Unibet : public CasinoInterface
 		enum eGrab {
 			GrabCash
 		}; // eGrab
+		enum eTokensPosition {
+			TokensPositionLeft,
+			TokensPositionRight
+		}; // eTokensPosition
 
 #ifdef Q_WS_WIN
 		static const DWORD CHECK_INTERVAL = 5000;
@@ -33,6 +37,7 @@ class Unibet : public CasinoInterface
 #ifdef Q_WS_WIN
 		bool _bStop;
 #endif
+		eTokensPosition _etpTokensPosition;
 		UnibetSettings _usSettings;
 		WId _wiWindow;
 
@@ -50,6 +55,7 @@ class Unibet : public CasinoInterface
 		virtual QWidget *GetSettings();
 		const QPixmap GrabWindow(const eGrab &pPart) const;
 		const QString Recognize(const QPixmap &pPixmap) const;
+		virtual const void Reset();
 }; // Unibet
 
 #endif // UNIBET_H

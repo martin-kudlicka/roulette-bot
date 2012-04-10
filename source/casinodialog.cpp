@@ -1,6 +1,6 @@
 #include "casinodialog.h"
 
-CasinoDialog::CasinoDialog(const CasinoInterface *pCasino, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags)
+CasinoDialog::CasinoDialog(CasinoInterface *pCasino, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags)
 {
 	_ciCasino = pCasino;
 
@@ -18,7 +18,7 @@ const bool CasinoDialog::IsPlaying() const
 	return !_qdcCasinoDialog.qpbStart->isEnabled();
 } // IsPlaying
 
-const void CasinoDialog::on_ciCasino_GameActiveChanged(const bool &pActive) const
+const void CasinoDialog::on_ciCasino_GameActiveChanged(const bool &pActive)
 {
 	if (pActive) {
 		if (!IsPlaying()) {
@@ -31,16 +31,24 @@ const void CasinoDialog::on_ciCasino_GameActiveChanged(const bool &pActive) cons
 	} // if else
 } // on_ciCasino_GameActiveChanged
 
-const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */) const
+const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 {
 	_qdcCasinoDialog.qpbStart->setEnabled(false);
 	_qdcCasinoDialog.qpbStop->setEnabled(true);
-} // on_qpbStart_clicked
 
-const void CasinoDialog::on_qpbStop_clicked(bool checked /* false */) const
-{
+	_ciCasino->Reset();
+
+	_bStop = false;
+	while (!_bStop) {
+	} // while
+
 	_qdcCasinoDialog.qpbStop->setEnabled(false);
 	_qdcCasinoDialog.qpbStart->setEnabled(_ciCasino->GameActive());
+} // on_qpbStart_clicked
+
+const void CasinoDialog::on_qpbStop_clicked(bool checked /* false */)
+{
+	_bStop = true;
 } // on_qpbStop_clicked
 
 const void CasinoDialog::RefreshStatus() const

@@ -142,6 +142,11 @@ const QString Unibet::Recognize(const QPixmap &pPixmap) const
 	return sText.string();
 } // Recognize
 
+const void Unibet::Reset()
+{
+	_etpTokensPosition = TokensPositionLeft;
+} // Reset
+
 Unibet::Unibet() : CasinoInterface()
 {
 #ifdef Q_WS_WIN
