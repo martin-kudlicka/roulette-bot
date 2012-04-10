@@ -6,7 +6,6 @@
 #include "casinomodel.h"
 #include "casinodialog.h"
 #include "settings.h"
-#include "systemplugins.h"
 
 class MainWindow : public QMainWindow
 {

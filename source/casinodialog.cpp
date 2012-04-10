@@ -1,17 +1,27 @@
 #include "casinodialog.h"
 
-CasinoDialog::CasinoDialog(CasinoInterface *pCasino, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags)
+CasinoDialog::CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSystems, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags)
 {
 	_ciCasino = pCasino;
+	_spSystems = pSystems;
 
 	_qdcCasinoDialog.setupUi(this);
 
 	setWindowTitle(windowTitle() += pCasino->GetName());
 
 	RefreshStatus();
+	InitSettings();
 
 	connect(pCasino, SIGNAL(GameActiveChanged(const bool &)), SLOT(on_ciCasino_GameActiveChanged(const bool &)));
 } // CasinoDialog
+
+const void CasinoDialog::InitSettings() const
+{
+	for (int iSystem = 0; iSystem < _spSystems->GetCount(); iSystem++) {
+		const SystemInterface *siSystem = _spSystems->GetSystem(iSystem);
+		_qdcCasinoDialog.qcbSystems->addItem(siSystem->GetName(), reinterpret_cast<unsigned int>(siSystem));
+	} // for
+} // InitSettings
 
 const bool CasinoDialog::IsPlaying() const
 {
@@ -33,23 +43,34 @@ const void CasinoDialog::on_ciCasino_GameActiveChanged(const bool &pActive)
 
 const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 {
+	_qdcCasinoDialog.qgbSettings->setEnabled(false);
 	_qdcCasinoDialog.qpbStart->setEnabled(false);
 	_qdcCasinoDialog.qpbStop->setEnabled(true);
 
+	SystemInterface *siSystem = reinterpret_cast<SystemInterface *>(_qdcCasinoDialog.qcbSystems->itemData(_qdcCasinoDialog.qcbSystems->currentIndex()).toUInt());
+
 	_ciCasino->Reset();
+	siSystem->Reset();
 
 	_bStop = false;
 	while (!_bStop) {
+		PlayRound();
 	} // while
 
 	_qdcCasinoDialog.qpbStop->setEnabled(false);
 	_qdcCasinoDialog.qpbStart->setEnabled(_ciCasino->GameActive());
+	_qdcCasinoDialog.qgbSettings->setEnabled(true);
 } // on_qpbStart_clicked
 
 const void CasinoDialog::on_qpbStop_clicked(bool checked /* false */)
 {
 	_bStop = true;
 } // on_qpbStop_clicked
+
+const void CasinoDialog::PlayRound() const
+{
+	// TODO
+} // PlayRound
 
 const void CasinoDialog::RefreshStatus() const
 {
