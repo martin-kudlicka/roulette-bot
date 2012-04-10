@@ -6,17 +6,17 @@
 class UnibetSettings
 {
 	public:
-		enum eBetValue {
-			BetValue1,
-			BetValue2,
-			BetValue3,
-			BetValue4
-		}; // eBetValue
+		enum eTokenValue {
+			TokenValue1,
+			TokenValue2,
+			TokenValue3,
+			TokenValue4
+		}; // eTokenValue
 
 		UnibetSettings();
 
-		const eBetValue GetBetValue() const;
-		const void SetBetValue(const eBetValue &pBetValue);
+		const eTokenValue GetTokenValue() const;
+		const void SetTokenValue(const eTokenValue &pTokenValue);
 
 	private:
 		CasinoSettings _csSettings;

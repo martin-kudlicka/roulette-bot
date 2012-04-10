@@ -1,16 +1,16 @@
 #include "unibetsettings.h"
 
-const QString BET_VALUE = "BetValue";
+const QString TOKEN_VALUE = "TokenValue";
 
-const UnibetSettings::eBetValue UnibetSettings::GetBetValue() const
+const UnibetSettings::eTokenValue UnibetSettings::GetTokenValue() const
 {
-	return static_cast<eBetValue>(_csSettings.value(BET_VALUE, BetValue1).toInt());
-} // GetBetValue
+	return static_cast<eTokenValue>(_csSettings.value(TOKEN_VALUE, TokenValue1).toInt());
+} // GetTokenValue
 
-const void UnibetSettings::SetBetValue(const eBetValue &pBetValue)
+const void UnibetSettings::SetTokenValue(const eTokenValue &pTokenValue)
 {
-	_csSettings.setValue(BET_VALUE, pBetValue);
-} // SetBetValue
+	_csSettings.setValue(TOKEN_VALUE, pTokenValue);
+} // SetTokenValue
 
 UnibetSettings::UnibetSettings()
 {
