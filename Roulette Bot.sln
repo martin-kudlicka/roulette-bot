@@ -37,6 +37,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wordrec", "3rdparty\tessera
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libtesseract", "3rdparty\tesseract\vs2010\libtesseract.vcxproj", "{37E51687-D37B-4E91-8710-2E860D899C87}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "systems", "systems", "{F7C5FCA4-D0FE-4689-86E6-DDDE699BED43}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "system63", "systems\system63\system63.vcxproj", "{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug.dll|Win32 = Debug.dll|Win32
@@ -165,6 +169,14 @@ Global
 		{37E51687-D37B-4E91-8710-2E860D899C87}.Release.dll|Win32.Build.0 = Release.dll|Win32
 		{37E51687-D37B-4E91-8710-2E860D899C87}.Release|Win32.ActiveCfg = Release.dll|Win32
 		{37E51687-D37B-4E91-8710-2E860D899C87}.Release|Win32.Build.0 = Release.dll|Win32
+		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Debug.dll|Win32.ActiveCfg = Debug|Win32
+		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Debug.dll|Win32.Build.0 = Debug|Win32
+		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Debug|Win32.Build.0 = Debug|Win32
+		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Release.dll|Win32.ActiveCfg = Release|Win32
+		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Release.dll|Win32.Build.0 = Release|Win32
+		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Release|Win32.ActiveCfg = Release|Win32
+		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -185,5 +197,6 @@ Global
 		{CE11FF6E-60D3-4E61-AFE2-F8F501100238} = {28EEE205-D69D-481F-87EF-3EECF77D030F}
 		{C2342D39-FD84-4448-A050-7FF3B4A33F3D} = {28EEE205-D69D-481F-87EF-3EECF77D030F}
 		{37E51687-D37B-4E91-8710-2E860D899C87} = {28EEE205-D69D-481F-87EF-3EECF77D030F}
+		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63} = {F7C5FCA4-D0FE-4689-86E6-DDDE699BED43}
 	EndGlobalSection
 EndGlobal
