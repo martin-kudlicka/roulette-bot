@@ -86,6 +86,24 @@
     <ClCompile Include="settingsdialog\casinosettingsmodel.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="systemplugins.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Debug\RouletteBot\moc_systeminterface.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Release\RouletteBot\moc_systeminterface.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Debug\RouletteBot\moc_casinointerface.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Release\RouletteBot\moc_casinointerface.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
+    <ClCompile Include="settingsdialog\systemsettingsmodel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -112,6 +130,12 @@
     <CustomBuild Include="settingsdialog.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="..\systems\common\systeminterface.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\casinos\common\casinointerface.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\temp\GeneratedFiles\RouletteBot\ui_mainwindow.h">
@@ -133,6 +157,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="settingsdialog\casinosettingsmodel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="systemplugins.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="settingsdialog\systemsettingsmodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -11,6 +11,7 @@ class SystemInterface : public QObject
 
 	public:
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const = 0;
+		virtual const QString GetName() const = 0;
 		virtual QWidget *GetSettings() = 0;
 		virtual const void Reset() = 0;
 }; // SystemInterface

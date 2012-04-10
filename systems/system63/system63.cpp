@@ -13,6 +13,11 @@ const void System63::CloseSettings(const QWidget *pSettings, const bool &pSave) 
 	delete s63swSettings;
 } // CloseSettings
 
+const QString System63::GetName() const
+{
+	return "System 63";
+} // GetName
+
 QWidget *System63::GetSettings()
 {
 	return new System63SettingsWidget(&_s63sSettings);

@@ -83,6 +83,9 @@
     <ClCompile Include="..\temp\GeneratedFiles\Debug\RouletteBot\moc_casinodialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Debug\RouletteBot\moc_casinointerface.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\temp\GeneratedFiles\Debug\RouletteBot\moc_casinomodel.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -92,7 +95,13 @@
     <ClCompile Include="..\temp\GeneratedFiles\Debug\RouletteBot\moc_settingsdialog.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Debug\RouletteBot\moc_systeminterface.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\temp\GeneratedFiles\Release\RouletteBot\moc_casinodialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Release\RouletteBot\moc_casinointerface.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\temp\GeneratedFiles\Release\RouletteBot\moc_casinomodel.cpp">
@@ -102,6 +111,9 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\temp\GeneratedFiles\Release\RouletteBot\moc_settingsdialog.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\temp\GeneratedFiles\Release\RouletteBot\moc_systeminterface.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\temp\GeneratedFiles\RouletteBot\qrc_mainwindow.cpp">
@@ -118,6 +130,8 @@
     <ClCompile Include="settings.cpp" />
     <ClCompile Include="settingsdialog.cpp" />
     <ClCompile Include="settingsdialog\casinosettingsmodel.cpp" />
+    <ClCompile Include="settingsdialog\systemsettingsmodel.cpp" />
+    <ClCompile Include="systemplugins.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="mainwindow.h">
@@ -158,11 +172,33 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <CustomBuild Include="..\casinos\common\casinointerface.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing casinointerface.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot" "-I.\..\temp\GeneratedFiles\RouletteBot" "-I." "-I." "-I."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing casinointerface.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot" "-I.\..\temp\GeneratedFiles\RouletteBot" "-I." "-I." "-I."</Command>
+    </CustomBuild>
     <ClInclude Include="..\common\settingscmn.h" />
+    <CustomBuild Include="..\systems\common\systeminterface.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing systeminterface.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DQT_GUI_LIB "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot" "-I.\..\temp\GeneratedFiles\RouletteBot" "-I." "-I." "-I."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing systeminterface.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot" "-I.\..\temp\GeneratedFiles\RouletteBot" "-I." "-I." "-I."</Command>
+    </CustomBuild>
     <ClInclude Include="..\temp\GeneratedFiles\RouletteBot\ui_casinodialog.h" />
     <ClInclude Include="..\temp\GeneratedFiles\RouletteBot\ui_mainwindow.h" />
     <ClInclude Include="settings.h" />
     <ClInclude Include="settingsdialog\casinosettingsmodel.h" />
+    <ClInclude Include="settingsdialog\systemsettingsmodel.h" />
+    <ClInclude Include="systemplugins.h" />
     <CustomBuild Include="settingsdialog.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing settingsdialog.h...</Message>

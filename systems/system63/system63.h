@@ -14,6 +14,7 @@ class System63 : public SystemInterface
 
 		// interface
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const;
+		virtual const QString GetName() const;
 		virtual QWidget *GetSettings();
 		virtual const void Reset();
 }; // System63

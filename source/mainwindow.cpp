@@ -10,6 +10,8 @@ MainWindow::MainWindow(QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 
 	_cmCasinos.SetCasinos(&_cpCasinos);
 	_qmwmMainWindow.qtvCasinos->setModel(&_cmCasinos);
 
+	_spSystems.Load();
+
 	connect(&_cmCasinos, SIGNAL(ActiveChanged(const int &, const bool &)), SLOT(on_cmCasinos_ActiveChanged(const int &, const bool &)));
 	connect(_qmwmMainWindow.qtvCasinos->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &, const QItemSelection &)));
 } // MainWindow
@@ -30,7 +32,7 @@ const void MainWindow::on_cmCasinos_ActiveChanged(const int &pRow, const bool &p
 
 const void MainWindow::on_qaSettings_triggered(bool checked /* false */)
 {
-	SettingsDialog sdSettings(&_sSettings, &_cpCasinos, this);
+	SettingsDialog sdSettings(&_sSettings, &_cpCasinos, &_spSystems, this);
 	sdSettings.exec();
 } // on_qaSettings_triggered
 
