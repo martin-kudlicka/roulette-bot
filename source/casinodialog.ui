@@ -68,6 +68,9 @@
      </item>
      <item>
       <widget class="QPushButton" name="qpbStop">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
        <property name="text">
         <string>S&amp;top</string>
        </property>
