@@ -25,6 +25,23 @@ BOOL WINAPI DllMain(__in HINSTANCE hinstDLL, __in DWORD fdwReason, __in LPVOID l
 	return TRUE;
 } // DllMain
 
+const int Unibet::CheckForTournaments(const QPixmap &pPixmap) const
+{
+	QImage qiImage = pPixmap.toImage();
+
+	int iTournaments = 0;
+	do {
+		QRgb qrgbRgb = qiImage.pixel(qiImage.width() - iTournaments - 1, qiImage.height() / 2);
+		if (qrgbRgb == 0xFF1F1F1F) {
+			iTournaments++;
+		} else {
+			break;
+		} // if else
+	} while (true);
+
+	return iTournaments;
+} // CheckForTournaments
+
 const void Unibet::CloseSettings(const QWidget *pSettings, const bool &pSave) const
 {
 	const UnibetSettingsWidget *uswSettings = qobject_cast<const UnibetSettingsWidget *>(pSettings);
@@ -103,12 +120,14 @@ const QPixmap Unibet::GrabWindow(const eGrab &pPart) const
 {
 	QPixmap qpAll = QPixmap::grabWindow(_wiWindow);
 
+	int iTournamentsWidth = CheckForTournaments(qpAll);
+
 	int iPartHeight, iPartWidth, iPartX, iPartY;
 	switch (pPart) {
 		case GrabCash:
-			iPartX = static_cast<float>(qpAll.width()) / 100 * 39;
+			iPartX = static_cast<float>(qpAll.width() - iTournamentsWidth) / 100 * 39;
 			iPartY = static_cast<float>(qpAll.height()) / 100 * 90.5;
-			iPartWidth = static_cast<float>(qpAll.width()) / 100 * 6;
+			iPartWidth = static_cast<float>(qpAll.width() - iTournamentsWidth) / 100 * 6;
 			iPartHeight = static_cast<float>(qpAll.height()) / 100 * 2.5;
 	} // switch
 
