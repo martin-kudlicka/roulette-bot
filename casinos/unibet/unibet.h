@@ -41,6 +41,7 @@ class Unibet : public CasinoInterface
 		UnibetSettings _usSettings;
 		WId _wiWindow;
 
+		const int CheckForTournaments(const QPixmap &pPixmap) const;
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const;
 #ifdef Q_WS_WIN
 		static BOOL CALLBACK EnumWindowsProc(__in HWND hwnd, __in LPARAM lParam);
