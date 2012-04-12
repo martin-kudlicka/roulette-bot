@@ -2,20 +2,25 @@
 
 #include "system63settingswidget.h"
 
-const SystemInterface::eSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
+const SystemInterface::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
 {
 	PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin);
 
-	eSpinResult esrResult;
+	qfSpinResults qfsrResult;
 	do {
 		if (_tbhLastBet.isEmpty()) {
 			// no bet made
-			esrResult = SpinResultNoBet;
+			qfsrResult = SpinResultNoBet;
 
 			if (_iSameDozenColumnBeforeBet < _s63sSettings.GetSameDozenColumnBeforeBet()) {
 				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
 					_iSameDozenColumnBeforeBet++;
 				} else {
+					if (_qui8ProgressionIndex > 0) {
+						qfsrResult |= SpinResultLost;
+						_qui8ProgressionIndex = 0;
+					} // if
+
 					_iSameDozenColumnBeforeBet = 1;
 				} // if else
 
@@ -26,9 +31,13 @@ const SystemInterface::eSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
 				if ((_s63sSettings.GetProgressionDozenColumnNotChanged() && _ebpLastPosition == ebpPosition) || !_s63sSettings.GetProgressionDozenColumnNotChanged()) {
 					_iSameDozenColumnProgression++;
 				} else {
+					if (_qui8ProgressionIndex > 0) {
+						qfsrResult |= SpinResultLost;
+						_qui8ProgressionIndex = 0;
+					} // if
+
 					_iSameDozenColumnBeforeBet = 1;
 					_iSameDozenColumnProgression = 0;
-					_qui8ProgressionIndex = 0;
 				} // if else
 
 				break;
@@ -37,7 +46,7 @@ const SystemInterface::eSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
 			// bet made
 			if (_tbhLastBet.contains(ebpPosition)) {
 				// won
-				esrResult = SpinResultWon;
+				qfsrResult = SpinResultWon;
 
 				_iSameDozenColumnBeforeBet = 0;
 				_iSameDozenColumnProgression = 0;
@@ -45,15 +54,17 @@ const SystemInterface::eSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
 
 				break;
 			} else {
-				// lost
-				esrResult = SpinResultLost;
-
+				// lost or progression
 				_iSameDozenColumnProgression = 0;
 
 				if (_qui8ProgressionIndex == _qlProgressionSequence.size() - 1) {
+					qfsrResult = SpinResultLost;
+
 					_iSameDozenColumnBeforeBet = 0;
 					_qui8ProgressionIndex = 0;
 				} else {
+					qfsrResult = SpinResultProgression;
+
 					_qui8ProgressionIndex++;
 				} // if else
 
@@ -64,7 +75,7 @@ const SystemInterface::eSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
 
 	_ebpLastPosition = ebpPosition;
 
-	return esrResult;
+	return qfsrResult;
 } // AnalyzeSpin
 
 const void System63::CloseSettings(const QWidget *pSettings, const bool &pSave) const

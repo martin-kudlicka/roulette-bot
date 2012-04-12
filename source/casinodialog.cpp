@@ -91,32 +91,37 @@ const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 	quint8 qui8Spin = _ciCasino->MakeSpin();
 	_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(qui8Spin));
 
-	SystemInterface::eSpinResult esrResult = pSystem->AnalyzeSpin(qui8Spin);
-	switch (esrResult) {
-		case SystemInterface::SpinResultNoBet:
-			_qdcCasinoDialog.qpteLog->appendPlainText(tr("No bet."));
-			IncreaseCounter(_qdcCasinoDialog.qlNoBet);
-			break;
-		case SystemInterface::SpinResultWon:
-			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Won "));
-			IncreaseCounter(_qdcCasinoDialog.qlWon);
-			break;
-		case SystemInterface::SpinResultLost:
-			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Lost "));
-			IncreaseCounter(_qdcCasinoDialog.qlLost);
-	} // switch
+	SystemInterface::qfSpinResults qfsrResult = pSystem->AnalyzeSpin(qui8Spin);
+	if (qfsrResult & SystemInterface::SpinResultNoBet) {
+		_qdcCasinoDialog.qpteLog->appendPlainText(tr("No bet."));
+		IncreaseCounter(_qdcCasinoDialog.qlNoBet);
+	} // if
+	if (qfsrResult & SystemInterface::SpinResultWon) {
+		_qdcCasinoDialog.qpteLog->appendPlainText(tr("Won "));
+		IncreaseCounter(_qdcCasinoDialog.qlWon);
+	} // if
+	if (qfsrResult & SystemInterface::SpinResultLost) {
+		_qdcCasinoDialog.qpteLog->appendPlainText(tr("Lost "));
+		IncreaseCounter(_qdcCasinoDialog.qlLost);
+
+		if (qfsrResult & SystemInterface::SpinResultNoBet) {
+			_qdcCasinoDialog.qpteLog->insertPlainText(tr("before."));
+		} // if
+	} // if
+	if (qfsrResult & SystemInterface::SpinResultProgression) {
+		_qdcCasinoDialog.qpteLog->appendPlainText(tr("Progression "));
+		IncreaseCounter(_qdcCasinoDialog.qlProgression);
+	} // if
 
 	_ciCasino->RemoveBet();
 
 	float fOldCash = _qdcCasinoDialog.qlCash->text().toFloat();
 	RefreshStatus();
 
-	switch (esrResult) {
-		case SystemInterface::SpinResultWon:
-		case SystemInterface::SpinResultLost:
-			float fCash = _qdcCasinoDialog.qlCash->text().toFloat();
-			_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(qAbs(fCash - fOldCash)));
-	} // switch
+	float fProfit = qAbs(_qdcCasinoDialog.qlCash->text().toFloat() - fOldCash);
+	if (fProfit > 0) {
+		_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(fProfit));
+	} // if
 
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("End of round."));
 } // PlayRound

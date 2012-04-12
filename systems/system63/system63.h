@@ -18,7 +18,7 @@ class System63 : public SystemInterface
 		System63Settings _s63sSettings;
 		PlayCmn::tBetHash _tbhLastBet;
 
-		virtual const eSpinResult AnalyzeSpin(const quint8 &pSpin);
+		virtual const qfSpinResults AnalyzeSpin(const quint8 &pSpin);
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const;
 		const PlayCmn::tBetHash CreateBet() const;
 		virtual const PlayCmn::tBetHash GetBet();
