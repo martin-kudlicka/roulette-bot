@@ -22,6 +22,7 @@ class Unibet : public CasinoInterface
 
 	private:
 		enum eClick {
+			ClickFastSpin,
 			ClickPositionColumn1,
 			ClickPositionColumn2,
 			ClickPositionColumn3,
@@ -34,7 +35,8 @@ class Unibet : public CasinoInterface
 			ClickTokenPosition4
 		}; // eClick
 		enum eGrab {
-			GrabCash
+			GrabCash,
+			GrabSpinResult
 		}; // eGrab
 		enum eTokensPosition {
 			TokensPositionUnknown,
@@ -69,6 +71,7 @@ class Unibet : public CasinoInterface
 		virtual QWidget *GetSettings();
 		const QPixmap GrabWindow(const eGrab &pPart) const;
 		virtual const void MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet) const;
+		virtual const quint8 MakeSpin() const;
 		const void MouseClick(const eClick &pClickOn) const;
 		const int PercentCount(const int &pValue, const float &pPercent) const;
 		const QString Recognize(const QPixmap &pPixmap) const;

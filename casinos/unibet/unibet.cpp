@@ -133,6 +133,12 @@ const QPixmap Unibet::GrabWindow(const eGrab &pPart) const
 			iPartY = PercentCount(qpAll.height(), 90.5);
 			iPartWidth = PercentCount(qpAll.width() - iTournamentsWidth, 6);
 			iPartHeight = PercentCount(qpAll.height(), 2.5);
+			break;
+		case GrabSpinResult:
+			iPartX = PercentCount(qpAll.width() - iTournamentsWidth, 13);
+			iPartY = PercentCount(qpAll.height(), 59);
+			iPartWidth = PercentCount(qpAll.width() - iTournamentsWidth, 9.5);
+			iPartHeight = PercentCount(qpAll.height(), 7.2);
 	} // switch
 
 	return qpAll.copy(iPartX, iPartY, iPartWidth, iPartHeight);
@@ -158,6 +164,17 @@ const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerB
 	} // for
 } // MakeBet
 
+const quint8 Unibet::MakeSpin() const
+{
+	MouseClick(ClickFastSpin);
+	QTest::qWait(1000);
+
+	QPixmap qpSpin = GrabWindow(GrabSpinResult);
+	QString qsSpin = Recognize(qpSpin);
+
+	return qsSpin.toUInt();
+} // MakeSpin
+
 const void Unibet::MouseClick(const eClick &pClickOn) const
 {
 	QPixmap qpAll = QPixmap::grabWindow(_wiWindow);
@@ -165,6 +182,10 @@ const void Unibet::MouseClick(const eClick &pClickOn) const
 
 	int iX, iY;
 	switch (pClickOn) {
+		case ClickFastSpin:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 45);
+			iY = PercentCount(qpAll.height(), 83);
+			break;
 		case ClickPositionColumn1:
 			iX = PercentCount(qpAll.width() - iTournamentsWidth, 88.5);
 			iY = PercentCount(qpAll.height(), 71.5);
