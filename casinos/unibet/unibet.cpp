@@ -265,6 +265,11 @@ const QString Unibet::Recognize(const QPixmap &pPixmap) const
 	return sText.string();
 } // Recognize
 
+const void Unibet::RemoveBet() const
+{
+	MouseClick(ClickRemoveBet);
+} // RemoveBet
+
 const void Unibet::Reset()
 {
 	_etpTokensPosition = TokensPositionUnknown;
