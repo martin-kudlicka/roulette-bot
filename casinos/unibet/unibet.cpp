@@ -296,13 +296,14 @@ const QString Unibet::Recognize(const QPixmap &pPixmap) const
 const void Unibet::RemoveBet() const
 {
 	MouseClick(ClickRemoveBet);
+	Wait(250, 500);
 } // RemoveBet
 
 const void Unibet::Reset()
 {
 	_etpTokensPosition = TokensPositionUnknown;
 
-	MouseClick(ClickRemoveBet);
+	RemoveBet();
 	SelectToken(_usSettings.GetTokenValue());
 } // Reset
 
