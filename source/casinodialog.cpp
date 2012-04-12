@@ -77,6 +77,8 @@ const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 	quint8 qui8Spin = _ciCasino->MakeSpin();
 
 	pSystem->AnalyzeSpin(qui8Spin);
+
+	_ciCasino->RemoveBet();
 } // PlayRound
 
 const void CasinoDialog::RefreshStatus() const
