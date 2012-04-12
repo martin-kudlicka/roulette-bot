@@ -19,20 +19,70 @@
      <property name="title">
       <string>Status</string>
      </property>
-     <layout class="QFormLayout" name="formLayout">
-      <item row="0" column="0">
-       <widget class="QLabel" name="label">
-        <property name="text">
-         <string>Cash</string>
-        </property>
-       </widget>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Cash</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="qlCash">
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
-      <item row="0" column="1">
-       <widget class="QLabel" name="qlCash">
-        <property name="text">
-         <string>TextLabel</string>
-        </property>
-       </widget>
+      <item>
+       <layout class="QFormLayout" name="formLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_3">
+          <property name="text">
+           <string>Won</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLabel" name="qlWon">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QLabel" name="label_5">
+          <property name="text">
+           <string>Lost</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLabel" name="qlLost">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>No bet</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="1">
+         <widget class="QLabel" name="qlNoBet">
+          <property name="text">
+           <string>0</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
       </item>
      </layout>
     </widget>
