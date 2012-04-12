@@ -82,7 +82,9 @@ const void CasinoDialog::on_qpbStop_clicked(bool checked /* false */)
 const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 {
 	PlayCmn::tBetHash tbhBet = pSystem->GetBet();
-	//_ciCasino->MakeBet(tbhBet, _sSettings->GetTokensPerBet());
+	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked()) {
+		_ciCasino->MakeBet(tbhBet, _sSettings->GetTokensPerBet());
+	} // if
 
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Spin: "));
 	quint8 qui8Spin = _ciCasino->MakeSpin();
