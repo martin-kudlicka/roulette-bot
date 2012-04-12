@@ -2,13 +2,16 @@
 
 #include "system63settingswidget.h"
 
-const void System63::AnalyzeSpin(const quint8 &pSpin)
+const SystemInterface::eSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
 {
 	PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin);
 
+	eSpinResult esrResult;
 	do {
 		if (_tbhLastBet.isEmpty()) {
 			// no bet made
+			esrResult = SpinResultNoBet;
+
 			if (_iSameDozenColumnBeforeBet < _s63sSettings.GetSameDozenColumnBeforeBet()) {
 				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
 					_iSameDozenColumnBeforeBet++;
@@ -34,6 +37,8 @@ const void System63::AnalyzeSpin(const quint8 &pSpin)
 			// bet made
 			if (_tbhLastBet.contains(ebpPosition)) {
 				// won
+				esrResult = SpinResultWon;
+
 				_iSameDozenColumnBeforeBet = 0;
 				_iSameDozenColumnProgression = 0;
 				_qui8ProgressionIndex = 0;
@@ -41,6 +46,8 @@ const void System63::AnalyzeSpin(const quint8 &pSpin)
 				break;
 			} else {
 				// lost
+				esrResult = SpinResultLost;
+
 				_iSameDozenColumnProgression = 0;
 
 				if (_qui8ProgressionIndex == _qlProgressionSequence.size() - 1) {
@@ -56,6 +63,8 @@ const void System63::AnalyzeSpin(const quint8 &pSpin)
 	} while (false);
 
 	_ebpLastPosition = ebpPosition;
+
+	return esrResult;
 } // AnalyzeSpin
 
 const void System63::CloseSettings(const QWidget *pSettings, const bool &pSave) const
