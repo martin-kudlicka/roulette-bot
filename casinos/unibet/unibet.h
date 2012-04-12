@@ -21,10 +21,23 @@ class Unibet : public CasinoInterface
 		Unibet();
 
 	private:
+		enum eClick {
+			ClickPositionColumn1,
+			ClickPositionColumn2,
+			ClickPositionColumn3,
+			ClickRemoveBet,
+			ClickTokensLeft,
+			ClickTokensRight,
+			ClickTokenPosition1,
+			ClickTokenPosition2,
+			ClickTokenPosition3,
+			ClickTokenPosition4
+		}; // eClick
 		enum eGrab {
 			GrabCash
 		}; // eGrab
 		enum eTokensPosition {
+			TokensPositionUnknown,
 			TokensPositionLeft,
 			TokensPositionRight
 		}; // eTokensPosition
@@ -55,8 +68,12 @@ class Unibet : public CasinoInterface
 		virtual const QString GetName() const;
 		virtual QWidget *GetSettings();
 		const QPixmap GrabWindow(const eGrab &pPart) const;
+		virtual const void MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet) const;
+		const void MouseClick(const eClick &pClickOn) const;
+		const int PercentCount(const int &pValue, const float &pPercent) const;
 		const QString Recognize(const QPixmap &pPixmap) const;
 		virtual const void Reset();
+		const void SelectToken(const UnibetSettings::eTokenValue &pValue) const;
 }; // Unibet
 
 #endif // UNIBET_H

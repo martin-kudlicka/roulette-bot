@@ -10,6 +10,7 @@
 #include "../../3rdparty/tesseract/vs2010/include/leptonica/allheaders.h"
 #include "../../3rdparty/tesseract/ccutil/strngs.h"
 #include "unibetsettingswidget.h"
+#include <QTest>
 
 #ifdef Q_WS_WIN
 LPCTSTR CAPTION_ROULETTE = _T("Roulette");
@@ -60,10 +61,13 @@ BOOL CALLBACK Unibet::EnumWindowsProc(__in HWND hwnd, __in LPARAM lParam)
 
 	bool bRoulette = _tcsncmp(tcWindowText, CAPTION_ROULETTE, _tcslen(CAPTION_ROULETTE)) == 0;
 	if (bRoulette) {
-		HWND *hwRoulette = reinterpret_cast<HWND *>(lParam);
-		*hwRoulette = FindWindowEx(hwnd, NULL, NULL, CAPTION_ROULETTE);
-		if (*hwRoulette) {
-			return FALSE;
+		HWND hwRoulette = FindWindowEx(hwnd, NULL, NULL, CAPTION_ROULETTE);
+		if (hwRoulette) {
+			HWND *hwRouletteChild = reinterpret_cast<HWND *>(lParam);
+			*hwRouletteChild = FindWindowEx(hwRoulette, NULL, NULL, NULL);
+			if (*hwRouletteChild) {
+				return FALSE;
+			} // if
 		} // if
 	} // if
 
@@ -125,14 +129,93 @@ const QPixmap Unibet::GrabWindow(const eGrab &pPart) const
 	int iPartHeight, iPartWidth, iPartX, iPartY;
 	switch (pPart) {
 		case GrabCash:
-			iPartX = static_cast<float>(qpAll.width() - iTournamentsWidth) / 100 * 39;
-			iPartY = static_cast<float>(qpAll.height()) / 100 * 90.5;
-			iPartWidth = static_cast<float>(qpAll.width() - iTournamentsWidth) / 100 * 6;
-			iPartHeight = static_cast<float>(qpAll.height()) / 100 * 2.5;
+			iPartX = PercentCount(qpAll.width() - iTournamentsWidth, 39);
+			iPartY = PercentCount(qpAll.height(), 90.5);
+			iPartWidth = PercentCount(qpAll.width() - iTournamentsWidth, 6);
+			iPartHeight = PercentCount(qpAll.height(), 2.5);
 	} // switch
 
 	return qpAll.copy(iPartX, iPartY, iPartWidth, iPartHeight);
 } // GrabWindow
+
+const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet) const
+{
+	for (PlayCmn::tBetHash::const_iterator ciBet = pBet.constBegin(); ciBet != pBet.constEnd(); ciBet++) {
+		for (int iToken = 0; iToken < pTokensPerBet; iToken++) {
+			switch (ciBet.key()) {
+				case PlayCmn::BetPositionColumn1:
+					MouseClick(ClickPositionColumn1);
+					break;
+				case PlayCmn::BetPositionColumn2:
+					MouseClick(ClickPositionColumn2);
+					break;
+				case PlayCmn::BetPositionColumn3:
+					MouseClick(ClickPositionColumn3);
+			} // switch
+
+			QTest::qWait(200);
+		} // for
+	} // for
+} // MakeBet
+
+const void Unibet::MouseClick(const eClick &pClickOn) const
+{
+	QPixmap qpAll = QPixmap::grabWindow(_wiWindow);
+	int iTournamentsWidth = CheckForTournaments(qpAll);
+
+	int iX, iY;
+	switch (pClickOn) {
+		case ClickPositionColumn1:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 88.5);
+			iY = PercentCount(qpAll.height(), 71.5);
+			break;
+		case ClickPositionColumn2:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 92);
+			iY = PercentCount(qpAll.height(), 67);
+			break;
+		case ClickPositionColumn3:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 95);
+			iY = PercentCount(qpAll.height(), 61);
+			break;
+		case ClickRemoveBet:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 66);
+			iY = PercentCount(qpAll.height(), 83);
+			break;
+		case ClickTokensLeft:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 77.5);
+			iY = PercentCount(qpAll.height(), 90);
+			break;
+		case ClickTokensRight:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 98.5);
+			iY = PercentCount(qpAll.height(), 90);
+			break;
+		case ClickTokenPosition1:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 81);
+			iY = PercentCount(qpAll.height(), 90);
+			break;
+		case ClickTokenPosition2:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 86);
+			iY = PercentCount(qpAll.height(), 90);
+			break;
+		case ClickTokenPosition3:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 91); // 580
+			iY = PercentCount(qpAll.height(), 90);
+			break;
+		case ClickTokenPosition4:
+			iX = PercentCount(qpAll.width() - iTournamentsWidth, 95.5); // 610
+			iY = PercentCount(qpAll.height(), 90);
+	} // switch
+
+#ifdef Q_WS_WIN
+	SendMessage(_wiWindow, WM_LBUTTONDOWN, MK_LBUTTON, MAKELONG(iX, iY));
+	SendMessage(_wiWindow, WM_LBUTTONUP, 0, MAKELONG(iX, iY));
+#endif
+} // MouseClick
+
+const int Unibet::PercentCount(const int &pValue, const float &pPercent) const
+{
+	return static_cast<float>(pValue) / 100 * pPercent;
+} // PercentCount
 
 const QString Unibet::Recognize(const QPixmap &pPixmap) const
 {
@@ -163,8 +246,44 @@ const QString Unibet::Recognize(const QPixmap &pPixmap) const
 
 const void Unibet::Reset()
 {
-	_etpTokensPosition = TokensPositionLeft;
+	_etpTokensPosition = TokensPositionUnknown;
+
+	MouseClick(ClickRemoveBet);
+	SelectToken(_usSettings.GetTokenValue());
 } // Reset
+
+const void Unibet::SelectToken(const UnibetSettings::eTokenValue &pValue) const
+{
+	if ((_etpTokensPosition == TokensPositionUnknown && pValue != UnibetSettings::TokenValue4) || (_etpTokensPosition == TokensPositionRight && pValue == UnibetSettings::TokenValue1)) {
+		MouseClick(ClickTokensLeft);
+	} else {
+		if (_etpTokensPosition == TokensPositionUnknown || (_etpTokensPosition == TokensPositionLeft && pValue == UnibetSettings::TokenValue4)) {
+			MouseClick(ClickTokensRight);
+		} // if
+	} // if else
+
+	switch (pValue) {
+		case UnibetSettings::TokenValue1:
+			MouseClick(ClickTokenPosition2);
+			break;
+		case UnibetSettings::TokenValue2:
+			if (_etpTokensPosition == TokensPositionLeft) {
+				MouseClick(ClickTokenPosition3);
+			} else {
+				MouseClick(ClickTokenPosition2);
+			} // if else
+			break;
+		case UnibetSettings::TokenValue3:
+			if (_etpTokensPosition == TokensPositionLeft) {
+				MouseClick(ClickTokenPosition4);
+			} else {
+				MouseClick(ClickTokenPosition3);
+			} // if else
+			break;
+		case UnibetSettings::TokenValue4:
+			MouseClick(ClickTokenPosition4);
+	} // switch
+} // SelectToken
 
 Unibet::Unibet() : CasinoInterface()
 {
