@@ -17,6 +17,7 @@ class CasinoDialog : public QDialog
 	private:
 		bool _bStop;
 		CasinoInterface *_ciCasino;
+		float _fStartingCash;
 		Settings *_sSettings;
 		const SystemPlugins *_spSystems;
 		Ui::qdCasino _qdcCasinoDialog;
