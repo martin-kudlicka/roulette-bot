@@ -46,7 +46,7 @@ const void MainWindow::on_qpbPlay_clicked(bool checked /* false */)
 		cdCasino->raise();
 	} else {
 		CasinoInterface *ciCasino = _cpCasinos.GetCasino(iRow);
-		cdCasino = new CasinoDialog(ciCasino, &_spSystems);
+		cdCasino = new CasinoDialog(ciCasino, &_spSystems, &_sSettings);
 
 		connect(cdCasino, SIGNAL(finished(int)), SLOT(on_cdCasinoDialog_finished(int)));
 

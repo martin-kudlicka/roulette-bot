@@ -182,6 +182,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I.\..\temp\GeneratedFiles\$(ConfigurationName)\RouletteBot" "-I.\..\temp\GeneratedFiles\RouletteBot" "-I." "-I." "-I."</Command>
     </CustomBuild>
+    <ClInclude Include="..\common\playcmn.h" />
     <ClInclude Include="..\common\settingscmn.h" />
     <CustomBuild Include="..\systems\common\systeminterface.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

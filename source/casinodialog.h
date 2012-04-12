@@ -5,23 +5,25 @@
 
 #include "../casinos/common/casinointerface.h"
 #include "systemplugins.h"
+#include "settings.h"
 
 class CasinoDialog : public QDialog
 {
 	Q_OBJECT
 
 	public:
-		CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSystems, QWidget *pParent = NULL, Qt::WindowFlags pFlags = 0);
+		CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSystems, Settings *pSettings, QWidget *pParent = NULL, Qt::WindowFlags pFlags = 0);
 
 	private:
 		bool _bStop;
 		CasinoInterface *_ciCasino;
+		Settings *_sSettings;
 		const SystemPlugins *_spSystems;
 		Ui::qdCasino _qdcCasinoDialog;
 
 		const void InitSettings() const;
 		const bool IsPlaying() const;
-		const void PlayRound() const;
+		const void PlayRound(SystemInterface *pSystem) const;
 		const void RefreshStatus() const;
 
 	private slots:
