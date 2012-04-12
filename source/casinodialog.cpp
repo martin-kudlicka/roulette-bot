@@ -50,14 +50,18 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 
 	SystemInterface *siSystem = reinterpret_cast<SystemInterface *>(_qdcCasinoDialog.qcbSystems->itemData(_qdcCasinoDialog.qcbSystems->currentIndex()).toUInt());
 
+	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Game started."));
+
 	_ciCasino->Reset();
 	siSystem->Reset();
 
 	_bStop = false;
 	while (!_bStop) {
 		PlayRound(siSystem);
-		RefreshStatus();
 	} // while
+
+	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Game stopped."));
+	_qdcCasinoDialog.qpteLog->appendPlainText("");
 
 	_qdcCasinoDialog.qpbStop->setEnabled(false);
 	_qdcCasinoDialog.qpbStart->setEnabled(_ciCasino->GameActive());
@@ -72,13 +76,37 @@ const void CasinoDialog::on_qpbStop_clicked(bool checked /* false */)
 const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 {
 	PlayCmn::tBetHash tbhBet = pSystem->GetBet();
-	_ciCasino->MakeBet(tbhBet, _sSettings->GetTokensPerBet());
+	//_ciCasino->MakeBet(tbhBet, _sSettings->GetTokensPerBet());
 
+	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Spin: "));
 	quint8 qui8Spin = _ciCasino->MakeSpin();
+	_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(qui8Spin));
 
-	pSystem->AnalyzeSpin(qui8Spin);
+	SystemInterface::eSpinResult esrResult = pSystem->AnalyzeSpin(qui8Spin);
+	switch (esrResult) {
+		case SystemInterface::SpinResultNoBet:
+			_qdcCasinoDialog.qpteLog->appendPlainText(tr("No bet."));
+			break;
+		case SystemInterface::SpinResultWon:
+			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Won "));
+			break;
+		case SystemInterface::SpinResultLost:
+			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Lost "));
+	} // switch
 
 	_ciCasino->RemoveBet();
+
+	float fOldCash = _qdcCasinoDialog.qlCash->text().toFloat();
+	RefreshStatus();
+
+	switch (esrResult) {
+		case SystemInterface::SpinResultWon:
+		case SystemInterface::SpinResultLost:
+			float fCash = _qdcCasinoDialog.qlCash->text().toFloat();
+			_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(qAbs(fCash - fOldCash)));
+	} // switch
+
+	_qdcCasinoDialog.qpteLog->appendPlainText(tr("End of round."));
 } // PlayRound
 
 const void CasinoDialog::RefreshStatus() const
