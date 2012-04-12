@@ -2,6 +2,7 @@
 #define CASINOINTERFACE_H
 
 #include <QtPlugin>
+#include "../../common/playcmn.h"
 
 static const char *CASINO_INTERFACE = "Casino Interface 1.0";
 
@@ -15,6 +16,7 @@ class CasinoInterface : public QObject
 		virtual const float GetCash() const = 0;
 		virtual const QString GetName() const = 0;
 		virtual QWidget *GetSettings() = 0;
+		virtual const void MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet) const = 0;
 		virtual const void Reset() = 0;
 
 	signals:

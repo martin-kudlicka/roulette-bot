@@ -39,15 +39,15 @@
     <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
     <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
     <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\output\$(Configuration)\casinos\unibet\</OutDir>
-    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\output\$(Configuration)\casinos\unibet\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\output\$(Configuration)\casinos\$(ProjectName)\</OutDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\output\$(Configuration)\casinos\$(ProjectName)\</OutDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)\temp\$(Configuration)\$(ProjectName)\</IntDir>
     <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)\temp\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;QT_LARGEFILE_SUPPORT;QT_CORE_LIB;UNIBET_LIB;QT_GUI_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;.;.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet;.\..\..\temp\GeneratedFiles\unibet;$(QTDIR)\include\QtGui;$(SolutionDir)3rdparty\tesseract\ccstruct;$(SolutionDir)3rdparty\tesseract\ccutil;$(SolutionDir)3rdparty\tesseract\ccmain;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;.;.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet;.\..\..\temp\GeneratedFiles\unibet;$(QTDIR)\include\QtGui;$(SolutionDir)3rdparty\tesseract\ccstruct;$(SolutionDir)3rdparty\tesseract\ccutil;$(SolutionDir)3rdparty\tesseract\ccmain;$(QTDIR)\include\QtTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -59,13 +59,13 @@
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)\output\$(Configuration)\casinos\unibet;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;QtCored4.lib;QtGuid4.lib;libtesseract-debug.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;QtCored4.lib;QtGuid4.lib;libtesseract-debug.lib;QtTestd4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <PreprocessorDefinitions>UNICODE;WIN32;QT_LARGEFILE_SUPPORT;QT_NO_DEBUG;NDEBUG;QT_CORE_LIB;UNIBET_LIB;QT_GUI_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;.;.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet;.\..\..\temp\GeneratedFiles\unibet;$(QTDIR)\include\QtGui;$(SolutionDir)3rdparty\tesseract\ccstruct;$(SolutionDir)3rdparty\tesseract\ccutil;$(SolutionDir)3rdparty\tesseract\ccmain;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(QTDIR)\include;$(QTDIR)\include\QtCore;.;.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet;.\..\..\temp\GeneratedFiles\unibet;$(QTDIR)\include\QtGui;$(SolutionDir)3rdparty\tesseract\ccstruct;$(SolutionDir)3rdparty\tesseract\ccutil;$(SolutionDir)3rdparty\tesseract\ccmain;$(QTDIR)\include\QtTest;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
@@ -77,7 +77,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).dll</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;$(SolutionDir)\output\$(Configuration)\casinos\unibet;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>false</GenerateDebugInformation>
-      <AdditionalDependencies>qtmain.lib;QtCore4.lib;QtGui4.lib;libtesseract.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmain.lib;QtCore4.lib;QtGui4.lib;libtesseract.lib;QtTest4.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -119,11 +119,11 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing unibet.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I." "-I." "-I." "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I$(QTDIR)\include\QtTest" "-I." "-I." "-I." "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing unibet.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I." "-I." "-I." "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I$(QTDIR)\include\QtTest" "-I." "-I." "-I." "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -148,11 +148,11 @@
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing unibetsettingswidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I." "-I." "-I."</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I$(QTDIR)\include\QtTest" "-I." "-I." "-I." "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"</Command>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing unibetsettingswidget.h...</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I." "-I." "-I."</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"   -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL  "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I$(QTDIR)\include\QtTest" "-I." "-I." "-I." "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"</Command>
     </CustomBuild>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
