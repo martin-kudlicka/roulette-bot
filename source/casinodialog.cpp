@@ -1,9 +1,10 @@
 #include "casinodialog.h"
 
-CasinoDialog::CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSystems, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags)
+CasinoDialog::CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSystems, Settings *pSettings, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags)
 {
 	_ciCasino = pCasino;
 	_spSystems = pSystems;
+	_sSettings = pSettings;
 
 	_qdcCasinoDialog.setupUi(this);
 
@@ -54,7 +55,7 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 
 	_bStop = false;
 	while (!_bStop) {
-		PlayRound();
+		PlayRound(siSystem);
 	} // while
 
 	_qdcCasinoDialog.qpbStop->setEnabled(false);
@@ -67,9 +68,10 @@ const void CasinoDialog::on_qpbStop_clicked(bool checked /* false */)
 	_bStop = true;
 } // on_qpbStop_clicked
 
-const void CasinoDialog::PlayRound() const
+const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 {
-	// TODO
+	PlayCmn::tBetHash tbhBet = pSystem->GetBet();
+	_ciCasino->MakeBet(tbhBet, _sSettings->GetTokensPerBet());
 } // PlayRound
 
 const void CasinoDialog::RefreshStatus() const

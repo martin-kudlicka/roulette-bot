@@ -165,5 +165,8 @@
     <ClInclude Include="settingsdialog\systemsettingsmodel.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\common\playcmn.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
