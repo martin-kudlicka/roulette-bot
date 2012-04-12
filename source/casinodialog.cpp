@@ -56,6 +56,7 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 	_bStop = false;
 	while (!_bStop) {
 		PlayRound(siSystem);
+		RefreshStatus();
 	} // while
 
 	_qdcCasinoDialog.qpbStop->setEnabled(false);
