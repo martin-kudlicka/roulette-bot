@@ -54,6 +54,7 @@ class Unibet : public CasinoInterface
 #endif
 		eTokensPosition _etpTokensPosition;
 		UnibetSettings _usSettings;
+		WId _wiTopLevelWindow;
 		WId _wiWindow;
 
 		const int CheckForTournaments(const QPixmap &pPixmap) const;
@@ -78,6 +79,7 @@ class Unibet : public CasinoInterface
 		virtual const void RemoveBet() const;
 		virtual const void Reset();
 		const void SelectToken(const UnibetSettings::eTokenValue &pValue) const;
+		const void Wait(const int &pMix, const int &pMax) const;
 }; // Unibet
 
 #endif // UNIBET_H

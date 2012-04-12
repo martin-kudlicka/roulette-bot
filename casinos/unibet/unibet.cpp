@@ -101,6 +101,7 @@ unsigned _stdcall Unibet::GameCheckThread(void *pContext)
 				emit uUnibet->GameActiveChanged(hwRoulette);
 			} // if
 			uUnibet->_wiWindow = hwRoulette;
+			uUnibet->_wiTopLevelWindow = GetParent(GetParent(hwRoulette));
 		} // if
 
 		Sleep(uUnibet->CHECK_INTERVAL);
@@ -159,7 +160,7 @@ const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerB
 					MouseClick(ClickPositionColumn3);
 			} // switch
 
-			QTest::qWait(200);
+			Wait(200, 500);
 		} // for
 	} // for
 } // MakeBet
@@ -167,7 +168,7 @@ const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerB
 const quint8 Unibet::MakeSpin() const
 {
 	MouseClick(ClickFastSpin);
-	QTest::qWait(1000);
+	Wait(1000, 2000);
 
 	QPixmap qpSpin = GrabWindow(GrabSpinResult);
 	QString qsSpin = Recognize(qpSpin);
@@ -228,8 +229,32 @@ const void Unibet::MouseClick(const eClick &pClickOn) const
 	} // switch
 
 #ifdef Q_WS_WIN
-	SendMessage(_wiWindow, WM_LBUTTONDOWN, MK_LBUTTON, MAKELONG(iX, iY));
-	SendMessage(_wiWindow, WM_LBUTTONUP, 0, MAKELONG(iX, iY));
+	/*SendMessage(_wiWindow, WM_MOUSEACTIVATE, reinterpret_cast<WPARAM>(_wiTopLevelWindow), MAKELONG(HTCLIENT, WM_LBUTTONDOWN));
+	SendMessage(_wiWindow, WM_SETCURSOR, reinterpret_cast<WPARAM>(_wiWindow), MAKELONG(HTCLIENT, WM_LBUTTONDOWN));
+	PostMessage(_wiWindow, WM_LBUTTONDOWN, MK_LBUTTON, MAKELONG(iX, iY));
+	Wait(50, 100);
+	PostMessage(_wiWindow, WM_LBUTTONUP, 0, MAKELONG(iX, iY));*/
+	POINT pOldPos;
+	GetCursorPos(&pOldPos);
+
+	POINT pPos;
+	pPos.x = iX;
+	pPos.y = iY;
+	ClientToScreen(_wiWindow, &pPos);
+	SetCursorPos(pPos.x, pPos.y);
+
+	INPUT iInput;
+	ZeroMemory(&iInput, sizeof(iInput));
+	iInput.type = INPUT_MOUSE;
+	iInput.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
+	SendInput(1, &iInput, sizeof(iInput));
+	Wait(50, 100);
+	ZeroMemory(&iInput, sizeof(iInput));
+	iInput.type = INPUT_MOUSE;
+	iInput.mi.dwFlags = MOUSEEVENTF_LEFTUP;
+	SendInput(1, &iInput, sizeof(iInput));
+
+	SetCursorPos(pOldPos.x, pOldPos.y);
 #endif
 } // MouseClick
 
@@ -316,11 +341,19 @@ Unibet::Unibet() : CasinoInterface()
 #ifdef Q_WS_WIN
 	_bStop = false;
 #endif
+	_wiTopLevelWindow = NULL;
 	_wiWindow = NULL;
 
 #ifdef Q_WS_WIN
 	_beginthreadex(NULL, 0, &Unibet::GameCheckThread, this, 0, NULL);
 #endif
 } // Unibet
+
+const void Unibet::Wait(const int &pMin, const int &pMax) const
+{
+	int iWait = (qrand() % (pMax - pMin)) + pMin;
+	QTest::qWait(iWait);
+	qDebug("%d", iWait);
+} // Wait
 
 Q_EXPORT_PLUGIN2(unibet, Unibet)
