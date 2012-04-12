@@ -16,6 +16,12 @@ CasinoDialog::CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSyste
 	connect(pCasino, SIGNAL(GameActiveChanged(const bool &)), SLOT(on_ciCasino_GameActiveChanged(const bool &)));
 } // CasinoDialog
 
+const void CasinoDialog::IncreaseCounter(QLabel *pCounter) const
+{
+	int iCount = pCounter->text().toInt() + 1;
+	pCounter->setText(QString::number(iCount));
+} // IncreaseCounter
+
 const void CasinoDialog::InitSettings() const
 {
 	for (int iSystem = 0; iSystem < _spSystems->GetCount(); iSystem++) {
@@ -86,12 +92,15 @@ const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 	switch (esrResult) {
 		case SystemInterface::SpinResultNoBet:
 			_qdcCasinoDialog.qpteLog->appendPlainText(tr("No bet."));
+			IncreaseCounter(_qdcCasinoDialog.qlNoBet);
 			break;
 		case SystemInterface::SpinResultWon:
 			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Won "));
+			IncreaseCounter(_qdcCasinoDialog.qlWon);
 			break;
 		case SystemInterface::SpinResultLost:
 			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Lost "));
+			IncreaseCounter(_qdcCasinoDialog.qlLost);
 	} // switch
 
 	_ciCasino->RemoveBet();
