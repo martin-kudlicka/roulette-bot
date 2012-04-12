@@ -236,25 +236,28 @@ const void Unibet::MouseClick(const eClick &pClickOn) const
 	PostMessage(_wiWindow, WM_LBUTTONUP, 0, MAKELONG(iX, iY));*/
 	POINT pOldPos;
 	GetCursorPos(&pOldPos);
-
 	POINT pPos;
 	pPos.x = iX;
 	pPos.y = iY;
 	ClientToScreen(_wiWindow, &pPos);
 	SetCursorPos(pPos.x, pPos.y);
+	HWND hwForegroundWindow = GetForegroundWindow();
 
 	INPUT iInput;
 	ZeroMemory(&iInput, sizeof(iInput));
 	iInput.type = INPUT_MOUSE;
 	iInput.mi.dwFlags = MOUSEEVENTF_LEFTDOWN;
 	SendInput(1, &iInput, sizeof(iInput));
+
 	Wait(50, 100);
+
 	ZeroMemory(&iInput, sizeof(iInput));
 	iInput.type = INPUT_MOUSE;
 	iInput.mi.dwFlags = MOUSEEVENTF_LEFTUP;
 	SendInput(1, &iInput, sizeof(iInput));
 
 	SetCursorPos(pOldPos.x, pOldPos.y);
+	SetForegroundWindow(hwForegroundWindow);
 #endif
 } // MouseClick
 
