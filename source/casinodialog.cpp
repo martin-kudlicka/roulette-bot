@@ -10,6 +10,7 @@ CasinoDialog::CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSyste
 
 	setWindowTitle(windowTitle() += pCasino->GetName());
 
+	_fStartingCash = pCasino->GetCash();
 	RefreshStatus();
 	InitSettings();
 
@@ -123,4 +124,5 @@ const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 const void CasinoDialog::RefreshStatus() const
 {
 	_qdcCasinoDialog.qlCash->setText(QString::number(_ciCasino->GetCash()));
+	_qdcCasinoDialog.qlProfit->setText(QString::number(_ciCasino->GetCash() - _fStartingCash));
 } // RefreshStatus
