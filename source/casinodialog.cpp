@@ -74,6 +74,8 @@ const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 	_ciCasino->MakeBet(tbhBet, _sSettings->GetTokensPerBet());
 
 	quint8 qui8Spin = _ciCasino->MakeSpin();
+
+	pSystem->AnalyzeSpin(qui8Spin);
 } // PlayRound
 
 const void CasinoDialog::RefreshStatus() const
