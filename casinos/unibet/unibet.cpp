@@ -268,7 +268,7 @@ const int Unibet::PercentCount(const int &pValue, const float &pPercent) const
 
 const QString Unibet::Recognize(const QPixmap &pPixmap) const
 {
-	QPixmap qpScaled = pPixmap.scaled(pPixmap.size() * PIXMAP_SCALE, Qt::KeepAspectRatioByExpanding, Qt::SmoothTransformation);
+	QPixmap qpScaled = pPixmap.scaled(pPixmap.size() * PIXMAP_SCALE, Qt::KeepAspectRatioByExpanding);
 
 	tesseract::TessBaseAPI tbaTesseract;
 #ifdef Q_WS_WIN
