@@ -11,6 +11,7 @@ class SystemInterface : public QObject
 	Q_OBJECT
 
 	public:
+		virtual const void AnalyzeSpin(const quint8 &pSpin) = 0;
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const = 0;
 		virtual const PlayCmn::tBetHash GetBet() = 0;
 		virtual const QString GetName() const = 0;
