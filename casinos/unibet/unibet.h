@@ -75,6 +75,7 @@ class Unibet : public CasinoInterface
 		const void MouseClick(const eClick &pClickOn) const;
 		const int PercentCount(const int &pValue, const float &pPercent) const;
 		const QString Recognize(const QPixmap &pPixmap) const;
+		virtual const void RemoveBet() const;
 		virtual const void Reset();
 		const void SelectToken(const UnibetSettings::eTokenValue &pValue) const;
 }; // Unibet
