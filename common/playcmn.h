@@ -8,6 +8,7 @@ class PlayCmn
 	public:
 		enum eBetPosition {
 			BetPositionNone,
+			BetPosition0,
 			BetPositionColumn1,
 			BetPositionColumn2,
 			BetPositionColumn3
