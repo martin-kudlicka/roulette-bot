@@ -14,7 +14,6 @@ class System63 : public SystemInterface
 		int _iSameDozenColumnBeforeBet;
 		int _iSameDozenColumnProgression;
 		QList<quint8> _qlProgressionSequence;
-		quint8 _qui8LastSpin;
 		quint8 _qui8ProgressionIndex;
 		System63Settings _s63sSettings;
 		PlayCmn::tBetHash _tbhLastBet;

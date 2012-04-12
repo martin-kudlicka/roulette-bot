@@ -4,24 +4,26 @@
 
 const void System63::AnalyzeSpin(const quint8 &pSpin)
 {
+	PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin);
+
 	do {
 		if (_tbhLastBet.isEmpty()) {
 			// no bet made
 			if (_iSameDozenColumnBeforeBet < _s63sSettings.GetSameDozenColumnBeforeBet()) {
-				if (_qui8LastSpin == pSpin) {
+				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
 					_iSameDozenColumnBeforeBet++;
 				} else {
-					_iSameDozenColumnBeforeBet = 0;
+					_iSameDozenColumnBeforeBet = 1;
 				} // if else
 
 				break;
 			} // if
 
 			if (_iSameDozenColumnProgression < _s63sSettings.GetSameDozenColumnProgression()) {
-				if ((_s63sSettings.GetProgressionDozenColumnNotChanged() && _qui8LastSpin == pSpin) || !_s63sSettings.GetProgressionDozenColumnNotChanged()) {
+				if ((_s63sSettings.GetProgressionDozenColumnNotChanged() && _ebpLastPosition == ebpPosition) || !_s63sSettings.GetProgressionDozenColumnNotChanged()) {
 					_iSameDozenColumnProgression++;
 				} else {
-					_iSameDozenColumnBeforeBet = 0;
+					_iSameDozenColumnBeforeBet = 1;
 					_iSameDozenColumnProgression = 0;
 					_qui8ProgressionIndex = 0;
 				} // if else
@@ -30,7 +32,6 @@ const void System63::AnalyzeSpin(const quint8 &pSpin)
 			} // if
 		} else {
 			// bet made
-			PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin);
 			if (_tbhLastBet.contains(ebpPosition)) {
 				// won
 				_iSameDozenColumnBeforeBet = 0;
@@ -54,7 +55,7 @@ const void System63::AnalyzeSpin(const quint8 &pSpin)
 		} // if else
 	} while (false);
 
-	_qui8LastSpin = pSpin;
+	_ebpLastPosition = ebpPosition;
 } // AnalyzeSpin
 
 const void System63::CloseSettings(const QWidget *pSettings, const bool &pSave) const
@@ -98,7 +99,6 @@ const PlayCmn::tBetHash System63::GetBet()
 	} // if
 
 	_tbhLastBet = CreateBet();
-	_qui8ProgressionIndex++;
 
 	return _tbhLastBet;
 } // GetBet
@@ -135,7 +135,6 @@ const void System63::Reset()
 	_ebpLastPosition = PlayCmn::BetPositionNone;
 	_iSameDozenColumnBeforeBet = 0;
 	_iSameDozenColumnProgression = 0;
-	_qui8LastSpin = -1;
 
 	_qlProgressionSequence.clear();
 	QStringList qslProgressionSequence = _s63sSettings.GetProgressionManualSequence().split(PROGRESSION_SEQUENCE_SEPARATOR);
