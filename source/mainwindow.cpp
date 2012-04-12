@@ -56,6 +56,13 @@ const void MainWindow::on_qpbPlay_clicked(bool checked /* false */)
 	} // if else
 } // on_qpbPlay_clicked
 
+const void MainWindow::on_qtvCasinos_doubleClicked(const QModelIndex &index)
+{
+	if (_qmwmMainWindow.qpbPlay->isEnabled()) {
+		on_qpbPlay_clicked();
+	} // if
+} // on_qtvCasinos_doubleClicked
+
 const void MainWindow::on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const
 {
 	const CasinoInterface *ciCasino = _cpCasinos.GetCasino(_qmwmMainWindow.qtvCasinos->currentIndex().row());
