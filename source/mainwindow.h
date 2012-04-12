@@ -26,6 +26,7 @@ class MainWindow : public QMainWindow
 		const void on_cmCasinos_ActiveChanged(const int &pRow, const bool &pActive) const;
 		const void on_qaSettings_triggered(bool checked = false);
 		const void on_qpbPlay_clicked(bool checked = false);
+		const void on_qtvCasinos_doubleClicked(const QModelIndex &index);
 		const void on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;
 }; // MainWindow
 
