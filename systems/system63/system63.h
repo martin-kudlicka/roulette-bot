@@ -11,6 +11,7 @@ class System63 : public SystemInterface
 
 	private:
 		PlayCmn::eBetPosition _ebpLastPosition;
+		PlayCmn::eBetPosition _ebpLastProgressionPosition;
 		int _iSameDozenColumnBeforeBet;
 		int _iSameDozenColumnProgression;
 		QList<quint8> _qlProgressionSequence;

@@ -16,11 +16,6 @@ const SystemInterface::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
 				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
 					_iSameDozenColumnBeforeBet++;
 				} else {
-					if (_qui8ProgressionIndex > 0) {
-						qfsrResult |= SpinResultLost;
-						_qui8ProgressionIndex = 0;
-					} // if
-
 					_iSameDozenColumnBeforeBet = 1;
 				} // if else
 
@@ -28,16 +23,22 @@ const SystemInterface::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
 			} // if
 
 			if (_iSameDozenColumnProgression < _s63sSettings.GetSameDozenColumnProgression()) {
-				if ((_s63sSettings.GetProgressionDozenColumnNotChanged() && _ebpLastPosition == ebpPosition) || !_s63sSettings.GetProgressionDozenColumnNotChanged()) {
-					_iSameDozenColumnProgression++;
-				} else {
-					if (_qui8ProgressionIndex > 0) {
+				if (_s63sSettings.GetProgressionDozenColumnNotChanged()) {
+					if (_ebpLastPosition == ebpPosition) {
+						_iSameDozenColumnProgression++;
+					} else {
 						qfsrResult |= SpinResultLost;
+						_iSameDozenColumnBeforeBet = 1;
+						_iSameDozenColumnProgression = 0;
 						_qui8ProgressionIndex = 0;
-					} // if
-
-					_iSameDozenColumnBeforeBet = 1;
-					_iSameDozenColumnProgression = 0;
+					} // if else
+				} else {
+					if (_iSameDozenColumnProgression == 0 || _ebpLastProgressionPosition != ebpPosition) {
+						_ebpLastProgressionPosition = ebpPosition;
+						_iSameDozenColumnProgression = 1;
+					} else {
+						_iSameDozenColumnProgression++;
+					} // if else
 				} // if else
 
 				break;
@@ -153,6 +154,7 @@ QWidget *System63::GetSettings()
 const void System63::Reset()
 {
 	_ebpLastPosition = PlayCmn::BetPositionNone;
+	_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
 	_iSameDozenColumnBeforeBet = 0;
 	_iSameDozenColumnProgression = 0;
 
