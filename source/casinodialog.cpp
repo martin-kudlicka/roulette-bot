@@ -128,7 +128,7 @@ const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 		IncreaseCounter(_qdcCasinoDialog.qlProgression);
 	} // if
 
-	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked()) {
+	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked() && !tbhBet.isEmpty()) {
 		_ciCasino->RemoveBet();
 	} // if
 
