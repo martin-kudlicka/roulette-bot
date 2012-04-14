@@ -59,14 +59,38 @@ BOOL CALLBACK Unibet::EnumWindowsProc(__in HWND hwnd, __in LPARAM lParam)
 	TCHAR tcWindowText[MAX_PATH];
 	GetWindowText(hwnd, tcWindowText, sizeof(tcWindowText) / sizeof(TCHAR));
 
-	bool bRoulette = _tcsncmp(tcWindowText, CAPTION_ROULETTE, _tcslen(CAPTION_ROULETTE)) == 0;
-	if (bRoulette) {
-		HWND hwRoulette = FindWindowEx(hwnd, NULL, NULL, CAPTION_ROULETTE);
-		if (hwRoulette) {
-			HWND *hwRouletteChild = reinterpret_cast<HWND *>(lParam);
-			*hwRouletteChild = FindWindowEx(hwRoulette, NULL, NULL, NULL);
-			if (*hwRouletteChild) {
+	TCHAR tcRouletteTop[MAX_PATH];
+	_tcscpy(tcRouletteTop, CAPTION_ROULETTE);
+	_tcscat(tcRouletteTop, _T(" - "));
+	bool bRouletteTop = _tcsncmp(tcWindowText, tcRouletteTop, _tcslen(tcRouletteTop)) == 0;
+	if (bRouletteTop) {
+		// Google Chrome
+		HWND hwChrome_WidgetWin_0 = FindWindowEx(hwnd, NULL, _T("Chrome_WidgetWin_0"), CAPTION_ROULETTE);
+		if (hwChrome_WidgetWin_0) {
+			sEnumWindowsData *sewdData = reinterpret_cast<sEnumWindowsData *>(lParam);
+			sewdData->hwRouletteChild = FindWindowEx(hwChrome_WidgetWin_0, NULL, _T("Chrome_RenderWidgetHostHWND"), _T(""));
+			if (sewdData->hwRouletteChild) {
+				//sewdData->hwTopLevel = hwnd;
+				sewdData->ebBrowser = BrowserGoogleChrome;
 				return FALSE;
+			} // if
+		} // if
+
+		// Internet Explorer
+		HWND hwFrameTab = FindWindowEx(hwnd, NULL, _T("Frame Tab"), _T(""));
+		if (hwFrameTab) {
+			HWND hwTabWindowClass = FindWindowEx(hwFrameTab, NULL, _T("TabWindowClass"), tcWindowText);
+			if (hwTabWindowClass) {
+				HWND hwShellDocObjectView = FindWindowEx(hwTabWindowClass, NULL, _T("Shell DocObject View"), _T(""));
+				if (hwShellDocObjectView) {
+					sEnumWindowsData *sewdData = reinterpret_cast<sEnumWindowsData *>(lParam);
+					sewdData->hwRouletteChild = FindWindowEx(hwShellDocObjectView, NULL, _T("Internet Explorer_Server"), _T(""));
+					if (sewdData->hwRouletteChild) {
+						//sewdData->hwTopLevel = hwnd;
+						sewdData->ebBrowser = BrowserInternetExplorer;
+						return FALSE;
+					} // if
+				} // if
 			} // if
 		} // if
 	} // if
@@ -93,15 +117,16 @@ unsigned _stdcall Unibet::GameCheckThread(void *pContext)
 {
 	Unibet *uUnibet = static_cast<Unibet *>(pContext);
 	while (!uUnibet->_bStop) {
-		HWND hwRoulette = NULL;
-		EnumWindows(&Unibet::EnumWindowsProc, reinterpret_cast<LPARAM>(&hwRoulette));
+		sEnumWindowsData sewdData;
+		EnumWindows(&Unibet::EnumWindowsProc, reinterpret_cast<LPARAM>(&sewdData));
 
-		if (uUnibet->_wiWindow != hwRoulette) {
-			if (static_cast<bool>(uUnibet->_wiWindow) ^ static_cast<bool>(hwRoulette)) {
-				emit uUnibet->GameActiveChanged(hwRoulette);
+		if (uUnibet->_wiWindow != sewdData.hwRouletteChild) {
+			if (static_cast<bool>(uUnibet->_wiWindow) ^ static_cast<bool>(sewdData.hwRouletteChild)) {
+				emit uUnibet->GameActiveChanged(sewdData.hwRouletteChild);
 			} // if
-			uUnibet->_wiWindow = hwRoulette;
-			uUnibet->_wiTopLevelWindow = GetParent(GetParent(hwRoulette));
+			uUnibet->_wiWindow = sewdData.hwRouletteChild;
+			//uUnibet->_wiTopLevelWindow = GetParent(GetParent(sewdData.hwTopLevel));
+			uUnibet->_ebBrowser = sewdData.ebBrowser;
 		} // if
 
 		Sleep(uUnibet->CHECK_INTERVAL);
@@ -256,6 +281,19 @@ const void Unibet::MouseClick(const eClick &pClickOn) const
 	iInput.mi.dwFlags = MOUSEEVENTF_LEFTUP;
 	SendInput(1, &iInput, sizeof(iInput));
 
+	Wait(50, 100);
+
+	if (_ebBrowser == BrowserInternetExplorer) {
+		ZeroMemory(&iInput, sizeof(iInput));
+		iInput.type = INPUT_MOUSE;
+		iInput.mi.dx = 1;
+		iInput.mi.dy = 1;
+		iInput.mi.dwFlags = MOUSEEVENTF_MOVE;
+		SendInput(1, &iInput, sizeof(iInput));
+
+		Wait(50, 100);
+	} // if
+
 	SetCursorPos(pOldPos.x, pOldPos.y);
 	SetForegroundWindow(hwForegroundWindow);
 #endif
@@ -346,7 +384,8 @@ Unibet::Unibet() : CasinoInterface()
 #ifdef Q_WS_WIN
 	_bStop = false;
 #endif
-	_wiTopLevelWindow = NULL;
+	_ebBrowser = BrowserUnknown;
+	//_wiTopLevelWindow = NULL;
 	_wiWindow = NULL;
 
 #ifdef Q_WS_WIN

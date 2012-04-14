@@ -21,6 +21,11 @@ class Unibet : public CasinoInterface
 		Unibet();
 
 	private:
+		enum eBrowser {
+			BrowserUnknown,
+			BrowserGoogleChrome,
+			BrowserInternetExplorer
+		}; // eBrowser
 		enum eClick {
 			ClickFastSpin,
 			ClickPositionColumn1,
@@ -44,6 +49,18 @@ class Unibet : public CasinoInterface
 			TokensPositionRight
 		}; // eTokensPosition
 
+		struct sEnumWindowsData {
+			HWND hwRouletteChild;
+			//HWND hwTopLevel;
+			eBrowser ebBrowser;
+
+			sEnumWindowsData() {
+				hwRouletteChild = NULL;
+				//hwTopLevel = NULL;
+				ebBrowser = BrowserUnknown;
+			} // sEnumWindowsData
+		}; // sEnumWindowsData
+
 #ifdef Q_WS_WIN
 		static const DWORD CHECK_INTERVAL = 5000;
 #endif
@@ -52,9 +69,10 @@ class Unibet : public CasinoInterface
 #ifdef Q_WS_WIN
 		bool _bStop;
 #endif
+		eBrowser _ebBrowser;
 		eTokensPosition _etpTokensPosition;
 		UnibetSettings _usSettings;
-		WId _wiTopLevelWindow;
+		//WId _wiTopLevelWindow;
 		WId _wiWindow;
 
 		const int CheckForTournaments(const QPixmap &pPixmap) const;
