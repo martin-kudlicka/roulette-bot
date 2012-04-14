@@ -173,7 +173,7 @@ const QPixmap Unibet::GrabWindow(const eGrab &pPart) const
 const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet) const
 {
 	for (PlayCmn::tBetHash::const_iterator ciBet = pBet.constBegin(); ciBet != pBet.constEnd(); ciBet++) {
-		for (int iToken = 0; iToken < pTokensPerBet; iToken++) {
+		for (int iToken = 0; iToken < pTokensPerBet * ciBet.value(); iToken++) {
 			switch (ciBet.key()) {
 				case PlayCmn::BetPositionColumn1:
 					MouseClick(ClickPositionColumn1);
