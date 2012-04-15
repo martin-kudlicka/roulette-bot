@@ -58,6 +58,7 @@ const void SettingsDialog::GetSystemSettings() const
 const void SettingsDialog::LoadSettings() const
 {
 	_qdsSettingsDialog.qsbTokensPerBet->setValue(_sSettings->GetTokensPerBet());
+	_qdsSettingsDialog.qsbMaxLossToPlay->setValue(_sSettings->GetMaxLossToPlay());
 } // LoadSettings
 
 const void SettingsDialog::on_csmCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const
@@ -75,6 +76,7 @@ const void SettingsDialog::on_csmSystemsSelectionModel_selectionChanged(const QI
 const void SettingsDialog::SaveSettings() const
 {
 	_sSettings->SetTokensPerBet(_qdsSettingsDialog.qsbTokensPerBet->value());
+	_sSettings->SetMaxLossToPlay(_qdsSettingsDialog.qsbMaxLossToPlay->value());
 } // SaveSettings
 
 SettingsDialog::SettingsDialog(Settings *pSettings, const CasinoPlugins *pCasinos, const SystemPlugins *pSystems, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags), _csmCasinos(pCasinos), _ssmSystems(pSystems)
