@@ -42,12 +42,10 @@ class UnibetActiveChecker : public QThread
 	private:
 		static const DWORD CHECK_INTERVAL = 5000;
 
-		HWND _hwLastChild;
-
 		static BOOL CALLBACK EnumWindowsProc(__in HWND hwnd, __in LPARAM lParam);
 
 	signals:
-		void ActiveChanged(const UnibetActiveChecker::sActiveData &pData) const;
+		void GameActive(const UnibetActiveChecker::sActiveData &pData) const;
 #endif
 }; // UnibetActiveChecker
 

@@ -56,10 +56,7 @@ void UnibetActiveChecker::run()
 		sActiveData sadData;
 		EnumWindows(&UnibetActiveChecker::EnumWindowsProc, reinterpret_cast<LPARAM>(&sadData));
 
-		if (_hwLastChild != sadData.wiRouletteChild) {
-			_hwLastChild = sadData.wiRouletteChild;
-			emit ActiveChanged(sadData);
-		} // if
+		emit GameActive(sadData);
 
 		Sleep(CHECK_INTERVAL);
 	} // while
@@ -67,8 +64,6 @@ void UnibetActiveChecker::run()
 
 UnibetActiveChecker::UnibetActiveChecker()
 {
-	_hwLastChild = NULL;
-
 	qRegisterMetaType<sActiveData>("UnibetActiveChecker::sActiveData");
 } // UnibetActiveChecker
 
