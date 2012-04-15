@@ -72,7 +72,7 @@ class Unibet : public CasinoInterface
 
 #ifdef Q_WS_WIN
 	private slots:
-		const void on_uacChecker_ActiveChanged(const UnibetActiveChecker::sActiveData &pData);
+		const void on_uacChecker_GameActive(const UnibetActiveChecker::sActiveData &pData);
 #endif
 }; // Unibet
 

@@ -243,7 +243,7 @@ const void Unibet::MouseClick(const eClick &pClickOn) const
 } // MouseClick
 
 #ifdef Q_WS_WIN
-const void Unibet::on_uacChecker_ActiveChanged(const UnibetActiveChecker::sActiveData &pData)
+const void Unibet::on_uacChecker_GameActive(const UnibetActiveChecker::sActiveData &pData)
 {
 	HWND hwLastChild = _sadActiveData.wiRouletteChild;
 
@@ -342,7 +342,7 @@ const void Unibet::SelectToken(const UnibetSettings::eTokenValue &pValue) const
 #ifdef Q_WS_WIN
 Unibet::Unibet() : CasinoInterface()
 {
-	connect(&_uacChecker, SIGNAL(ActiveChanged(const UnibetActiveChecker::sActiveData &)), SLOT(on_uacChecker_ActiveChanged(const UnibetActiveChecker::sActiveData &)));
+	connect(&_uacChecker, SIGNAL(GameActive(const UnibetActiveChecker::sActiveData &)), SLOT(on_uacChecker_GameActive(const UnibetActiveChecker::sActiveData &)));
 	_uacChecker.start();
 } // Unibet
 #endif
