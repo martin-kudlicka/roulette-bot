@@ -65,6 +65,15 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\unibet\moc_unibet.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="unibetactivechecker.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Debug\unibet\moc_unibetactivechecker.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Release\unibet\moc_unibetactivechecker.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="unibet.h">
@@ -77,6 +86,9 @@
       <Filter>Form Files</Filter>
     </CustomBuild>
     <CustomBuild Include="unibetsettingswidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="unibetactivechecker.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>

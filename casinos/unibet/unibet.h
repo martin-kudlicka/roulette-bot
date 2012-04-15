@@ -2,11 +2,10 @@
 #define UNIBET_H
 
 #include "../common/casinointerface.h"
-#ifdef Q_WS_WIN
-# include <Windows.h>
-#endif
-#include <QtGui>
 #include "unibetsettings.h"
+#ifdef Q_WS_WIN
+# include "unibetactivechecker.h"
+#endif
 
 class Unibet : public CasinoInterface
 {
@@ -16,16 +15,11 @@ class Unibet : public CasinoInterface
 	public:
 #ifdef Q_WS_WIN
 		static HINSTANCE _hiInstance;
-#endif
 
 		Unibet();
+#endif
 
 	private:
-		enum eBrowser {
-			BrowserUnknown,
-			BrowserGoogleChrome,
-			BrowserInternetExplorer
-		}; // eBrowser
 		enum eClick {
 			ClickFastSpin,
 			ClickPositionColumn1,
@@ -49,42 +43,19 @@ class Unibet : public CasinoInterface
 			TokensPositionRight
 		}; // eTokensPosition
 
-		struct sEnumWindowsData {
-			HWND hwRouletteChild;
-			//HWND hwTopLevel;
-			eBrowser ebBrowser;
+		static const int PIXMAP_SCALE = 4;
 
-			sEnumWindowsData() {
-				hwRouletteChild = NULL;
-				//hwTopLevel = NULL;
-				ebBrowser = BrowserUnknown;
-			} // sEnumWindowsData
-		}; // sEnumWindowsData
-
-#ifdef Q_WS_WIN
-		static const DWORD CHECK_INTERVAL = 5000;
-#endif
-		static const int PIXMAP_SCALE = 2;
-
-#ifdef Q_WS_WIN
-		bool _bStop;
-#endif
-		eBrowser _ebBrowser;
 		eTokensPosition _etpTokensPosition;
+		UnibetActiveChecker::sActiveData _sadActiveData;
+		UnibetActiveChecker _uacChecker;
 		UnibetSettings _usSettings;
-		//WId _wiTopLevelWindow;
-		WId _wiWindow;
 
 		const int CheckForTournaments(const QPixmap &pPixmap) const;
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const;
-#ifdef Q_WS_WIN
-		static BOOL CALLBACK EnumWindowsProc(__in HWND hwnd, __in LPARAM lParam);
-#endif
-
 		virtual const bool GameActive() const;
 		virtual const float GetCash() const;
 #ifdef Q_WS_WIN
-		static unsigned _stdcall GameCheckThread(void *pContext);
+		const bool GameReady(const WId &pWindow) const;
 #endif
 		virtual const QString GetName() const;
 		virtual QWidget *GetSettings();
@@ -98,6 +69,11 @@ class Unibet : public CasinoInterface
 		virtual const void Reset();
 		const void SelectToken(const UnibetSettings::eTokenValue &pValue) const;
 		const void Wait(const int &pMix, const int &pMax) const;
+
+#ifdef Q_WS_WIN
+	private slots:
+		const void on_uacChecker_ActiveChanged(const UnibetActiveChecker::sActiveData &pData);
+#endif
 }; // Unibet
 
 #endif // UNIBET_H
