@@ -348,7 +348,6 @@ const void Unibet::Wait(const int &pMin, const int &pMax) const
 {
 	int iWait = (qrand() % (pMax - pMin)) + pMin;
 	QTest::qWait(iWait);
-	qDebug("%d", iWait);
 } // Wait
 
 Q_EXPORT_PLUGIN2(unibet, Unibet)
