@@ -65,6 +65,15 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\system63\moc_system63settingswidget.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="system63statisticswidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Debug\system63\moc_system63statisticswidget.cpp">
+      <Filter>Generated Files\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Release\system63\moc_system63statisticswidget.cpp">
+      <Filter>Generated Files\Release</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="system63.h">
@@ -79,6 +88,12 @@
     <CustomBuild Include="system63settingswidget.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="system63statisticswidget.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="system63statisticswidget.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\systemsettings.h">
@@ -88,6 +103,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\temp\GeneratedFiles\system63\ui_system63settingswidget.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\temp\GeneratedFiles\system63\ui_system63statisticswidget.h">
       <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>

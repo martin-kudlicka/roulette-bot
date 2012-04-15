@@ -1,9 +1,17 @@
 #include "casinodialog.h"
 
+CasinoDialog::~CasinoDialog()
+{
+	if (_siSystem) {
+		_siSystem->CloseStatistics();
+	} // if
+} // ~CasinoDialog
+
 CasinoDialog::CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSystems, Settings *pSettings, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags)
 {
 	_bStop = true;
 	_ciCasino = pCasino;
+	_siSystem = NULL;
 	_spSystems = pSystems;
 	_sSettings = pSettings;
 
@@ -52,22 +60,30 @@ const void CasinoDialog::on_ciCasino_GameActiveChanged(const bool &pActive)
 	} // if else
 } // on_ciCasino_GameActiveChanged
 
+const void CasinoDialog::on_qcbSystems_currentIndexChanged(int index)
+{
+	if (_siSystem) {
+		_siSystem->CloseStatistics();
+	} // if
+
+	_siSystem = reinterpret_cast<SystemInterface *>(_qdcCasinoDialog.qcbSystems->itemData(index).toUInt());
+	_siSystem->OpenStatistics(qobject_cast<QVBoxLayout *>(_qdcCasinoDialog.qgbCasinoStatistics->layout()));
+} // on_qcbSystems_currentIndexChanged
+
 const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 {
 	_qdcCasinoDialog.qgbSettings->setEnabled(false);
 	_qdcCasinoDialog.qpbStart->setEnabled(false);
 	_qdcCasinoDialog.qpbStop->setEnabled(true);
 
-	SystemInterface *siSystem = reinterpret_cast<SystemInterface *>(_qdcCasinoDialog.qcbSystems->itemData(_qdcCasinoDialog.qcbSystems->currentIndex()).toUInt());
-
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Game started."));
 
 	_ciCasino->Reset();
-	siSystem->Reset();
+	_siSystem->Reset();
 
 	_bStop = false;
 	while (!_bStop) {
-		PlayRound(siSystem);
+		PlayRound();
 
 		if (_fStartingCash - _qdcCasinoDialog.qlCash->text().toFloat() > _sSettings->GetMaxLossToPlay()) {
 			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Maximum lost reached."));
@@ -88,9 +104,9 @@ const void CasinoDialog::on_qpbStop_clicked(bool checked /* false */)
 	_bStop = true;
 } // on_qpbStop_clicked
 
-const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
+const void CasinoDialog::PlayRound() const
 {
-	PlayCmn::tBetHash tbhBet = pSystem->GetBet();
+	PlayCmn::tBetHash tbhBet = _siSystem->GetBet();
 	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked()) {
 		_ciCasino->MakeBet(tbhBet, _sSettings->GetTokensPerBet());
 	} // if
@@ -99,7 +115,7 @@ const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 	quint8 qui8Spin = _ciCasino->MakeSpin();
 	_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(qui8Spin));
 
-	SystemInterface::qfSpinResults qfsrResult = pSystem->AnalyzeSpin(qui8Spin);
+	SystemInterface::qfSpinResults qfsrResult = _siSystem->AnalyzeSpin(qui8Spin);
 	if (qfsrResult & SystemInterface::SpinResultNoBet) {
 		_qdcCasinoDialog.qpteLog->appendPlainText(tr("No bet."));
 		IncreaseCounter(_qdcCasinoDialog.qlNoBet);

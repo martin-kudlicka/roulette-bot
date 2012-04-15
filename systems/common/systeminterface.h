@@ -3,6 +3,7 @@
 
 #include <QtPlugin>
 #include "../../common/playcmn.h"
+#include <QtGui/QVBoxLayout>
 
 static const char *SYSTEM_INTERFACE = "System Interface 1.0";
 
@@ -21,9 +22,11 @@ class SystemInterface : public QObject
 
 		virtual const qfSpinResults AnalyzeSpin(const quint8 &pSpin) = 0;
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const = 0;
+		virtual const void CloseStatistics() const = 0;
 		virtual const PlayCmn::tBetHash GetBet() = 0;
 		virtual const QString GetName() const = 0;
 		virtual QWidget *GetSettings() = 0;
+		virtual const void OpenStatistics(QVBoxLayout *pLayout) = 0;
 		virtual const void Reset() = 0;
 }; // SystemInterface
 
