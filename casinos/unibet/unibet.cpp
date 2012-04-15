@@ -127,8 +127,6 @@ const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerB
 				case PlayCmn::BetPositionColumn3:
 					MouseClick(ClickPositionColumn3);
 			} // switch
-
-			Wait(200, 500);
 		} // for
 	} // for
 } // MakeBet
@@ -295,7 +293,6 @@ const QString Unibet::Recognize(const QPixmap &pPixmap) const
 const void Unibet::RemoveBet() const
 {
 	MouseClick(ClickRemoveBet);
-	Wait(250, 500);
 } // RemoveBet
 
 const void Unibet::Reset()
