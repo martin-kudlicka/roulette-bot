@@ -2,6 +2,7 @@
 
 CasinoDialog::CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSystems, Settings *pSettings, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags)
 {
+	_bStop = true;
 	_ciCasino = pCasino;
 	_spSystems = pSystems;
 	_sSettings = pSettings;
@@ -33,7 +34,7 @@ const void CasinoDialog::InitSettings() const
 
 const bool CasinoDialog::IsPlaying() const
 {
-	return !_qdcCasinoDialog.qpbStart->isEnabled();
+	return !_bStop;
 } // IsPlaying
 
 const void CasinoDialog::on_ciCasino_GameActiveChanged(const bool &pActive)
