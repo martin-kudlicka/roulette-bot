@@ -85,6 +85,9 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Debug\system63\moc_system63settingswidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Debug\system63\moc_system63statisticswidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\temp\GeneratedFiles\Debug\system63\moc_systeminterface.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -94,6 +97,9 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\system63\moc_system63settingswidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Release\system63\moc_system63statisticswidget.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\system63\moc_systeminterface.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -101,6 +107,7 @@
     <ClCompile Include="system63.cpp" />
     <ClCompile Include="system63settings.cpp" />
     <ClCompile Include="system63settingswidget.cpp" />
+    <ClCompile Include="system63statisticswidget.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="system63.h">
@@ -128,8 +135,19 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\temp\GeneratedFiles\system63\ui_system63settingswidget.h" />
+    <ClInclude Include="..\..\temp\GeneratedFiles\system63\ui_system63statisticswidget.h" />
     <ClInclude Include="..\common\systemsettings.h" />
     <ClInclude Include="system63settings.h" />
+    <CustomBuild Include="system63statisticswidget.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing system63statisticswidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\temp\GeneratedFiles\$(ConfigurationName)\system63\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\system63\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DSYSTEM63_LIB -DQT_GUI_LIB -D_WINDLL "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\system63" "-I.\..\..\temp\GeneratedFiles\system63" "-I$(QTDIR)\include\QtGui" "-I." "-I." "-I."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing system63statisticswidget.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\temp\GeneratedFiles\$(ConfigurationName)\system63\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\system63\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DSYSTEM63_LIB -DQT_GUI_LIB -D_WINDLL "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\system63" "-I.\..\..\temp\GeneratedFiles\system63" "-I$(QTDIR)\include\QtGui" "-I." "-I." "-I."</Command>
+    </CustomBuild>
     <CustomBuild Include="system63settingswidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing system63settingswidget.h...</Message>
@@ -143,6 +161,19 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="system63settingswidget.ui">
+      <FileType>Document</FileType>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\temp\GeneratedFiles\system63\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\..\temp\GeneratedFiles\system63\ui_%(Filename).h" "%(FullPath)"</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Uic%27ing %(Identity)...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\temp\GeneratedFiles\system63\ui_%(Filename).h;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\uic.exe" -o ".\..\..\temp\GeneratedFiles\system63\ui_%(Filename).h" "%(FullPath)"</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="system63statisticswidget.ui">
       <FileType>Document</FileType>
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\uic.exe;%(AdditionalInputs)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Uic%27ing %(Identity)...</Message>

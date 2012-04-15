@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>300</height>
+    <height>328</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -113,6 +113,14 @@
        </layout>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="qgbCasinoStatistics">
+     <property name="title">
+      <string>Statistics</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2"/>
     </widget>
    </item>
    <item>
