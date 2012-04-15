@@ -67,6 +67,10 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 	_bStop = false;
 	while (!_bStop) {
 		PlayRound(siSystem);
+
+		if (_fStartingCash - _qdcCasinoDialog.qlCash->text().toFloat() > _sSettings->GetMaxLossToPlay()) {
+			_bStop = true;
+		} // if
 	} // while
 
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Game stopped."));

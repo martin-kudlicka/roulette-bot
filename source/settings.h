@@ -8,7 +8,9 @@ class Settings
 	public:
 		Settings();
 
+		const int GetMaxLossToPlay();
 		const int GetTokensPerBet();
+		const void SetMaxLossToPlay(const int &pValue);
 		const void SetTokensPerBet(const int &pTokens);
 
 	private:
