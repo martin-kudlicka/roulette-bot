@@ -70,6 +70,7 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 		PlayRound(siSystem);
 
 		if (_fStartingCash - _qdcCasinoDialog.qlCash->text().toFloat() > _sSettings->GetMaxLossToPlay()) {
+			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Maximum lost reached."));
 			_bStop = true;
 		} // if
 	} // while
