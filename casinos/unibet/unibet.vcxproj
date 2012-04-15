@@ -97,6 +97,9 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Debug\unibet\moc_unibet.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Debug\unibet\moc_unibetactivechecker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\temp\GeneratedFiles\Debug\unibet\moc_unibetsettingswidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
     </ClCompile>
@@ -106,10 +109,14 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\unibet\moc_unibet.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\temp\GeneratedFiles\Release\unibet\moc_unibetactivechecker.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\unibet\moc_unibetsettingswidget.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\common\casinosettings.cpp" />
+    <ClCompile Include="unibetactivechecker.cpp" />
     <ClCompile Include="unibetsettings.cpp" />
     <ClCompile Include="unibetsettingswidget.cpp" />
     <ClCompile Include="unibet.cpp" />
@@ -143,6 +150,16 @@
     <ClInclude Include="..\..\common\settingscmn.h" />
     <ClInclude Include="..\..\temp\GeneratedFiles\unibet\ui_unibetsettingswidget.h" />
     <ClInclude Include="..\common\casinosettings.h" />
+    <CustomBuild Include="unibetactivechecker.h">
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Moc%27ing unibetactivechecker.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I$(QTDIR)\include\QtTest" "-I." "-I." "-I."</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Moc%27ing unibetactivechecker.h...</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DQT_LARGEFILE_SUPPORT -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DUNIBET_LIB -DQT_GUI_LIB -D_WINDLL "-I." "-I$(QTDIR)\include" "-I$(QTDIR)\include\QtCore" "-I.\..\..\temp\GeneratedFiles\$(ConfigurationName)\unibet" "-I.\..\..\temp\GeneratedFiles\unibet" "-I$(QTDIR)\include\QtGui" "-I$(SolutionDir)3rdparty\tesseract\ccstruct" "-I$(SolutionDir)3rdparty\tesseract\ccutil" "-I$(SolutionDir)3rdparty\tesseract\ccmain" "-I$(QTDIR)\include\QtTest" "-I." "-I." "-I."</Command>
+    </CustomBuild>
     <ClInclude Include="unibetsettings.h" />
     <CustomBuild Include="unibetsettingswidget.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(QTDIR)\bin\moc.exe;%(FullPath);$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>

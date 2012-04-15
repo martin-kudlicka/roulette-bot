@@ -2,8 +2,6 @@
 
 #ifdef Q_WS_WIN
 # include <process.h>
-# define _UNICODE
-# include <tchar.h>
 #endif
 #undef MAX_PATH
 #include "../../3rdparty/tesseract/api/baseapi.h"
@@ -13,8 +11,6 @@
 #include <QTest>
 
 #ifdef Q_WS_WIN
-LPCTSTR CAPTION_ROULETTE = _T("Roulette");
-
 HINSTANCE Unibet::_hiInstance = NULL;
 
 BOOL WINAPI DllMain(__in HINSTANCE hinstDLL, __in DWORD fdwReason, __in LPVOID lpvReserved)
@@ -25,6 +21,7 @@ BOOL WINAPI DllMain(__in HINSTANCE hinstDLL, __in DWORD fdwReason, __in LPVOID l
 
 	return TRUE;
 } // DllMain
+#endif
 
 const int Unibet::CheckForTournaments(const QPixmap &pPixmap) const
 {
@@ -54,54 +51,9 @@ const void Unibet::CloseSettings(const QWidget *pSettings, const bool &pSave) co
 	delete uswSettings;
 } // CloseSettings
 
-BOOL CALLBACK Unibet::EnumWindowsProc(__in HWND hwnd, __in LPARAM lParam)
-{
-	TCHAR tcWindowText[MAX_PATH];
-	GetWindowText(hwnd, tcWindowText, sizeof(tcWindowText) / sizeof(TCHAR));
-
-	TCHAR tcRouletteTop[MAX_PATH];
-	_tcscpy(tcRouletteTop, CAPTION_ROULETTE);
-	_tcscat(tcRouletteTop, _T(" - "));
-	bool bRouletteTop = _tcsncmp(tcWindowText, tcRouletteTop, _tcslen(tcRouletteTop)) == 0;
-	if (bRouletteTop) {
-		// Google Chrome
-		HWND hwChrome_WidgetWin_0 = FindWindowEx(hwnd, NULL, _T("Chrome_WidgetWin_0"), CAPTION_ROULETTE);
-		if (hwChrome_WidgetWin_0) {
-			sEnumWindowsData *sewdData = reinterpret_cast<sEnumWindowsData *>(lParam);
-			sewdData->hwRouletteChild = FindWindowEx(hwChrome_WidgetWin_0, NULL, _T("Chrome_RenderWidgetHostHWND"), _T(""));
-			if (sewdData->hwRouletteChild) {
-				//sewdData->hwTopLevel = hwnd;
-				sewdData->ebBrowser = BrowserGoogleChrome;
-				return FALSE;
-			} // if
-		} // if
-
-		// Internet Explorer
-		HWND hwFrameTab = FindWindowEx(hwnd, NULL, _T("Frame Tab"), _T(""));
-		if (hwFrameTab) {
-			HWND hwTabWindowClass = FindWindowEx(hwFrameTab, NULL, _T("TabWindowClass"), tcWindowText);
-			if (hwTabWindowClass) {
-				HWND hwShellDocObjectView = FindWindowEx(hwTabWindowClass, NULL, _T("Shell DocObject View"), _T(""));
-				if (hwShellDocObjectView) {
-					sEnumWindowsData *sewdData = reinterpret_cast<sEnumWindowsData *>(lParam);
-					sewdData->hwRouletteChild = FindWindowEx(hwShellDocObjectView, NULL, _T("Internet Explorer_Server"), _T(""));
-					if (sewdData->hwRouletteChild) {
-						//sewdData->hwTopLevel = hwnd;
-						sewdData->ebBrowser = BrowserInternetExplorer;
-						return FALSE;
-					} // if
-				} // if
-			} // if
-		} // if
-	} // if
-
-	return TRUE;
-} // EnumWindowsProc
-#endif
-
 const bool Unibet::GameActive() const
 {
-	return _wiWindow != NULL;
+	return _sadActiveData.wiRouletteChild != NULL;
 } // GameActive
 
 const float Unibet::GetCash() const
@@ -113,27 +65,19 @@ const float Unibet::GetCash() const
 } // GetCash
 
 #ifdef Q_WS_WIN
-unsigned _stdcall Unibet::GameCheckThread(void *pContext)
+const bool Unibet::GameReady(const WId &pWindow) const
 {
-	Unibet *uUnibet = static_cast<Unibet *>(pContext);
-	while (!uUnibet->_bStop) {
-		sEnumWindowsData sewdData;
-		EnumWindows(&Unibet::EnumWindowsProc, reinterpret_cast<LPARAM>(&sewdData));
+	QPixmap qpAll = QPixmap::grabWindow(pWindow);
+	int iTournamentsWidth = CheckForTournaments(qpAll);
 
-		if (uUnibet->_wiWindow != sewdData.hwRouletteChild) {
-			if (static_cast<bool>(uUnibet->_wiWindow) ^ static_cast<bool>(sewdData.hwRouletteChild)) {
-				emit uUnibet->GameActiveChanged(sewdData.hwRouletteChild);
-			} // if
-			uUnibet->_wiWindow = sewdData.hwRouletteChild;
-			//uUnibet->_wiTopLevelWindow = GetParent(GetParent(sewdData.hwTopLevel));
-			uUnibet->_ebBrowser = sewdData.ebBrowser;
-		} // if
+	int iX = PercentCount(qpAll.width() - iTournamentsWidth, 81.5);
+	int iY = PercentCount(qpAll.height(), 88.5);
 
-		Sleep(uUnibet->CHECK_INTERVAL);
-	} // while
+	QImage qiImage = qpAll.toImage();
+	QRgb qrgbRgb = qiImage.pixel(iX, iY);
 
-	return TRUE;
-} // GameCheckThread
+	return qrgbRgb == 0xFFAEAEAE;
+} // GameReady
 #endif
 
 const QString Unibet::GetName() const
@@ -148,8 +92,7 @@ QWidget *Unibet::GetSettings()
 
 const QPixmap Unibet::GrabWindow(const eGrab &pPart) const
 {
-	QPixmap qpAll = QPixmap::grabWindow(_wiWindow);
-
+	QPixmap qpAll = QPixmap::grabWindow(_sadActiveData.wiRouletteChild);
 	int iTournamentsWidth = CheckForTournaments(qpAll);
 
 	int iPartHeight, iPartWidth, iPartX, iPartY;
@@ -203,7 +146,7 @@ const quint8 Unibet::MakeSpin() const
 
 const void Unibet::MouseClick(const eClick &pClickOn) const
 {
-	QPixmap qpAll = QPixmap::grabWindow(_wiWindow);
+	QPixmap qpAll = QPixmap::grabWindow(_sadActiveData.wiRouletteChild);
 	int iTournamentsWidth = CheckForTournaments(qpAll);
 
 	int iX, iY;
@@ -254,17 +197,17 @@ const void Unibet::MouseClick(const eClick &pClickOn) const
 	} // switch
 
 #ifdef Q_WS_WIN
-	/*SendMessage(_wiWindow, WM_MOUSEACTIVATE, reinterpret_cast<WPARAM>(_wiTopLevelWindow), MAKELONG(HTCLIENT, WM_LBUTTONDOWN));
-	SendMessage(_wiWindow, WM_SETCURSOR, reinterpret_cast<WPARAM>(_wiWindow), MAKELONG(HTCLIENT, WM_LBUTTONDOWN));
-	PostMessage(_wiWindow, WM_LBUTTONDOWN, MK_LBUTTON, MAKELONG(iX, iY));
+	/*SendMessage(_sadActiveData.wiRouletteChild, WM_MOUSEACTIVATE, reinterpret_cast<WPARAM>(_sadActiveData.hwTopLevel), MAKELONG(HTCLIENT, WM_LBUTTONDOWN));
+	SendMessage(_sadActiveData.wiRouletteChild, WM_SETCURSOR, reinterpret_cast<WPARAM>(_sadActiveData.wiRouletteChild), MAKELONG(HTCLIENT, WM_LBUTTONDOWN));
+	PostMessage(_sadActiveData.wiRouletteChild, WM_LBUTTONDOWN, MK_LBUTTON, MAKELONG(iX, iY));
 	Wait(50, 100);
-	PostMessage(_wiWindow, WM_LBUTTONUP, 0, MAKELONG(iX, iY));*/
+	PostMessage(_sadActiveData.wiRouletteChild, WM_LBUTTONUP, 0, MAKELONG(iX, iY));*/
 	POINT pOldPos;
 	GetCursorPos(&pOldPos);
 	POINT pPos;
 	pPos.x = iX;
 	pPos.y = iY;
-	ClientToScreen(_wiWindow, &pPos);
+	ClientToScreen(_sadActiveData.wiRouletteChild, &pPos);
 	SetCursorPos(pPos.x, pPos.y);
 	HWND hwForegroundWindow = GetForegroundWindow();
 
@@ -283,7 +226,7 @@ const void Unibet::MouseClick(const eClick &pClickOn) const
 
 	Wait(50, 100);
 
-	if (_ebBrowser == BrowserInternetExplorer) {
+	if (_sadActiveData.ebBrowser == UnibetActiveChecker::BrowserInternetExplorer) {
 		ZeroMemory(&iInput, sizeof(iInput));
 		iInput.type = INPUT_MOUSE;
 		iInput.mi.dx = 1;
@@ -298,6 +241,23 @@ const void Unibet::MouseClick(const eClick &pClickOn) const
 	SetForegroundWindow(hwForegroundWindow);
 #endif
 } // MouseClick
+
+#ifdef Q_WS_WIN
+const void Unibet::on_uacChecker_ActiveChanged(const UnibetActiveChecker::sActiveData &pData)
+{
+	HWND hwLastChild = _sadActiveData.wiRouletteChild;
+
+	if (pData.wiRouletteChild && GameReady(pData.wiRouletteChild)) {
+		_sadActiveData = pData;
+	} else {
+		_sadActiveData = UnibetActiveChecker::sActiveData();
+	} // if else
+
+	if (static_cast<bool>(hwLastChild) ^ static_cast<bool>(_sadActiveData.wiRouletteChild)) {
+		emit GameActiveChanged(pData.wiRouletteChild);
+	} // if
+} // on_uacChecker_ActiveChanged
+#endif
 
 const int Unibet::PercentCount(const int &pValue, const float &pPercent) const
 {
@@ -379,19 +339,13 @@ const void Unibet::SelectToken(const UnibetSettings::eTokenValue &pValue) const
 	} // switch
 } // SelectToken
 
+#ifdef Q_WS_WIN
 Unibet::Unibet() : CasinoInterface()
 {
-#ifdef Q_WS_WIN
-	_bStop = false;
-#endif
-	_ebBrowser = BrowserUnknown;
-	//_wiTopLevelWindow = NULL;
-	_wiWindow = NULL;
-
-#ifdef Q_WS_WIN
-	_beginthreadex(NULL, 0, &Unibet::GameCheckThread, this, 0, NULL);
-#endif
+	connect(&_uacChecker, SIGNAL(ActiveChanged(const UnibetActiveChecker::sActiveData &)), SLOT(on_uacChecker_ActiveChanged(const UnibetActiveChecker::sActiveData &)));
+	_uacChecker.start();
 } // Unibet
+#endif
 
 const void Unibet::Wait(const int &pMin, const int &pMax) const
 {
