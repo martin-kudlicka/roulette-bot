@@ -45,7 +45,9 @@ const void CasinoDialog::on_ciCasino_GameActiveChanged(const bool &pActive)
 	} else {
 		if (IsPlaying()) {
 			on_qpbStop_clicked();
-		} // if
+		} else {
+			_qdcCasinoDialog.qpbStart->setEnabled(false);
+		} // if else
 	} // if else
 } // on_ciCasino_GameActiveChanged
 
