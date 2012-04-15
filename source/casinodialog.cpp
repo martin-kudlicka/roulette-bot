@@ -147,6 +147,8 @@ const void CasinoDialog::PlayRound(SystemInterface *pSystem) const
 
 const void CasinoDialog::RefreshStatus() const
 {
-	_qdcCasinoDialog.qlCash->setText(QString::number(_ciCasino->GetCash()));
-	_qdcCasinoDialog.qlProfit->setText(QString::number(_ciCasino->GetCash() - _fStartingCash));
+	float fCash = _ciCasino->GetCash();
+
+	_qdcCasinoDialog.qlCash->setText(QString::number(fCash));
+	_qdcCasinoDialog.qlProfit->setText(QString::number(fCash - _fStartingCash));
 } // RefreshStatus
