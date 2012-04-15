@@ -21,6 +21,7 @@ const void MainWindow::on_cdCasinoDialog_finished(int result)
 	CasinoDialog *cdCasino = qobject_cast<CasinoDialog *>(sender());
 	int iRow = _qhOpenedCasinos.key(cdCasino);
 	_qhOpenedCasinos.remove(iRow);
+	delete cdCasino;
 } // on_cdCasinoDialog_finished
 
 const void MainWindow::on_cmCasinos_ActiveChanged(const int &pRow, const bool &pActive) const
