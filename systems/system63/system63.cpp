@@ -74,16 +74,17 @@ const SystemInterface::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
 		} // if else
 	} while (false);
 
-	_iSameInRow++;
-	if (_ebpLastPosition != ebpPosition) {
+	if (_ebpLastPosition == ebpPosition) {
+		_iSameInRow++;
+	} else {
 		if (_iMaxSameInRow < _iSameInRow) {
-			_s63Statistics.SetMaxSameInRow(_iSameInRow);
+			_s63swStatistics.SetMaxSameInRow(_iSameInRow);
 			_iMaxSameInRow = _iSameInRow;
 		} // if
 		if (_iSameInRow < System63StatisticsWidget::CounterMoreSameInRow) {
-			_s63Statistics.Increment(static_cast<System63StatisticsWidget::eCounter>(System63StatisticsWidget::Counter1SameInRow + _iSameInRow - 1));
+			_s63swStatistics.Increment(static_cast<System63StatisticsWidget::eCounter>(System63StatisticsWidget::Counter1SameInRow + _iSameInRow - 1));
 		} else {
-			_s63Statistics.Increment(System63StatisticsWidget::CounterMoreSameInRow);
+			_s63swStatistics.Increment(System63StatisticsWidget::CounterMoreSameInRow);
 		} // if else
 		_iSameInRow = 0;
 
@@ -106,7 +107,7 @@ const void System63::CloseSettings(const QWidget *pSettings, const bool &pSave) 
 
 const void System63::CloseStatistics() const
 {
-	QVBoxLayout *qvbLayout = qobject_cast<QVBoxLayout *>(_s63Statistics.parentWidget()->layout());
+	QVBoxLayout *qvbLayout = qobject_cast<QVBoxLayout *>(_s63swStatistics.parentWidget()->layout());
 	QLayoutItem *qliLayoutItem = qvbLayout->takeAt(0);
 	QWidget *qwWidget = qliLayoutItem->widget();
 	qwWidget->setParent(NULL);
@@ -175,7 +176,7 @@ QWidget *System63::GetSettings()
 
 const void System63::OpenStatistics(QVBoxLayout *pLayout)
 {
-	pLayout->addWidget(&_s63Statistics);
+	pLayout->addWidget(&_s63swStatistics);
 } // OpenStatistics
 
 const void System63::Reset()
