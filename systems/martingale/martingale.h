@@ -3,6 +3,7 @@
 
 #include "../common/systeminterface.h"
 #include "martingalesettings.h"
+#include "martingalestatisticswidget.h"
 
 class Martingale : public SystemInterface
 {
@@ -11,6 +12,7 @@ class Martingale : public SystemInterface
 
 	private:
 		MartingaleSettings _msSettings;
+		MartingaleStatisticsWidget _mswStatistics;
 
 		virtual const qfSpinResults AnalyzeSpin(const quint8 &pSpin);
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const;
