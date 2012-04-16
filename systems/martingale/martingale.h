@@ -13,6 +13,10 @@ class Martingale : public SystemInterface
 	private:
 		PlayCmn::eBetPosition _ebpLastPosition;
 		PlayCmn::eBetPosition _ebpLastProgressionPosition;
+		int _iBlackInRow;
+		int _iMaxBlackInRow;
+		int _iMaxRedInRow;
+		int _iRedInRow;
 		int _iSameColorBeforeBet;
 		int _iSameColorProgression;
 		MartingaleSettings _msSettings;
