@@ -21,7 +21,10 @@ const void Martingale::CloseSettings(const QWidget *pSettings, const bool &pSave
 
 const void Martingale::CloseStatistics() const
 {
-	// TODO
+	QVBoxLayout *qvbLayout = qobject_cast<QVBoxLayout *>(_mswStatistics.parentWidget()->layout());
+	QLayoutItem *qliLayoutItem = qvbLayout->takeAt(0);
+	QWidget *qwWidget = qliLayoutItem->widget();
+	qwWidget->setParent(NULL);
 } // CloseStatistics
 
 const PlayCmn::tBetHash Martingale::GetBet()
@@ -42,7 +45,7 @@ QWidget *Martingale::GetSettings()
 
 const void Martingale::OpenStatistics(QVBoxLayout *pLayout)
 {
-	// TODO
+	pLayout->addWidget(&_mswStatistics);
 } // OpenStatistics
 
 const void Martingale::Reset()
