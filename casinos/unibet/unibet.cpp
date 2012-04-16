@@ -127,6 +127,8 @@ const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerB
 				case PlayCmn::BetPositionColumn3:
 					MouseClick(ClickPositionColumn3);
 			} // switch
+
+			Wait(100, 200);
 		} // for
 	} // for
 } // MakeBet
@@ -134,7 +136,7 @@ const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerB
 const quint8 Unibet::MakeSpin() const
 {
 	MouseClick(ClickFastSpin);
-	Wait(1000, 2000);
+	Wait(500, 750);
 
 	QPixmap qpSpin = GrabWindow(GrabSpinResult);
 	QString qsSpin = Recognize(qpSpin);
@@ -293,6 +295,7 @@ const QString Unibet::Recognize(const QPixmap &pPixmap) const
 const void Unibet::RemoveBet() const
 {
 	MouseClick(ClickRemoveBet);
+	Wait(100, 200);
 } // RemoveBet
 
 const void Unibet::Reset()
@@ -319,16 +322,16 @@ const void Unibet::SelectToken(const UnibetSettings::eTokenValue &pValue) const
 			break;
 		case UnibetSettings::TokenValue2:
 			if (_etpTokensPosition == TokensPositionLeft) {
-				MouseClick(ClickTokenPosition3);
-			} else {
 				MouseClick(ClickTokenPosition2);
+			} else {
+				MouseClick(ClickTokenPosition3);
 			} // if else
 			break;
 		case UnibetSettings::TokenValue3:
 			if (_etpTokensPosition == TokensPositionLeft) {
-				MouseClick(ClickTokenPosition4);
-			} else {
 				MouseClick(ClickTokenPosition3);
+			} else {
+				MouseClick(ClickTokenPosition4);
 			} // if else
 			break;
 		case UnibetSettings::TokenValue4:
