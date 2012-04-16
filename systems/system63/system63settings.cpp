@@ -1,11 +1,17 @@
 #include "system63settings.h"
 
+const QString BET_ON = "BetOn";
 const QString PROGRESSION_AUTO_VALUE = "ProgressionAutoValue";
 const QString PROGRESSION_DOZEN_COLUMN_NOT_CHANGED = "ProgressionDozenColumnNotChanged";
 const QString PROGRESSION_MANUAL_SEQUENCE = "ProgressionManualSequence";
 const QString PROGRESSION_TYPE = "ProgressionType";
 const QString SAME_DOZEN_COLUMN_BEFORE_BET = "SameDozenColumnBeforeBet";
 const QString SAME_DOZEN_COLUMN_PROGRESSION = "SameDozenColumnProgression";
+
+const System63Settings::eBetOn System63Settings::GetBetOn() const
+{
+	return static_cast<eBetOn>(_ssSettings.value(BET_ON, BetOnColumn).toInt());
+} // GetBetOn
 
 const int System63Settings::GetProgressionAutoValue() const
 {
@@ -36,6 +42,11 @@ const int System63Settings::GetSameDozenColumnProgression() const
 {
 	return _ssSettings.value(SAME_DOZEN_COLUMN_PROGRESSION, 1).toInt();
 } // GetSameDozenColumnProgression
+
+const void System63Settings::SetBetOn(const eBetOn &pBetOn)
+{
+	_ssSettings.setValue(BET_ON, pBetOn);
+} // SetBetOn
 
 const void System63Settings::SetProgressionAutoValue(const int &pValue)
 {
