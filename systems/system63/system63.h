@@ -20,7 +20,7 @@ class System63 : public SystemInterface
 		QList<quint8> _qlProgressionSequence;
 		quint8 _qui8ProgressionIndex;
 		System63Settings _s63sSettings;
-		System63StatisticsWidget _s63Statistics;
+		System63StatisticsWidget _s63swStatistics;
 		PlayCmn::tBetHash _tbhLastBet;
 
 		virtual const qfSpinResults AnalyzeSpin(const quint8 &pSpin);
