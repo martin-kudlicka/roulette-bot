@@ -98,9 +98,9 @@ const QPixmap Unibet::GrabWindow(const eGrab &pPart) const
 	int iPartHeight, iPartWidth, iPartX, iPartY;
 	switch (pPart) {
 		case GrabCash:
-			iPartX = PercentCount(qpAll.width() - iTournamentsWidth, 39);
+			iPartX = PercentCount(qpAll.width() - iTournamentsWidth, 39.4);
 			iPartY = PercentCount(qpAll.height(), 90.5);
-			iPartWidth = PercentCount(qpAll.width() - iTournamentsWidth, 6);
+			iPartWidth = PercentCount(qpAll.width() - iTournamentsWidth, 5.1);
 			iPartHeight = PercentCount(qpAll.height(), 2.5);
 			break;
 		case GrabSpinResult:
@@ -136,7 +136,7 @@ const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerB
 const quint8 Unibet::MakeSpin() const
 {
 	MouseClick(ClickFastSpin);
-	Wait(500, 750);
+	Wait(750, 1000);
 
 	QPixmap qpSpin = GrabWindow(GrabSpinResult);
 	QString qsSpin = Recognize(qpSpin);
