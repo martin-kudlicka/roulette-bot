@@ -27,10 +27,40 @@ const void Martingale::CloseStatistics() const
 	qwWidget->setParent(NULL);
 } // CloseStatistics
 
+const PlayCmn::tBetHash Martingale::CreateBet() const
+{
+	PlayCmn::tBetHash tbhBet;
+
+	PlayCmn::eBetPosition ebpPosition;
+	if (_msSettings.GetBetStyle() == MartingaleSettings::BetStyleRandom) {
+		ebpPosition = static_cast<PlayCmn::eBetPosition>((qrand() % (PlayCmn::BetPositionColorRed - PlayCmn::BetPositionColorBlack + 1)) + PlayCmn::BetPositionColorBlack);
+	} else {
+		if (_qui8ProgressionIndex == 0) {
+			if (_ebpLastPosition == PlayCmn::BetPositionColorBlack) {
+				ebpPosition = PlayCmn::BetPositionColorRed;
+			} else {
+				ebpPosition = PlayCmn::BetPositionColorBlack;
+			} // if else
+		} else {
+			ebpPosition = _ebpLastPosition;
+		} // if else
+	} // if else
+	tbhBet.insert(ebpPosition, _qlProgressionSequence.at(_qui8ProgressionIndex));
+
+	return tbhBet;
+} // CreateBet
+
 const PlayCmn::tBetHash Martingale::GetBet()
 {
-	// TODO
-	return PlayCmn::tBetHash();
+	if (_iSameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
+		return PlayCmn::tBetHash();
+	} // if
+
+	if (_qui8ProgressionIndex > 0 && _iSameColorProgression < _msSettings.GetSameColorProgression()) {
+		return PlayCmn::tBetHash();
+	} // if
+
+	return CreateBet();
 } // GetBet
 
 const QString Martingale::GetName() const
@@ -50,7 +80,17 @@ const void Martingale::OpenStatistics(QVBoxLayout *pLayout)
 
 const void Martingale::Reset()
 {
-	// TODO
+	_ebpLastPosition = PlayCmn::BetPositionNone;
+	_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
+	_iSameColorBeforeBet = 0;
+	_iSameColorProgression = 0;
+
+	_qlProgressionSequence.clear();
+	QStringList qslProgressionSequence = _msSettings.GetProgressionManualSequence().split(PROGRESSION_SEQUENCE_SEPARATOR);
+	foreach (QString qsProgression, qslProgressionSequence) {
+		_qlProgressionSequence.append(qsProgression.toUInt());
+	} // foreach
+	_qui8ProgressionIndex = 0;
 } // Reset
 
 Q_EXPORT_PLUGIN2(martingale, Martingale)
