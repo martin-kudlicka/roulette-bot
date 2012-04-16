@@ -111,6 +111,10 @@ const void CasinoDialog::PlayRound() const
 		_ciCasino->MakeBet(tbhBet, _sSettings->GetTokensPerBet());
 	} // if
 
+	if (_bStop) {
+		return;
+	} // if
+
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Spin: "));
 	quint8 qui8Spin = _ciCasino->MakeSpin();
 	_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(qui8Spin));
