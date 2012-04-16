@@ -107,7 +107,7 @@ const void CasinoDialog::on_qpbStop_clicked(bool checked /* false */)
 const void CasinoDialog::PlayRound() const
 {
 	PlayCmn::tBetHash tbhBet = _siSystem->GetBet();
-	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked()) {
+	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked() && !tbhBet.isEmpty()) {
 		_ciCasino->MakeBet(tbhBet, _sSettings->GetTokensPerBet());
 	} // if
 
@@ -160,7 +160,7 @@ const void CasinoDialog::PlayRound() const
 		_ciCasino->RemoveBet();
 	} // if
 
-	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked()) {
+	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked() && !tbhBet.isEmpty()) {
 		float fOldCash = _qdcCasinoDialog.qlCash->text().toFloat();
 		RefreshStatus();
 
