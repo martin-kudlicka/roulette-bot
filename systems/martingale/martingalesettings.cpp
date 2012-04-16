@@ -15,7 +15,7 @@ const MartingaleSettings::eBetStyle MartingaleSettings::GetBetStyle() const
 
 const int MartingaleSettings::GetProgressionAutoValue() const
 {
-	return _ssSettings.value(PROGRESSION_AUTO_VALUE, 2).toInt();
+	return _ssSettings.value(PROGRESSION_AUTO_VALUE, 3).toInt();
 } // GetProgressionAutoValue
 
 const bool MartingaleSettings::GetProgressionColorNotChanged() const
@@ -25,7 +25,7 @@ const bool MartingaleSettings::GetProgressionColorNotChanged() const
 
 const QString MartingaleSettings::GetProgressionManualSequence() const
 {
-	return _ssSettings.value(PROGRESSION_MANUAL_SEQUENCE, "1;3").toString();
+	return _ssSettings.value(PROGRESSION_MANUAL_SEQUENCE, "1;2;4").toString();
 } // GetProgressionManualSequence
 
 const MartingaleSettings::eProgressionType MartingaleSettings::GetProgressionType() const
