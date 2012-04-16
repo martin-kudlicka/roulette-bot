@@ -2,7 +2,7 @@
 
 const void SettingsDialog::CloseCasinoSettings(const bool &pSave) const
 {
-	for (int iCasino = 0; iCasino < _csmCasinos.rowCount(); iCasino++) {
+	for (int iCasino = _csmCasinos.rowCount() - 1; iCasino >= 0 ; iCasino--) {
 		QModelIndex qmiIndex = _csmCasinos.index(iCasino, CasinoSettingsModel::ColumnName);
 		const CasinoInterface *ciCasino = static_cast<const CasinoInterface *>(qmiIndex.internalPointer());
 		const QWidget *qwSettings = _qdsSettingsDialog.qswCasinoSettings->widget(iCasino);
@@ -13,7 +13,7 @@ const void SettingsDialog::CloseCasinoSettings(const bool &pSave) const
 
 const void SettingsDialog::CloseSystemSettings(const bool &pSave) const
 {
-	for (int iSystem = 0; iSystem < _ssmSystems.rowCount(); iSystem++) {
+	for (int iSystem = _ssmSystems.rowCount() - 1; iSystem >= 0; iSystem--) {
 		QModelIndex qmiIndex = _ssmSystems.index(iSystem, SystemSettingsModel::ColumnName);
 		const SystemInterface *siSystem = static_cast<const SystemInterface *>(qmiIndex.internalPointer());
 		const QWidget *qwSettings = _qdsSettingsDialog.qswSystemSettings->widget(iSystem);
