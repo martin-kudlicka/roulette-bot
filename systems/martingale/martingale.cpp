@@ -4,8 +4,79 @@
 
 const SystemInterface::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin)
 {
-	// TODO
-	return SystemInterface::SpinResultNoBet;
+	PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin);
+
+	qfSpinResults qfsrResult;
+	do {
+		if (_tbhLastBet.isEmpty()) {
+			// no bet made
+			qfsrResult = SpinResultNoBet;
+
+			if (_iSameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
+				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
+					_iSameColorBeforeBet++;
+				} else {
+					_iSameColorBeforeBet = 1;
+				} // if else
+
+				break;
+			} // if
+
+			if (_iSameColorProgression < _msSettings.GetSameColorProgression()) {
+				if (_msSettings.GetProgressionColorNotChanged()) {
+					if (_ebpLastPosition == ebpPosition) {
+						_iSameColorProgression++;
+					} else {
+						qfsrResult |= SpinResultLost;
+						_iSameColorBeforeBet = 1;
+						_iSameColorProgression = 0;
+						_qui8ProgressionIndex = 0;
+					} // if else
+				} else {
+					if (_iSameColorProgression == 0 || _ebpLastProgressionPosition != ebpPosition) {
+						_ebpLastProgressionPosition = ebpPosition;
+						_iSameColorProgression = 1;
+					} else {
+						_iSameColorProgression++;
+					} // if else
+				} // if else
+
+				break;
+			} // if
+		} else {
+			// bet made
+			if (_tbhLastBet.contains(ebpPosition)) {
+				// won
+				qfsrResult = SpinResultWon;
+
+				_iSameColorBeforeBet = 0;
+				_iSameColorProgression = 0;
+				_qui8ProgressionIndex = 0;
+
+				break;
+			} else {
+				// lost or progression
+				_iSameColorProgression = 0;
+
+				if (_qui8ProgressionIndex == _qlProgressionSequence.size() - 1) {
+					qfsrResult = SpinResultLost;
+
+					_iSameColorBeforeBet = 0;
+					_qui8ProgressionIndex = 0;
+				} else {
+					qfsrResult = SpinResultProgression;
+
+					_qui8ProgressionIndex++;
+				} // if else
+
+				break;
+			} // if else
+		} // if else
+	} while (false);
+
+	_ebpLastPosition = ebpPosition;
+
+	return qfsrResult;
 } // AnalyzeSpin
 
 const void Martingale::CloseSettings(const QWidget *pSettings, const bool &pSave) const
@@ -52,15 +123,19 @@ const PlayCmn::tBetHash Martingale::CreateBet() const
 
 const PlayCmn::tBetHash Martingale::GetBet()
 {
+	_tbhLastBet.clear();
+
 	if (_iSameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
-		return PlayCmn::tBetHash();
+		return _tbhLastBet;
 	} // if
 
 	if (_qui8ProgressionIndex > 0 && _iSameColorProgression < _msSettings.GetSameColorProgression()) {
-		return PlayCmn::tBetHash();
+		return _tbhLastBet;
 	} // if
 
-	return CreateBet();
+	_tbhLastBet = CreateBet();
+
+	return _tbhLastBet;
 } // GetBet
 
 const QString Martingale::GetName() const
@@ -72,6 +147,19 @@ QWidget *Martingale::GetSettings()
 {
 	return new MartingaleSettingsWidget(&_msSettings);
 } // GetSettings
+
+const PlayCmn::eBetPosition Martingale::GetSpinPosition(const quint8 &pSpin) const
+{
+	if (pSpin == 0) {
+		return PlayCmn::BetPosition0;
+	} // if
+
+	if (pSpin == 2 || pSpin == 4 || pSpin == 6 || pSpin == 8 || pSpin == 10 || pSpin == 11 || pSpin == 13 || pSpin == 15 || pSpin == 17 || pSpin == 20 || pSpin == 22 || pSpin == 24 || pSpin == 26 || pSpin == 28 || pSpin == 29 || pSpin == 31 || pSpin == 33 || pSpin == 35) {
+		return PlayCmn::BetPositionColorBlack;
+	} // if
+
+	return PlayCmn::BetPositionColorRed;
+} // GetSpinPosition
 
 const void Martingale::OpenStatistics(QVBoxLayout *pLayout)
 {

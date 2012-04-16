@@ -19,6 +19,7 @@ class Martingale : public SystemInterface
 		MartingaleStatisticsWidget _mswStatistics;
 		QList<quint8> _qlProgressionSequence;
 		quint8 _qui8ProgressionIndex;
+		PlayCmn::tBetHash _tbhLastBet;
 
 		virtual const qfSpinResults AnalyzeSpin(const quint8 &pSpin);
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const;
@@ -27,6 +28,7 @@ class Martingale : public SystemInterface
 		virtual const PlayCmn::tBetHash GetBet();
 		virtual const QString GetName() const;
 		virtual QWidget *GetSettings();
+		const PlayCmn::eBetPosition GetSpinPosition(const quint8 &pSpin) const;
 		virtual const void OpenStatistics(QVBoxLayout *pLayout);
 		virtual const void Reset();
 }; // Martingale
