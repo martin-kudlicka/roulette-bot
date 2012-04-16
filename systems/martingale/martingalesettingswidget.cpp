@@ -44,7 +44,7 @@ const void MartingaleSettingsWidget::on_qsbProgression_valueChanged(int i) const
 		} // if
 
 		qsSequence += QString::number(iProgression);
-		iProgression *= 3;
+		iProgression *= 2;
 	} // for
 
 	_qwsSettingsWidget.qleProgression->setText(qsSequence);
