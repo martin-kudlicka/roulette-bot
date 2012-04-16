@@ -41,6 +41,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "systems", "systems", "{F7C5
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "system63", "systems\system63\system63.vcxproj", "{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "martingale", "systems\martingale\martingale.vcxproj", "{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug.dll|Win32 = Debug.dll|Win32
@@ -177,6 +179,14 @@ Global
 		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Release.dll|Win32.Build.0 = Release|Win32
 		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Release|Win32.ActiveCfg = Release|Win32
 		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63}.Release|Win32.Build.0 = Release|Win32
+		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Debug.dll|Win32.ActiveCfg = Debug|Win32
+		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Debug.dll|Win32.Build.0 = Debug|Win32
+		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Debug|Win32.Build.0 = Debug|Win32
+		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Release.dll|Win32.ActiveCfg = Release|Win32
+		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Release.dll|Win32.Build.0 = Release|Win32
+		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Release|Win32.ActiveCfg = Release|Win32
+		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -198,5 +208,6 @@ Global
 		{C2342D39-FD84-4448-A050-7FF3B4A33F3D} = {28EEE205-D69D-481F-87EF-3EECF77D030F}
 		{37E51687-D37B-4E91-8710-2E860D899C87} = {28EEE205-D69D-481F-87EF-3EECF77D030F}
 		{B86CC5F2-D67F-44B4-8414-BDF9CDFBFB63} = {F7C5FCA4-D0FE-4689-86E6-DDDE699BED43}
+		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9} = {F7C5FCA4-D0FE-4689-86E6-DDDE699BED43}
 	EndGlobalSection
 EndGlobal
