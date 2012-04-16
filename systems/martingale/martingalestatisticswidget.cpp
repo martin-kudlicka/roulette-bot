@@ -8,10 +8,10 @@ const void MartingaleStatisticsWidget::Increment(QLabel *pLabel) const
 const void MartingaleStatisticsWidget::Increment(const eColorCounter &pCounter) const
 {
 	switch (pCounter) {
-		case BlackCount:
+		case ColorCounterBlack:
 			Increment(_qwmswWidget.qlBlackCount);
 			break;
-		case RedCount:
+		case ColorCounterRed:
 			Increment(_qwmswWidget.qlRedCount);
 	} // switch
 } // Increment
@@ -24,10 +24,10 @@ const void MartingaleStatisticsWidget::SetMaxSameInRow(QLabel *pLabel, const int
 const void MartingaleStatisticsWidget::SetMaxSameInRow(const eMaxCounter &pCounter, const int &pValue) const
 {
 	switch (pCounter) {
-		case MaxBlackInRow:
+		case MaxCounterBlackInRow:
 			SetMaxSameInRow(_qwmswWidget.qlMaxBlackInRow, pValue);
 			break;
-		case MaxRedInRow:
+		case MaxCounterRedInRow:
 			SetMaxSameInRow(_qwmswWidget.qlMaxRedInRow, pValue);
 	} // switch
 } // SetMaxSameInRow

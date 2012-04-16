@@ -74,7 +74,36 @@ const SystemInterface::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin
 		} // if else
 	} while (false);
 
-	_ebpLastPosition = ebpPosition;
+	if (ebpPosition == PlayCmn::BetPositionColorBlack) {
+		_mswStatistics.Increment(MartingaleStatisticsWidget::ColorCounterBlack);
+	} else {
+		if (ebpPosition == PlayCmn::BetPositionColorRed) {
+			_mswStatistics.Increment(MartingaleStatisticsWidget::ColorCounterRed);
+		} // if
+	} // if else
+
+	if (_ebpLastPosition == ebpPosition) {
+		if (ebpPosition == PlayCmn::BetPositionColorBlack) {
+			_iBlackInRow++;
+		} else {
+			if (ebpPosition == PlayCmn::BetPositionColorRed) {
+				_iRedInRow++;
+			} // if
+		} // if else
+	} else {
+		if (_iMaxBlackInRow < _iBlackInRow) {
+			_mswStatistics.SetMaxSameInRow(MartingaleStatisticsWidget::MaxCounterBlackInRow, _iBlackInRow);
+			_iMaxBlackInRow = _iBlackInRow;
+			_iBlackInRow = 0;
+		} // if
+		if (_iMaxRedInRow < _iRedInRow) {
+			_mswStatistics.SetMaxSameInRow(MartingaleStatisticsWidget::MaxCounterRedInRow, _iRedInRow);
+			_iMaxRedInRow = _iRedInRow;
+			_iRedInRow = 0;
+		} // if
+
+		_ebpLastPosition = ebpPosition;
+	} // if else
 
 	return qfsrResult;
 } // AnalyzeSpin
@@ -106,14 +135,10 @@ const PlayCmn::tBetHash Martingale::CreateBet() const
 	if (_msSettings.GetBetStyle() == MartingaleSettings::BetStyleRandom) {
 		ebpPosition = static_cast<PlayCmn::eBetPosition>((qrand() % (PlayCmn::BetPositionColorRed - PlayCmn::BetPositionColorBlack + 1)) + PlayCmn::BetPositionColorBlack);
 	} else {
-		if (_qui8ProgressionIndex == 0) {
-			if (_ebpLastPosition == PlayCmn::BetPositionColorBlack) {
-				ebpPosition = PlayCmn::BetPositionColorRed;
-			} else {
-				ebpPosition = PlayCmn::BetPositionColorBlack;
-			} // if else
+		if (_ebpLastPosition == PlayCmn::BetPositionColorBlack) {
+			ebpPosition = PlayCmn::BetPositionColorRed;
 		} else {
-			ebpPosition = _ebpLastPosition;
+			ebpPosition = PlayCmn::BetPositionColorBlack;
 		} // if else
 	} // if else
 	tbhBet.insert(ebpPosition, _qlProgressionSequence.at(_qui8ProgressionIndex));
@@ -170,6 +195,10 @@ const void Martingale::Reset()
 {
 	_ebpLastPosition = PlayCmn::BetPositionNone;
 	_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
+	_iBlackInRow = 0;
+	_iMaxBlackInRow = 0;
+	_iMaxRedInRow = 0;
+	_iRedInRow = 0;
 	_iSameColorBeforeBet = 0;
 	_iSameColorProgression = 0;
 

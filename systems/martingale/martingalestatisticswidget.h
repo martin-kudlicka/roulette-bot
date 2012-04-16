@@ -9,12 +9,12 @@ class MartingaleStatisticsWidget : public QWidget
 
 	public:
 		enum eColorCounter {
-			BlackCount,
-			RedCount
+			ColorCounterBlack,
+			ColorCounterRed
 		}; // eColorCounter
 		enum eMaxCounter {
-			MaxBlackInRow,
-			MaxRedInRow
+			MaxCounterBlackInRow,
+			MaxCounterRedInRow
 		}; // eMaxCounter
 
 		MartingaleStatisticsWidget(QWidget *pParent = NULL, Qt::WindowFlags pFlags = 0);
