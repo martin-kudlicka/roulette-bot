@@ -40,7 +40,7 @@ class UnibetActiveChecker : public QThread
 		virtual void run();
 
 	private:
-		static const DWORD CHECK_INTERVAL = 5000;
+		static const DWORD CHECK_INTERVAL = 4000;
 
 		static BOOL CALLBACK EnumWindowsProc(__in HWND hwnd, __in LPARAM lParam);
 
