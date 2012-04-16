@@ -20,7 +20,7 @@ const int System63Settings::GetProgressionAutoValue() const
 
 const bool System63Settings::GetProgressionDozenColumnNotChanged() const
 {
-	return _ssSettings.value(PROGRESSION_DOZEN_COLUMN_NOT_CHANGED, true).toBool();
+	return _ssSettings.value(PROGRESSION_DOZEN_COLUMN_NOT_CHANGED, false).toBool();
 } // GetProgressionDozenColumnNotChanged
 
 const QString System63Settings::GetProgressionManualSequence() const
@@ -40,7 +40,7 @@ const int System63Settings::GetSameDozenColumnBeforeBet() const
 
 const int System63Settings::GetSameDozenColumnProgression() const
 {
-	return _ssSettings.value(SAME_DOZEN_COLUMN_PROGRESSION, 1).toInt();
+	return _ssSettings.value(SAME_DOZEN_COLUMN_PROGRESSION, 2).toInt();
 } // GetSameDozenColumnProgression
 
 const void System63Settings::SetBetOn(const eBetOn &pBetOn)
