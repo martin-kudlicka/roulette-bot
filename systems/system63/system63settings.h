@@ -6,6 +6,11 @@
 class System63Settings
 {
 	public:
+		enum eBetOn {
+			BetOnColumn,
+			BetOnDozen,
+			BetOnRandom
+		}; // eBetOn
 		enum eProgressionType {
 			ProgressionTypeAuto,
 			ProgressionTypeManual
@@ -13,12 +18,14 @@ class System63Settings
 
 		System63Settings();
 
+		const eBetOn GetBetOn() const;
 		const int GetProgressionAutoValue() const;
 		const bool GetProgressionDozenColumnNotChanged() const;
 		const QString GetProgressionManualSequence() const;
 		const eProgressionType GetProgressionType() const;
 		const int GetSameDozenColumnBeforeBet() const;
 		const int GetSameDozenColumnProgression() const;
+		const void SetBetOn(const eBetOn &pBetOn);
 		const void SetProgressionAutoValue(const int &pValue);
 		const void SetProgressionDozenColumnNotChanged(const bool &pValue);
 		const void SetProgressionManualSequence(const QString &pSequence);

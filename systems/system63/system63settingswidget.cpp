@@ -2,6 +2,11 @@
 
 const void System63SettingsWidget::LoadSettings() const
 {
+	if (_s63sSettings->GetBetOn() == System63Settings::BetOnColumn) {
+		_qwsSettingsWidget.qrbBetOnColumn->setChecked(true);
+	} else {
+		_qwsSettingsWidget.qrbBetOnRandom->setChecked(true);
+	} // if else
 	_qwsSettingsWidget.qsbSameDozenColumnBeforeBet->setValue(_s63sSettings->GetSameDozenColumnBeforeBet());
 
 	if (_s63sSettings->GetProgressionType() == System63Settings::ProgressionTypeAuto) {
@@ -47,6 +52,11 @@ const void System63SettingsWidget::on_qsbProgression_valueChanged(int i) const
 
 const void System63SettingsWidget::SaveSettings() const
 {
+	if (_qwsSettingsWidget.qrbBetOnColumn->isChecked()) {
+		_s63sSettings->SetBetOn(System63Settings::BetOnColumn);
+	} else {
+		_s63sSettings->SetBetOn(System63Settings::BetOnRandom);
+	} // if else
 	_s63sSettings->SetSameDozenColumnBeforeBet(_qwsSettingsWidget.qsbSameDozenColumnBeforeBet->value());
 
 	if (_qwsSettingsWidget.qrbProgressionAuto->isChecked()) {
