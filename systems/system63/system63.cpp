@@ -119,7 +119,7 @@ const PlayCmn::tBetHash System63::CreateBet() const
 	for (int iBet = 0; iBet < 2; iBet++) {
 		do {
 			PlayCmn::eBetPosition ebpPosition = static_cast<PlayCmn::eBetPosition>((qrand() % (PlayCmn::BetPositionColumn3 - PlayCmn::BetPositionColumn1 + 1)) + PlayCmn::BetPositionColumn1);
-			if ((_s63sSettings.GetBetOn() != System63Settings::BetOnRandom || ebpPosition != _ebpLastPosition) && !tbhBet.contains(ebpPosition)) {
+			if ((_s63sSettings.GetBetOn() == System63Settings::BetOnRandom || ebpPosition != _ebpLastPosition) && !tbhBet.contains(ebpPosition)) {
 				tbhBet.insert(ebpPosition, _qlProgressionSequence.at(_qui8ProgressionIndex));
 				break;
 			} // if
