@@ -70,6 +70,11 @@ const void CasinoDialog::on_qcbSystems_currentIndexChanged(int index)
 	_siSystem->OpenStatistics(qobject_cast<QVBoxLayout *>(_qdcCasinoDialog.qgbCasinoStatistics->layout()));
 } // on_qcbSystems_currentIndexChanged
 
+const void CasinoDialog::on_qpbResetStatistics_clicked(bool checked /* false */) const
+{
+	_siSystem->Reset(SystemInterface::ResetContentStatistics);
+} // on_qpbResetStatistics_clicked
+
 const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 {
 	_qdcCasinoDialog.qgbSettings->setEnabled(false);
@@ -79,7 +84,7 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Game started."));
 
 	_ciCasino->Reset();
-	_siSystem->Reset();
+	_siSystem->Reset(SystemInterface::ResetContentCore);
 
 	_bStop = false;
 	while (!_bStop) {

@@ -32,7 +32,7 @@ class System63 : public SystemInterface
 		virtual const QString GetName() const;
 		virtual QWidget *GetSettings();
 		virtual const void OpenStatistics(QVBoxLayout *pLayout);
-		virtual const void Reset();
+		virtual const void Reset(const qfResetContents &pResetContents);
 }; // System63
 
 #endif // SYSTEM63_H

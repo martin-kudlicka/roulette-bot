@@ -22,6 +22,7 @@ class System63StatisticsWidget : public QWidget
 		System63StatisticsWidget(QWidget *pParent = NULL, Qt::WindowFlags pFlags = 0);
 
 		const void Increment(const eCounter &pCounter) const;
+		const void Reset() const;
 		const void SetMaxSameInRow(const int &pValue) const;
 
 	private:

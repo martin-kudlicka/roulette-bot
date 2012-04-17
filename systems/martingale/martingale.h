@@ -32,7 +32,7 @@ class Martingale : public SystemInterface
 		virtual QWidget *GetSettings();
 		const PlayCmn::eBetPosition GetSpinPosition(const quint8 &pSpin) const;
 		virtual const void OpenStatistics(QVBoxLayout *pLayout);
-		virtual const void Reset();
+		virtual const void Reset(const qfResetContents &pResetContents);
 }; // Martingale
 
 #endif // MARTINGALE_H

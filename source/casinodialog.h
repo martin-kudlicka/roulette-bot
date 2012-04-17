@@ -33,6 +33,7 @@ class CasinoDialog : public QDialog
 	private slots:
 		const void on_ciCasino_GameActiveChanged(const bool &pActive);
 		const void on_qcbSystems_currentIndexChanged(int index);
+		const void on_qpbResetStatistics_clicked(bool checked = false) const;
 		const void on_qpbStart_clicked(bool checked = false);
 		const void on_qpbStop_clicked(bool checked = false);
 }; // CasinoDialog

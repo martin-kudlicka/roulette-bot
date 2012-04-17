@@ -31,6 +31,18 @@ const void System63StatisticsWidget::Increment(const eCounter &pCounter) const
 	} // switch
 } // Increment
 
+const void System63StatisticsWidget::Reset() const
+{
+	_qws63swWidget.ql1SameDozenColumnInRow->setText("0");
+	_qws63swWidget.ql2SameDozenColumnInRow->setText("0");
+	_qws63swWidget.ql3SameDozenColumnInRow->setText("0");
+	_qws63swWidget.ql4SameDozenColumnInRow->setText("0");
+	_qws63swWidget.ql5SameDozenColumnInRow->setText("0");
+	_qws63swWidget.ql6SameDozenColumnInRow->setText("0");
+	_qws63swWidget.ql7SameDozenColumnInRow->setText("0");
+	_qws63swWidget.qlMaxSameDozenColumnInRow->setText("0");
+} // Reset
+
 const void System63StatisticsWidget::SetMaxSameInRow(const int &pValue) const
 {
 	_qws63swWidget.qlMaxSameDozenColumnInRow->setText(QString::number(pValue));

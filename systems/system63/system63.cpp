@@ -74,9 +74,8 @@ const SystemInterface::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
 		} // if else
 	} while (false);
 
-	if (_ebpLastPosition == ebpPosition) {
-		_iSameInRow++;
-	} else {
+	_iSameInRow++;
+	if (_ebpLastPosition != ebpPosition) {
 		if (_iMaxSameInRow < _iSameInRow) {
 			_s63swStatistics.SetMaxSameInRow(_iSameInRow);
 			_iMaxSameInRow = _iSameInRow;
@@ -179,21 +178,27 @@ const void System63::OpenStatistics(QVBoxLayout *pLayout)
 	pLayout->addWidget(&_s63swStatistics);
 } // OpenStatistics
 
-const void System63::Reset()
+const void System63::Reset(const qfResetContents &pResetContents)
 {
-	_ebpLastPosition = PlayCmn::BetPositionNone;
-	_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
-	_iMaxSameInRow = 0;
-	_iSameDozenColumnBeforeBet = 0;
-	_iSameDozenColumnProgression = 0;
-	_iSameInRow = 0;
+	if (pResetContents & ResetContentCore) {
+		_ebpLastPosition = PlayCmn::BetPositionNone;
+		_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
+		_iMaxSameInRow = 0;
+		_iSameDozenColumnBeforeBet = 0;
+		_iSameDozenColumnProgression = 0;
+		_iSameInRow = 0;
 
-	_qlProgressionSequence.clear();
-	QStringList qslProgressionSequence = _s63sSettings.GetProgressionManualSequence().split(PROGRESSION_SEQUENCE_SEPARATOR);
-	foreach (QString qsProgression, qslProgressionSequence) {
-		_qlProgressionSequence.append(qsProgression.toUInt());
-	} // foreach
-	_qui8ProgressionIndex = 0;
+		_qlProgressionSequence.clear();
+		QStringList qslProgressionSequence = _s63sSettings.GetProgressionManualSequence().split(PROGRESSION_SEQUENCE_SEPARATOR);
+		foreach (QString qsProgression, qslProgressionSequence) {
+			_qlProgressionSequence.append(qsProgression.toUInt());
+		} // foreach
+		_qui8ProgressionIndex = 0;
+	} // if
+
+	if (pResetContents & ResetContentStatistics) {
+		_s63swStatistics.Reset();
+	} // if
 } // Reset
 
 Q_EXPORT_PLUGIN2(system63, System63)
