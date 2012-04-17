@@ -175,7 +175,7 @@ QWidget *System63::GetSettings()
 
 const void System63::OpenStatistics(QVBoxLayout *pLayout)
 {
-	pLayout->addWidget(&_s63swStatistics);
+	pLayout->insertWidget(0, &_s63swStatistics);
 } // OpenStatistics
 
 const void System63::Reset(const qfResetContents &pResetContents)
@@ -197,6 +197,7 @@ const void System63::Reset(const qfResetContents &pResetContents)
 	} // if
 
 	if (pResetContents & ResetContentStatistics) {
+		_iMaxSameInRow = 0;
 		_s63swStatistics.Reset();
 	} // if
 } // Reset
