@@ -13,7 +13,7 @@ class SystemInterface : public QObject
 
 	public:
 		enum eResetContent {
-			ResetContentCore,
+			ResetContentCore = 1,
 			ResetContentStatistics
 		}; // eResetType
 		Q_DECLARE_FLAGS(qfResetContents, eResetContent)
