@@ -173,7 +173,7 @@ const PlayCmn::eBetPosition Martingale::GetSpinPosition(const quint8 &pSpin) con
 
 const void Martingale::OpenStatistics(QVBoxLayout *pLayout)
 {
-	pLayout->addWidget(&_mswStatistics);
+	pLayout->insertWidget(0, &_mswStatistics);
 } // OpenStatistics
 
 const void Martingale::Reset(const qfResetContents &pResetContents)
@@ -195,6 +195,7 @@ const void Martingale::Reset(const qfResetContents &pResetContents)
 	} // if
 
 	if (pResetContents & ResetContentStatistics) {
+		_iMaxSameInRow;
 		_mswStatistics.Reset();
 	} // if
 } // Reset
