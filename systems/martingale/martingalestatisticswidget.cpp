@@ -40,6 +40,21 @@ const void MartingaleStatisticsWidget::Increment(const eCounter &pCounter) const
 	} // switch
 } // Increment
 
+const void MartingaleStatisticsWidget::Reset() const
+{
+	_qwmswWidget.ql1SameColorInRow->setText("0");
+	_qwmswWidget.ql2SameColorInRow->setText("0");
+	_qwmswWidget.ql3SameColorInRow->setText("0");
+	_qwmswWidget.ql4SameColorInRow->setText("0");
+	_qwmswWidget.ql5SameColorInRow->setText("0");
+	_qwmswWidget.ql6SameColorInRow->setText("0");
+	_qwmswWidget.ql7SameColorInRow->setText("0");
+	_qwmswWidget.ql8SameColorInRow->setText("0");
+	_qwmswWidget.ql9SameColorInRow->setText("0");
+	_qwmswWidget.ql10SameColorInRow->setText("0");
+	_qwmswWidget.qlMaxSameColorInRow->setText("0");
+} // Reset
+
 const void MartingaleStatisticsWidget::SetMaxSameInRow(const int &pValue) const
 {
 	_qwmswWidget.qlMaxSameColorInRow->setText(QString::number(pValue));

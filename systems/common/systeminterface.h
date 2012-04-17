@@ -12,6 +12,11 @@ class SystemInterface : public QObject
 	Q_OBJECT
 
 	public:
+		enum eResetContent {
+			ResetContentCore,
+			ResetContentStatistics
+		}; // eResetType
+		Q_DECLARE_FLAGS(qfResetContents, eResetContent)
 		enum eSpinResult {
 			SpinResultNoBet = 1,
 			SpinResultWon = 2,
@@ -27,9 +32,10 @@ class SystemInterface : public QObject
 		virtual const QString GetName() const = 0;
 		virtual QWidget *GetSettings() = 0;
 		virtual const void OpenStatistics(QVBoxLayout *pLayout) = 0;
-		virtual const void Reset() = 0;
+		virtual const void Reset(const qfResetContents &pResetContents) = 0;
 }; // SystemInterface
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(SystemInterface::qfResetContents)
 Q_DECLARE_OPERATORS_FOR_FLAGS(SystemInterface::qfSpinResults)
 
 Q_DECLARE_INTERFACE(SystemInterface, SYSTEM_INTERFACE);

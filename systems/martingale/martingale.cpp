@@ -176,21 +176,27 @@ const void Martingale::OpenStatistics(QVBoxLayout *pLayout)
 	pLayout->addWidget(&_mswStatistics);
 } // OpenStatistics
 
-const void Martingale::Reset()
+const void Martingale::Reset(const qfResetContents &pResetContents)
 {
-	_ebpLastPosition = PlayCmn::BetPositionNone;
-	_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
-	_iMaxSameInRow = 0;
-	_iSameColorBeforeBet = 0;
-	_iSameColorProgression = 0;
-	_iSameInRow = 0;
+	if (pResetContents & ResetContentCore) {
+		_ebpLastPosition = PlayCmn::BetPositionNone;
+		_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
+		_iMaxSameInRow = 0;
+		_iSameColorBeforeBet = 0;
+		_iSameColorProgression = 0;
+		_iSameInRow = 0;
 
-	_qlProgressionSequence.clear();
-	QStringList qslProgressionSequence = _msSettings.GetProgressionManualSequence().split(PROGRESSION_SEQUENCE_SEPARATOR);
-	foreach (QString qsProgression, qslProgressionSequence) {
-		_qlProgressionSequence.append(qsProgression.toUInt());
-	} // foreach
-	_qui8ProgressionIndex = 0;
+		_qlProgressionSequence.clear();
+		QStringList qslProgressionSequence = _msSettings.GetProgressionManualSequence().split(PROGRESSION_SEQUENCE_SEPARATOR);
+		foreach (QString qsProgression, qslProgressionSequence) {
+			_qlProgressionSequence.append(qsProgression.toUInt());
+		} // foreach
+		_qui8ProgressionIndex = 0;
+	} // if
+
+	if (pResetContents & ResetContentStatistics) {
+		_mswStatistics.Reset();
+	} // if
 } // Reset
 
 Q_EXPORT_PLUGIN2(martingale, Martingale)
