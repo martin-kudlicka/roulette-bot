@@ -74,33 +74,18 @@ const SystemInterface::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin
 		} // if else
 	} while (false);
 
-	if (ebpPosition == PlayCmn::BetPositionColorBlack) {
-		_mswStatistics.Increment(MartingaleStatisticsWidget::ColorCounterBlack);
-	} else {
-		if (ebpPosition == PlayCmn::BetPositionColorRed) {
-			_mswStatistics.Increment(MartingaleStatisticsWidget::ColorCounterRed);
+	_iSameInRow++;
+	if (_ebpLastPosition != ebpPosition) {
+		if (_iMaxSameInRow < _iSameInRow) {
+			_mswStatistics.SetMaxSameInRow(_iSameInRow);
+			_iMaxSameInRow = _iSameInRow;
 		} // if
-	} // if else
-
-	if (_ebpLastPosition == ebpPosition) {
-		if (ebpPosition == PlayCmn::BetPositionColorBlack) {
-			_iBlackInRow++;
+		if (_iSameInRow < MartingaleStatisticsWidget::CounterMoreSameInRow) {
+			_mswStatistics.Increment(static_cast<MartingaleStatisticsWidget::eCounter>(MartingaleStatisticsWidget::Counter1SameInRow + _iSameInRow - 1));
 		} else {
-			if (ebpPosition == PlayCmn::BetPositionColorRed) {
-				_iRedInRow++;
-			} // if
+			_mswStatistics.Increment(MartingaleStatisticsWidget::CounterMoreSameInRow);
 		} // if else
-	} else {
-		if (_iMaxBlackInRow < _iBlackInRow) {
-			_mswStatistics.SetMaxSameInRow(MartingaleStatisticsWidget::MaxCounterBlackInRow, _iBlackInRow);
-			_iMaxBlackInRow = _iBlackInRow;
-			_iBlackInRow = 0;
-		} // if
-		if (_iMaxRedInRow < _iRedInRow) {
-			_mswStatistics.SetMaxSameInRow(MartingaleStatisticsWidget::MaxCounterRedInRow, _iRedInRow);
-			_iMaxRedInRow = _iRedInRow;
-			_iRedInRow = 0;
-		} // if
+		_iSameInRow = 0;
 
 		_ebpLastPosition = ebpPosition;
 	} // if else
@@ -195,12 +180,10 @@ const void Martingale::Reset()
 {
 	_ebpLastPosition = PlayCmn::BetPositionNone;
 	_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
-	_iBlackInRow = 0;
-	_iMaxBlackInRow = 0;
-	_iMaxRedInRow = 0;
-	_iRedInRow = 0;
+	_iMaxSameInRow = 0;
 	_iSameColorBeforeBet = 0;
 	_iSameColorProgression = 0;
+	_iSameInRow = 0;
 
 	_qlProgressionSequence.clear();
 	QStringList qslProgressionSequence = _msSettings.GetProgressionManualSequence().split(PROGRESSION_SEQUENCE_SEPARATOR);
