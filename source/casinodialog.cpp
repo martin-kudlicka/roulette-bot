@@ -85,6 +85,7 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 
 	_ciCasino->Reset();
 	_siSystem->Reset(SystemInterface::ResetContentCore);
+	_qui8MaxProgression = 0;
 
 	_bStop = false;
 	while (!_bStop) {
@@ -109,7 +110,7 @@ const void CasinoDialog::on_qpbStop_clicked(bool checked /* false */)
 	_bStop = true;
 } // on_qpbStop_clicked
 
-const void CasinoDialog::PlayRound() const
+const void CasinoDialog::PlayRound()
 {
 	PlayCmn::tBetHash tbhBet = _siSystem->GetBet();
 	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked() && !tbhBet.isEmpty()) {
@@ -159,6 +160,17 @@ const void CasinoDialog::PlayRound() const
 			_qdcCasinoDialog.qpteLog->insertPlainText(".");
 		} // if else
 		IncreaseCounter(_qdcCasinoDialog.qlProgression);
+	} // if
+
+	if (!(qfsrResult & SystemInterface::SpinResultNoBet)) {
+		_qui8MaxProgression++;
+		if (_qdcCasinoDialog.qlMaxProgression->text().toUInt() < _qui8MaxProgression) {
+			_qdcCasinoDialog.qlMaxProgression->setText(QString::number(_qui8MaxProgression));
+		} // if
+
+		if (qfsrResult & (SystemInterface::SpinResultWon | qfsrResult & SystemInterface::SpinResultLost)) {
+			_qui8MaxProgression = 0;
+		} // if
 	} // if
 
 	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked() && !tbhBet.isEmpty()) {

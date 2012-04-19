@@ -19,6 +19,7 @@ class CasinoDialog : public QDialog
 		bool _bStop;
 		CasinoInterface *_ciCasino;
 		float _fStartingCash;
+		quint8 _qui8MaxProgression;
 		Settings *_sSettings;
 		SystemInterface *_siSystem;
 		const SystemPlugins *_spSystems;
@@ -27,7 +28,7 @@ class CasinoDialog : public QDialog
 		const void IncreaseCounter(QLabel *pCounter) const;
 		const void InitSettings() const;
 		const bool IsPlaying() const;
-		const void PlayRound() const;
+		const void PlayRound();
 		const void RefreshStatus() const;
 
 	private slots:
