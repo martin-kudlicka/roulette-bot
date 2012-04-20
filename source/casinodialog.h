@@ -26,6 +26,7 @@ class CasinoDialog : public QDialog
 		Ui::qdCasino _qdcCasinoDialog;
 
 		const void IncreaseCounter(QLabel *pCounter) const;
+		const void IncreaseProgressionCounter(const quint8 &pProgression) const;
 		const void InitSettings() const;
 		const bool IsPlaying() const;
 		const void PlayRound();

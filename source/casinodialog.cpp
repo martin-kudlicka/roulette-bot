@@ -32,6 +32,32 @@ const void CasinoDialog::IncreaseCounter(QLabel *pCounter) const
 	pCounter->setText(QString::number(iCount));
 } // IncreaseCounter
 
+const void CasinoDialog::IncreaseProgressionCounter(const quint8 &pProgression) const
+{
+	switch (pProgression) {
+		case 1:
+			IncreaseCounter(_qdcCasinoDialog.ql1Progression);
+			break;
+		case 2:
+			IncreaseCounter(_qdcCasinoDialog.ql2Progression);
+			break;
+		case 3:
+			IncreaseCounter(_qdcCasinoDialog.ql3Progression);
+			break;
+		case 4:
+			IncreaseCounter(_qdcCasinoDialog.ql4Progression);
+			break;
+		case 5:
+			IncreaseCounter(_qdcCasinoDialog.ql5Progression);
+			break;
+		case 6:
+			IncreaseCounter(_qdcCasinoDialog.ql6Progression);
+			break;
+		default:
+			IncreaseCounter(_qdcCasinoDialog.qlMoreProgression);
+	} // switch
+} // IncreaseProgressionCounter
+
 const void CasinoDialog::InitSettings() const
 {
 	for (int iSystem = 0; iSystem < _spSystems->GetCount(); iSystem++) {
@@ -162,7 +188,7 @@ const void CasinoDialog::PlayRound()
 		IncreaseCounter(_qdcCasinoDialog.qlProgression);
 	} // if
 
-	if (qfsrResult & SystemInterface::SpinResultNoBet) {
+	if (qfsrResult == SystemInterface::SpinResultNoBet) {
 		_qdcCasinoDialog.qlInProgression->setText(QString::number(_qui8MaxProgression));
 	} else {
 		_qui8MaxProgression++;
@@ -172,6 +198,11 @@ const void CasinoDialog::PlayRound()
 		} // if
 
 		if (qfsrResult & (SystemInterface::SpinResultWon | qfsrResult & SystemInterface::SpinResultLost)) {
+			if (qfsrResult & SystemInterface::SpinResultLost) {
+				// increase to signalize win could be in higher progression
+				_qui8MaxProgression++;
+			} // if
+			IncreaseProgressionCounter(_qui8MaxProgression);
 			_qui8MaxProgression = 0;
 		} // if
 	} // if
