@@ -162,8 +162,11 @@ const void CasinoDialog::PlayRound()
 		IncreaseCounter(_qdcCasinoDialog.qlProgression);
 	} // if
 
-	if (!(qfsrResult & SystemInterface::SpinResultNoBet)) {
+	if (qfsrResult & SystemInterface::SpinResultNoBet) {
+		_qdcCasinoDialog.qlInProgression->setText(QString::number(_qui8MaxProgression));
+	} else {
 		_qui8MaxProgression++;
+		_qdcCasinoDialog.qlInProgression->setText(QString::number(_qui8MaxProgression));
 		if (_qdcCasinoDialog.qlMaxProgression->text().toUInt() < _qui8MaxProgression) {
 			_qdcCasinoDialog.qlMaxProgression->setText(QString::number(_qui8MaxProgression));
 		} // if
