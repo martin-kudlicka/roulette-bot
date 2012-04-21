@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>373</height>
+    <height>430</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -298,7 +298,7 @@
       <item row="0" column="0">
        <widget class="QLabel" name="label_2">
         <property name="text">
-         <string>&amp;System</string>
+         <string>S&amp;ystem</string>
         </property>
         <property name="buddy">
          <cstring>qcbSystems</cstring>
@@ -311,7 +311,10 @@
       <item row="1" column="0">
        <widget class="QLabel" name="label_4">
         <property name="text">
-         <string>Play for money</string>
+         <string>Play for &amp;money</string>
+        </property>
+        <property name="buddy">
+         <cstring>qcbPlayForMoney</cstring>
         </property>
        </widget>
       </item>
