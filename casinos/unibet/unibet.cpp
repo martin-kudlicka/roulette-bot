@@ -264,7 +264,7 @@ const int Unibet::PercentCount(const int &pValue, const float &pPercent) const
 	return static_cast<float>(pValue) / 100 * pPercent;
 } // PercentCount
 
-const void Unibet::ProcessSpinResult(const PlayCmn::qfSpinResults &pResult)
+const void Unibet::ProcessSpinResult(const PlayCmn::sSpinResult &pResult, const int &pTokensPerBet)
 {
 } // ProcessSpinResult
 

@@ -64,7 +64,7 @@ class Unibet : public CasinoInterface
 		virtual const quint8 MakeSpin() const;
 		const void MouseClick(const eClick &pClickOn) const;
 		const int PercentCount(const int &pValue, const float &pPercent) const;
-		virtual const void ProcessSpinResult(const PlayCmn::qfSpinResults &pResult);
+		virtual const void ProcessSpinResult(const PlayCmn::sSpinResult &pResult, const int &pTokensPerBet);
 		const QString Recognize(const QPixmap &pPixmap) const;
 		virtual const void RemoveBet() const;
 		virtual const void Reset();

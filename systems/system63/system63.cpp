@@ -2,15 +2,16 @@
 
 #include "system63settingswidget.h"
 
-const PlayCmn::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
+const PlayCmn::sSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
 {
 	PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin);
 
-	PlayCmn::qfSpinResults qfsrResult;
+	PlayCmn::sSpinResult srResult;
 	do {
 		if (_tbhLastBet.isEmpty()) {
 			// no bet made
-			qfsrResult = PlayCmn::SpinResultNoBet;
+			srResult.esrtType = PlayCmn::SpinResultTypeNoBet;
+			srResult.iBetProfit = 0;
 
 			if (_iSameDozenColumnBeforeBet < _s63sSettings.GetSameDozenColumnBeforeBet()) {
 				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
@@ -27,7 +28,7 @@ const PlayCmn::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
 					if (_ebpLastPosition == ebpPosition) {
 						_iSameDozenColumnProgression++;
 					} else {
-						qfsrResult |= PlayCmn::SpinResultLost;
+						srResult.esrtType |= PlayCmn::SpinResultTypeLost;
 						_iSameDozenColumnBeforeBet = 1;
 						_iSameDozenColumnProgression = 0;
 						_qui8ProgressionIndex = 0;
@@ -47,7 +48,8 @@ const PlayCmn::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
 			// bet made
 			if (_tbhLastBet.contains(ebpPosition)) {
 				// won
-				qfsrResult = PlayCmn::SpinResultWon;
+				srResult.esrtType = PlayCmn::SpinResultTypeWon;
+				srResult.iBetProfit = _tbhLastBet.value(ebpPosition) * 3;
 
 				_iSameDozenColumnBeforeBet = 0;
 				_iSameDozenColumnProgression = 0;
@@ -59,15 +61,16 @@ const PlayCmn::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
 				_iSameDozenColumnProgression = 0;
 
 				if (_qui8ProgressionIndex == _qlProgressionSequence.size() - 1) {
-					qfsrResult = PlayCmn::SpinResultLost;
+					srResult.esrtType = PlayCmn::SpinResultTypeLost;
 
 					_iSameDozenColumnBeforeBet = 0;
 					_qui8ProgressionIndex = 0;
 				} else {
-					qfsrResult = PlayCmn::SpinResultProgression;
+					srResult.esrtType = PlayCmn::SpinResultTypeProgression;
 
 					_qui8ProgressionIndex++;
 				} // if else
+				srResult.iBetProfit = 0;
 
 				break;
 			} // if else
@@ -90,7 +93,7 @@ const PlayCmn::qfSpinResults System63::AnalyzeSpin(const quint8 &pSpin)
 		_ebpLastPosition = ebpPosition;
 	} // if
 
-	return qfsrResult;
+	return srResult;
 } // AnalyzeSpin
 
 const void System63::CloseSettings(const QWidget *pSettings, const bool &pSave) const

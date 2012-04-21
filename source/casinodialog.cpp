@@ -181,14 +181,14 @@ const void CasinoDialog::PlayRound()
 	_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(qui8Spin));
 
 	// analyze spin in system
-	PlayCmn::qfSpinResults qfsrResult = _siSystem->AnalyzeSpin(qui8Spin);
+	PlayCmn::sSpinResult srResult = _siSystem->AnalyzeSpin(qui8Spin);
 
 	// process spin result for GUI
-	if (qfsrResult & PlayCmn::SpinResultNoBet) {
+	if (srResult.esrtType & PlayCmn::SpinResultTypeNoBet) {
 		_qdcCasinoDialog.qpteLog->appendPlainText(tr("No bet."));
 		IncreaseCounter(_qdcCasinoDialog.qlNoBet);
 	} // if
-	if (qfsrResult & PlayCmn::SpinResultWon) {
+	if (srResult.esrtType & PlayCmn::SpinResultTypeWon) {
 		_qdcCasinoDialog.qpteLog->appendPlainText(tr("Won"));
 		if (_qdcCasinoDialog.qcbPlayForMoney->isChecked()) {
 			_qdcCasinoDialog.qpteLog->insertPlainText(" ");
@@ -197,16 +197,16 @@ const void CasinoDialog::PlayRound()
 		} // if else
 		IncreaseCounter(_qdcCasinoDialog.qlWon);
 	} // if
-	if (qfsrResult & PlayCmn::SpinResultLost) {
+	if (srResult.esrtType & PlayCmn::SpinResultTypeLost) {
 		_qdcCasinoDialog.qpteLog->appendPlainText(tr("Lost"));
-		if (_qdcCasinoDialog.qcbPlayForMoney->isChecked() || qfsrResult & PlayCmn::SpinResultNoBet) {
+		if (_qdcCasinoDialog.qcbPlayForMoney->isChecked() || srResult.esrtType & PlayCmn::SpinResultTypeNoBet) {
 			_qdcCasinoDialog.qpteLog->insertPlainText(" ");
 		} else {
 			_qdcCasinoDialog.qpteLog->insertPlainText(".");
 		} // if else
 		IncreaseCounter(_qdcCasinoDialog.qlLost);
 
-		if (qfsrResult & PlayCmn::SpinResultNoBet) {
+		if (srResult.esrtType & PlayCmn::SpinResultTypeNoBet) {
 			_qdcCasinoDialog.qpteLog->insertPlainText(tr("before."));
 		} // if
 
@@ -214,7 +214,7 @@ const void CasinoDialog::PlayRound()
 			_bStop = true;
 		} // if
 	} // if
-	if (qfsrResult & PlayCmn::SpinResultProgression) {
+	if (srResult.esrtType & PlayCmn::SpinResultTypeProgression) {
 		_qdcCasinoDialog.qpteLog->appendPlainText(tr("Progression"));
 		if (_qdcCasinoDialog.qcbPlayForMoney->isChecked()) {
 			_qdcCasinoDialog.qpteLog->insertPlainText(" ");
@@ -223,7 +223,7 @@ const void CasinoDialog::PlayRound()
 		} // if else
 		IncreaseCounter(_qdcCasinoDialog.qlProgression);
 	} // if
-	if (qfsrResult == PlayCmn::SpinResultNoBet) {
+	if (srResult.esrtType == PlayCmn::SpinResultTypeNoBet) {
 		_qdcCasinoDialog.qlInProgression->setText(QString::number(_qui8MaxProgression));
 	} else {
 		_qui8MaxProgression++;
@@ -232,8 +232,8 @@ const void CasinoDialog::PlayRound()
 			_qdcCasinoDialog.qlMaxProgression->setText(QString::number(_qui8MaxProgression));
 		} // if
 
-		if (qfsrResult & (PlayCmn::SpinResultWon | qfsrResult & PlayCmn::SpinResultLost)) {
-			if (qfsrResult & PlayCmn::SpinResultLost) {
+		if (srResult.esrtType & (PlayCmn::SpinResultTypeWon | srResult.esrtType & PlayCmn::SpinResultTypeLost)) {
+			if (srResult.esrtType & PlayCmn::SpinResultTypeLost) {
 				// increase to signalize win could be in higher progression
 				_qui8MaxProgression++;
 			} // if
@@ -244,7 +244,7 @@ const void CasinoDialog::PlayRound()
 
 	// process spin result for casino
 	if (_qdcCasinoDialog.qcbPlayForMoney->isChecked() && !tbhBet.isEmpty()) {
-		_ciCasino->ProcessSpinResult(qfsrResult);
+		_ciCasino->ProcessSpinResult(srResult, _sSettings->GetTokensPerBet());
 	} // if
 
 	// remove remaining bet

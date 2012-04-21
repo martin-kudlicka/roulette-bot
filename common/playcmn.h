@@ -15,17 +15,22 @@ class PlayCmn
 			BetPositionColumn2,
 			BetPositionColumn3
 		}; // eBetPosition
-		enum eSpinResult {
-			SpinResultNoBet = 1,
-			SpinResultWon = 2,
-			SpinResultLost = 4,
-			SpinResultProgression = 8
-		}; // eSpinResult
-		Q_DECLARE_FLAGS(qfSpinResults, eSpinResult)
+		enum eSpinResultType {
+			SpinResultTypeNoBet = 1,
+			SpinResultTypeWon = 2,
+			SpinResultTypeLost = 4,
+			SpinResultTypeProgression = 8
+		}; // eSpinResultType
+		Q_DECLARE_FLAGS(qfSpinResultTypes, eSpinResultType)
+
+		struct sSpinResult {
+			qfSpinResultTypes esrtType;
+			int iBetProfit;
+		}; // sSpinResult
 
 		typedef QHash<eBetPosition, int> tBetHash;
 }; // PlayCmn
 
-Q_DECLARE_OPERATORS_FOR_FLAGS(PlayCmn::qfSpinResults)
+Q_DECLARE_OPERATORS_FOR_FLAGS(PlayCmn::qfSpinResultTypes)
 
 #endif // PLAYCMN_H

@@ -18,7 +18,7 @@ class SystemInterface : public QObject
 		}; // eResetType
 		Q_DECLARE_FLAGS(qfResetContents, eResetContent)
 
-		virtual const PlayCmn::qfSpinResults AnalyzeSpin(const quint8 &pSpin) = 0;
+		virtual const PlayCmn::sSpinResult AnalyzeSpin(const quint8 &pSpin) = 0;
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const = 0;
 		virtual const void CloseStatistics() const = 0;
 		virtual const PlayCmn::tBetHash GetBet() = 0;
