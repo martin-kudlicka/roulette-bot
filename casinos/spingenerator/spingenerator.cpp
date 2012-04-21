@@ -52,7 +52,7 @@ const void SpinGenerator::ProcessSpinResult(const PlayCmn::qfSpinResults &pResul
 	if (pResult & PlayCmn::SpinResultWon) {
 		_fCash += _iBet;
 	} else {
-		if (pResult & PlayCmn::SpinResultLost) {
+		if (pResult & (PlayCmn::SpinResultLost | PlayCmn::SpinResultProgression)) {
 			_fCash -= _iBet;
 		} // if
 	} // if else
@@ -64,12 +64,11 @@ const void SpinGenerator::RemoveBet() const
 
 const void SpinGenerator::Reset()
 {
-	_fCash = _sgsSettings.GetStartingCash();
 } // Reset
 
 SpinGenerator::SpinGenerator() : CasinoInterface()
 {
-	Reset();
+	_fCash = _sgsSettings.GetStartingCash();
 } // SpinGenerator
 
 Q_EXPORT_PLUGIN2(spingenerator, SpinGenerator)
