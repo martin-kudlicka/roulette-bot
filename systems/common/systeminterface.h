@@ -17,15 +17,8 @@ class SystemInterface : public QObject
 			ResetContentStatistics
 		}; // eResetType
 		Q_DECLARE_FLAGS(qfResetContents, eResetContent)
-		enum eSpinResult {
-			SpinResultNoBet = 1,
-			SpinResultWon = 2,
-			SpinResultLost = 4,
-			SpinResultProgression = 8
-		}; // eSpinResult
-		Q_DECLARE_FLAGS(qfSpinResults, eSpinResult)
 
-		virtual const qfSpinResults AnalyzeSpin(const quint8 &pSpin) = 0;
+		virtual const PlayCmn::qfSpinResults AnalyzeSpin(const quint8 &pSpin) = 0;
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const = 0;
 		virtual const void CloseStatistics() const = 0;
 		virtual const PlayCmn::tBetHash GetBet() = 0;
@@ -36,7 +29,6 @@ class SystemInterface : public QObject
 }; // SystemInterface
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(SystemInterface::qfResetContents)
-Q_DECLARE_OPERATORS_FOR_FLAGS(SystemInterface::qfSpinResults)
 
 Q_DECLARE_INTERFACE(SystemInterface, SYSTEM_INTERFACE);
 

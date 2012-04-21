@@ -2,15 +2,15 @@
 
 #include "martingalesettingswidget.h"
 
-const SystemInterface::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin)
+const PlayCmn::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin)
 {
 	PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin);
 
-	qfSpinResults qfsrResult;
+	PlayCmn::qfSpinResults qfsrResult;
 	do {
 		if (_tbhLastBet.isEmpty()) {
 			// no bet made
-			qfsrResult = SpinResultNoBet;
+			qfsrResult = PlayCmn::SpinResultNoBet;
 
 			if (_iSameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
 				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
@@ -27,7 +27,7 @@ const SystemInterface::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin
 					if (_ebpLastPosition == ebpPosition) {
 						_iSameColorProgression++;
 					} else {
-						qfsrResult |= SpinResultLost;
+						qfsrResult |= PlayCmn::SpinResultLost;
 						_iSameColorBeforeBet = 1;
 						_iSameColorProgression = 0;
 						_qui8ProgressionIndex = 0;
@@ -47,7 +47,7 @@ const SystemInterface::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin
 			// bet made
 			if (_tbhLastBet.contains(ebpPosition)) {
 				// won
-				qfsrResult = SpinResultWon;
+				qfsrResult = PlayCmn::SpinResultWon;
 
 				_iSameColorBeforeBet = 0;
 				_iSameColorProgression = 0;
@@ -59,12 +59,12 @@ const SystemInterface::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin
 				_iSameColorProgression = 0;
 
 				if (_qui8ProgressionIndex == _qlProgressionSequence.size() - 1) {
-					qfsrResult = SpinResultLost;
+					qfsrResult = PlayCmn::SpinResultLost;
 
 					_iSameColorBeforeBet = 0;
 					_qui8ProgressionIndex = 0;
 				} else {
-					qfsrResult = SpinResultProgression;
+					qfsrResult = PlayCmn::SpinResultProgression;
 
 					_qui8ProgressionIndex++;
 				} // if else
