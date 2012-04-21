@@ -16,8 +16,9 @@ class CasinoInterface : public QObject
 		virtual const float GetCash() const = 0;
 		virtual const QString GetName() const = 0;
 		virtual QWidget *GetSettings() = 0;
-		virtual const void MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet) const = 0;
+		virtual const void MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet) = 0;
 		virtual const quint8 MakeSpin() const = 0;
+		virtual const void ProcessSpinResult(const PlayCmn::qfSpinResults &pResult) = 0;
 		virtual const void RemoveBet() const = 0;
 		virtual const void Reset() = 0;
 

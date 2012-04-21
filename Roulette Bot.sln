@@ -43,6 +43,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "system63", "systems\system6
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "martingale", "systems\martingale\martingale.vcxproj", "{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "spingenerator", "casinos\spingenerator\spingenerator.vcxproj", "{DEEB37C5-9291-43CA-88D5-96BD75796656}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug.dll|Win32 = Debug.dll|Win32
@@ -187,12 +189,21 @@ Global
 		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Release.dll|Win32.Build.0 = Release|Win32
 		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Release|Win32.ActiveCfg = Release|Win32
 		{E2A329A8-9909-4A2E-845E-78DFEBA4F7F9}.Release|Win32.Build.0 = Release|Win32
+		{DEEB37C5-9291-43CA-88D5-96BD75796656}.Debug.dll|Win32.ActiveCfg = Debug|Win32
+		{DEEB37C5-9291-43CA-88D5-96BD75796656}.Debug.dll|Win32.Build.0 = Debug|Win32
+		{DEEB37C5-9291-43CA-88D5-96BD75796656}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DEEB37C5-9291-43CA-88D5-96BD75796656}.Debug|Win32.Build.0 = Debug|Win32
+		{DEEB37C5-9291-43CA-88D5-96BD75796656}.Release.dll|Win32.ActiveCfg = Release|Win32
+		{DEEB37C5-9291-43CA-88D5-96BD75796656}.Release.dll|Win32.Build.0 = Release|Win32
+		{DEEB37C5-9291-43CA-88D5-96BD75796656}.Release|Win32.ActiveCfg = Release|Win32
+		{DEEB37C5-9291-43CA-88D5-96BD75796656}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{69DBB4D9-4563-4B25-A250-3492E56124FF} = {1466E0EB-BEA5-4481-8D78-340216FBE24C}
+		{DEEB37C5-9291-43CA-88D5-96BD75796656} = {1466E0EB-BEA5-4481-8D78-340216FBE24C}
 		{28EEE205-D69D-481F-87EF-3EECF77D030F} = {68F7C511-B9A0-4444-9847-E89B6A92F227}
 		{EFE93017-B435-46EA-9199-1C83A869595A} = {28EEE205-D69D-481F-87EF-3EECF77D030F}
 		{B0596A04-42BF-4E8E-AEE7-AE9C236592A9} = {28EEE205-D69D-481F-87EF-3EECF77D030F}

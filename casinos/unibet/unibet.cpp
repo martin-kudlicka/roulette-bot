@@ -113,7 +113,7 @@ const QPixmap Unibet::GrabWindow(const eGrab &pPart) const
 	return qpAll.copy(iPartX, iPartY, iPartWidth, iPartHeight);
 } // GrabWindow
 
-const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet) const
+const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet)
 {
 	for (PlayCmn::tBetHash::const_iterator ciBet = pBet.constBegin(); ciBet != pBet.constEnd(); ciBet++) {
 		for (int iToken = 0; iToken < pTokensPerBet * ciBet.value(); iToken++) {
@@ -263,6 +263,10 @@ const int Unibet::PercentCount(const int &pValue, const float &pPercent) const
 {
 	return static_cast<float>(pValue) / 100 * pPercent;
 } // PercentCount
+
+const void Unibet::ProcessSpinResult(const PlayCmn::qfSpinResults &pResult)
+{
+} // ProcessSpinResult
 
 const QString Unibet::Recognize(const QPixmap &pPixmap) const
 {

@@ -60,10 +60,11 @@ class Unibet : public CasinoInterface
 		virtual const QString GetName() const;
 		virtual QWidget *GetSettings();
 		const QPixmap GrabWindow(const eGrab &pPart) const;
-		virtual const void MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet) const;
+		virtual const void MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet);
 		virtual const quint8 MakeSpin() const;
 		const void MouseClick(const eClick &pClickOn) const;
 		const int PercentCount(const int &pValue, const float &pPercent) const;
+		virtual const void ProcessSpinResult(const PlayCmn::qfSpinResults &pResult);
 		const QString Recognize(const QPixmap &pPixmap) const;
 		virtual const void RemoveBet() const;
 		virtual const void Reset();

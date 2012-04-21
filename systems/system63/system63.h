@@ -23,7 +23,7 @@ class System63 : public SystemInterface
 		System63StatisticsWidget _s63swStatistics;
 		PlayCmn::tBetHash _tbhLastBet;
 
-		virtual const qfSpinResults AnalyzeSpin(const quint8 &pSpin);
+		virtual const PlayCmn::qfSpinResults AnalyzeSpin(const quint8 &pSpin);
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const;
 		virtual const void CloseStatistics() const;
 		const PlayCmn::tBetHash CreateBet() const;
