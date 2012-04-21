@@ -24,10 +24,16 @@
        <string>General</string>
       </attribute>
       <layout class="QFormLayout" name="formLayout">
+       <property name="fieldGrowthPolicy">
+        <enum>QFormLayout::AllNonFixedFieldsGrow</enum>
+       </property>
        <item row="0" column="0">
         <widget class="QLabel" name="label">
          <property name="text">
           <string>Tokens per bet</string>
+         </property>
+         <property name="buddy">
+          <cstring>qsbTokensPerBet</cstring>
          </property>
         </widget>
        </item>
@@ -43,10 +49,30 @@
          <property name="text">
           <string>Max loss to play</string>
          </property>
+         <property name="buddy">
+          <cstring>qsbMaxLossToPlay</cstring>
+         </property>
         </widget>
        </item>
        <item row="1" column="1">
         <widget class="QSpinBox" name="qsbMaxLossToPlay"/>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>Stop on loss</string>
+         </property>
+         <property name="buddy">
+          <cstring>qcbStopOnLoss</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QCheckBox" name="qcbStopOnLoss">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -138,8 +164,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>278</x>
-     <y>253</y>
+     <x>308</x>
+     <y>285</y>
     </hint>
     <hint type="destinationlabel">
      <x>96</x>
@@ -154,8 +180,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>369</x>
-     <y>253</y>
+     <x>389</x>
+     <y>285</y>
     </hint>
     <hint type="destinationlabel">
      <x>179</x>
