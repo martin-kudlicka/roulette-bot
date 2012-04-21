@@ -4,17 +4,27 @@
 
 const QString GROUP_GENERAL = "general";
 const QString MAX_LOSS_TO_PLAY = "maxlosstoplay";
+const QString MAX_WIN_TO_PLAY = "maxwintoplay";
 const QString STOP_ON_LOSS = "stoponloss";
 const QString TOKENS_PER_BET = "TokensPerBet";
 
 const int Settings::GetMaxLossToPlay()
 {
 	_qsSettings.beginGroup(GROUP_GENERAL);
-	int iTokens = _qsSettings.value(MAX_LOSS_TO_PLAY, 0).toInt();
+	int iMaxLoss = _qsSettings.value(MAX_LOSS_TO_PLAY, 1).toInt();
 	_qsSettings.endGroup();
 
-	return iTokens;
+	return iMaxLoss;
 } // GetMaxLossToPlay
+
+const int Settings::GetMaxWinToPlay()
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	int iMaxWin = _qsSettings.value(MAX_WIN_TO_PLAY, 10).toInt();
+	_qsSettings.endGroup();
+
+	return iMaxWin;
+} // GetMaxWinToPlay
 
 const bool Settings::GetStopOnLoss()
 {
@@ -40,6 +50,13 @@ const void Settings::SetMaxLossToPlay(const int &pValue)
 	_qsSettings.setValue(MAX_LOSS_TO_PLAY, pValue);
 	_qsSettings.endGroup();
 } // SetMaxLossToPlay
+
+const void Settings::SetMaxWinToPlay(const int &pValue)
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	_qsSettings.setValue(MAX_WIN_TO_PLAY, pValue);
+	_qsSettings.endGroup();
+} // SetMaxWinToPlay
 
 const void Settings::SetStopOnLoss(const bool &pStop)
 {

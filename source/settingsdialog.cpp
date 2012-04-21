@@ -58,6 +58,7 @@ const void SettingsDialog::GetSystemSettings() const
 const void SettingsDialog::LoadSettings() const
 {
 	_qdsSettingsDialog.qsbTokensPerBet->setValue(_sSettings->GetTokensPerBet());
+	_qdsSettingsDialog.qsbMaxWinToPlay->setValue(_sSettings->GetMaxWinToPlay());
 	_qdsSettingsDialog.qsbMaxLossToPlay->setValue(_sSettings->GetMaxLossToPlay());
 	_qdsSettingsDialog.qcbStopOnLoss->setChecked(_sSettings->GetStopOnLoss());
 } // LoadSettings
@@ -77,6 +78,7 @@ const void SettingsDialog::on_csmSystemsSelectionModel_selectionChanged(const QI
 const void SettingsDialog::SaveSettings() const
 {
 	_sSettings->SetTokensPerBet(_qdsSettingsDialog.qsbTokensPerBet->value());
+	_sSettings->SetMaxWinToPlay(_qdsSettingsDialog.qsbMaxWinToPlay->value());
 	_sSettings->SetMaxLossToPlay(_qdsSettingsDialog.qsbMaxLossToPlay->value());
 	_sSettings->SetStopOnLoss(_qdsSettingsDialog.qcbStopOnLoss->isChecked());
 } // SaveSettings
