@@ -222,6 +222,10 @@ const void CasinoDialog::PlayRound()
 	} // if
 
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("End of round."));
+
+	if (qfsrResult & SystemInterface::SpinResultLost) {
+		_bStop = true;
+	} // if
 } // PlayRound
 
 const void CasinoDialog::RefreshStatus() const

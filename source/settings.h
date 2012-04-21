@@ -9,8 +9,10 @@ class Settings
 		Settings();
 
 		const int GetMaxLossToPlay();
+		const bool GetStopOnLoss();
 		const int GetTokensPerBet();
 		const void SetMaxLossToPlay(const int &pValue);
+		const void SetStopOnLoss(const bool &pStop);
 		const void SetTokensPerBet(const int &pTokens);
 
 	private:
