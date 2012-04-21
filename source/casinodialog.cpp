@@ -177,6 +177,10 @@ const void CasinoDialog::PlayRound()
 		if (qfsrResult & SystemInterface::SpinResultNoBet) {
 			_qdcCasinoDialog.qpteLog->insertPlainText(tr("before."));
 		} // if
+
+		if (_sSettings->GetStopOnLoss()) {
+			_bStop = true;
+		} // if
 	} // if
 	if (qfsrResult & SystemInterface::SpinResultProgression) {
 		_qdcCasinoDialog.qpteLog->appendPlainText(tr("Progression"));
@@ -218,14 +222,13 @@ const void CasinoDialog::PlayRound()
 		float fProfit = qAbs(_qdcCasinoDialog.qlCash->text().toFloat() - fOldCash);
 		if (fProfit > 0) {
 			_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(fProfit));
+			if (fProfit >= _sSettings->GetMaxWinToPlay()) {
+				_bStop = true;
+			} // if
 		} // if
 	} // if
 
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("End of round."));
-
-	if (qfsrResult & SystemInterface::SpinResultLost) {
-		_bStop = true;
-	} // if
 } // PlayRound
 
 const void CasinoDialog::RefreshStatus() const

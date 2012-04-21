@@ -44,7 +44,7 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QLabel" name="label_2">
          <property name="text">
           <string>Max &amp;loss to play</string>
@@ -54,10 +54,10 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
+       <item row="2" column="1">
         <widget class="QSpinBox" name="qsbMaxLossToPlay"/>
        </item>
-       <item row="2" column="0">
+       <item row="3" column="0">
         <widget class="QLabel" name="label_3">
          <property name="text">
           <string>&amp;Stop on loss</string>
@@ -67,12 +67,25 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QCheckBox" name="qcbStopOnLoss">
          <property name="text">
           <string/>
          </property>
         </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Max &amp;win to play</string>
+         </property>
+         <property name="buddy">
+          <cstring>qsbMaxWinToPlay</cstring>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="qsbMaxWinToPlay"/>
        </item>
       </layout>
      </widget>
