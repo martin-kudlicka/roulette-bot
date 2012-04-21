@@ -24,7 +24,7 @@ class SpinGenerator : public CasinoInterface
 		virtual QWidget *GetSettings();
 		virtual const void MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet);
 		virtual const quint8 MakeSpin() const;
-		virtual const void ProcessSpinResult(const PlayCmn::qfSpinResults &pResult);
+		virtual const void ProcessSpinResult(const PlayCmn::sSpinResult &pResult, const int &pTokensPerBet);
 		virtual const void RemoveBet() const;
 		virtual const void Reset();
 }; // SpinGenerator

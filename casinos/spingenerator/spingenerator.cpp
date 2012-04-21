@@ -47,15 +47,13 @@ const quint8 SpinGenerator::MakeSpin() const
 	return qrand() % 37;
 } // MakeSpin
 
-const void SpinGenerator::ProcessSpinResult(const PlayCmn::qfSpinResults &pResult)
+const void SpinGenerator::ProcessSpinResult(const PlayCmn::sSpinResult &pResult, const int &pTokensPerBet)
 {
-	if (pResult & PlayCmn::SpinResultWon) {
-		_fCash += _iBet;
-	} else {
-		if (pResult & (PlayCmn::SpinResultLost | PlayCmn::SpinResultProgression)) {
-			_fCash -= _iBet;
-		} // if
-	} // if else
+	_fCash -= _iBet;
+
+	if (pResult.esrtType & PlayCmn::SpinResultTypeWon) {
+		_fCash += pResult.iBetProfit * pTokensPerBet;
+	} // if
 } // ProcessSpinResult
 
 const void SpinGenerator::RemoveBet() const

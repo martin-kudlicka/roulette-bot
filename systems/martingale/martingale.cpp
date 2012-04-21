@@ -2,15 +2,16 @@
 
 #include "martingalesettingswidget.h"
 
-const PlayCmn::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin)
+const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 {
 	PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin);
 
-	PlayCmn::qfSpinResults qfsrResult;
+	PlayCmn::sSpinResult srResult;
 	do {
 		if (_tbhLastBet.isEmpty()) {
 			// no bet made
-			qfsrResult = PlayCmn::SpinResultNoBet;
+			srResult.esrtType = PlayCmn::SpinResultTypeNoBet;
+			srResult.iBetProfit = 0;
 
 			if (_iSameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
 				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
@@ -27,7 +28,7 @@ const PlayCmn::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin)
 					if (_ebpLastPosition == ebpPosition) {
 						_iSameColorProgression++;
 					} else {
-						qfsrResult |= PlayCmn::SpinResultLost;
+						srResult.esrtType |= PlayCmn::SpinResultTypeLost;
 						_iSameColorBeforeBet = 1;
 						_iSameColorProgression = 0;
 						_qui8ProgressionIndex = 0;
@@ -47,7 +48,8 @@ const PlayCmn::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin)
 			// bet made
 			if (_tbhLastBet.contains(ebpPosition)) {
 				// won
-				qfsrResult = PlayCmn::SpinResultWon;
+				srResult.esrtType = PlayCmn::SpinResultTypeWon;
+				srResult.iBetProfit = _tbhLastBet.value(ebpPosition) * 2;
 
 				_iSameColorBeforeBet = 0;
 				_iSameColorProgression = 0;
@@ -59,15 +61,16 @@ const PlayCmn::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin)
 				_iSameColorProgression = 0;
 
 				if (_qui8ProgressionIndex == _qlProgressionSequence.size() - 1) {
-					qfsrResult = PlayCmn::SpinResultLost;
+					srResult.esrtType = PlayCmn::SpinResultTypeLost;
 
 					_iSameColorBeforeBet = 0;
 					_qui8ProgressionIndex = 0;
 				} else {
-					qfsrResult = PlayCmn::SpinResultProgression;
+					srResult.esrtType = PlayCmn::SpinResultTypeProgression;
 
 					_qui8ProgressionIndex++;
 				} // if else
+				srResult.iBetProfit = 0;
 
 				break;
 			} // if else
@@ -90,7 +93,7 @@ const PlayCmn::qfSpinResults Martingale::AnalyzeSpin(const quint8 &pSpin)
 		_ebpLastPosition = ebpPosition;
 	} // if else
 
-	return qfsrResult;
+	return srResult;
 } // AnalyzeSpin
 
 const void Martingale::CloseSettings(const QWidget *pSettings, const bool &pSave) const

@@ -23,7 +23,7 @@ class Martingale : public SystemInterface
 		quint8 _qui8ProgressionIndex;
 		PlayCmn::tBetHash _tbhLastBet;
 
-		virtual const PlayCmn::qfSpinResults AnalyzeSpin(const quint8 &pSpin);
+		virtual const PlayCmn::sSpinResult AnalyzeSpin(const quint8 &pSpin);
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const;
 		virtual const void CloseStatistics() const;
 		const PlayCmn::tBetHash CreateBet() const;
