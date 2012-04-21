@@ -19,8 +19,7 @@ CasinoDialog::CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSyste
 
 	setWindowTitle(windowTitle() += pCasino->GetName());
 
-	_fStartingCash = pCasino->GetCash();
-	RefreshStatus();
+	on_qpbResetStatus_clicked();
 	InitSettings();
 
 	connect(pCasino, SIGNAL(GameActiveChanged(const bool &)), SLOT(on_ciCasino_GameActiveChanged(const bool &)));
@@ -101,6 +100,29 @@ const void CasinoDialog::on_qpbResetStatistics_clicked(bool checked /* false */)
 	_siSystem->Reset(SystemInterface::ResetContentStatistics);
 } // on_qpbResetStatistics_clicked
 
+const void CasinoDialog::on_qpbResetStatus_clicked(bool checked /* false */)
+{
+	_fStartingCash = _ciCasino->GetCash();
+
+	_qdcCasinoDialog.qlWon->setText("0");
+	_qdcCasinoDialog.qlLost->setText("0");
+	_qdcCasinoDialog.qlProgression->setText("0");
+	_qdcCasinoDialog.qlNoBet->setText("0");
+
+	_qdcCasinoDialog.qlInProgression->setText("0");
+	_qdcCasinoDialog.qlMaxProgression->setText("0");
+
+	_qdcCasinoDialog.ql1Progression->setText("0");
+	_qdcCasinoDialog.ql2Progression->setText("0");
+	_qdcCasinoDialog.ql3Progression->setText("0");
+	_qdcCasinoDialog.ql4Progression->setText("0");
+	_qdcCasinoDialog.ql5Progression->setText("0");
+	_qdcCasinoDialog.ql6Progression->setText("0");
+	_qdcCasinoDialog.qlMoreProgression->setText("0");
+
+	RefreshStatus();
+} // on_qpbResetStatus_clicked
+
 const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 {
 	_qdcCasinoDialog.qgbSettings->setEnabled(false);
@@ -117,10 +139,15 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 	while (!_bStop) {
 		PlayRound();
 
-		if (_fStartingCash - _qdcCasinoDialog.qlCash->text().toFloat() > _sSettings->GetMaxLossToPlay()) {
-			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Maximum lost reached."));
+		if (_qdcCasinoDialog.qlCash->text().toFloat() - _fStartingCash > _sSettings->GetMaxWinToPlay()) {
+			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Maximum win reached."));
 			_bStop = true;
-		} // if
+		} else {
+			if (_fStartingCash - _qdcCasinoDialog.qlCash->text().toFloat() > _sSettings->GetMaxLossToPlay()) {
+				_qdcCasinoDialog.qpteLog->appendPlainText(tr("Maximum lost reached."));
+				_bStop = true;
+			} // if
+		} // if else
 	} // while
 
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Game stopped."));
@@ -233,9 +260,6 @@ const void CasinoDialog::PlayRound()
 		float fProfit = qAbs(_qdcCasinoDialog.qlCash->text().toFloat() - fOldCash);
 		if (fProfit > 0) {
 			_qdcCasinoDialog.qpteLog->insertPlainText(QString("%1.").arg(fProfit));
-			if (fProfit >= _sSettings->GetMaxWinToPlay()) {
-				_bStop = true;
-			} // if
 		} // if
 	} // if
 
