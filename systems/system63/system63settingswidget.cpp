@@ -7,6 +7,19 @@ const void System63SettingsWidget::LoadSettings() const
 	} else {
 		_qwsSettingsWidget.qrbBetOnRandom->setChecked(true);
 	} // if else
+
+	if (_s63sSettings->GetDozenColumnType() == System63Settings::DozenColumnTypeDozen) {
+		_qwsSettingsWidget.qrbDozen->setChecked(true);
+	} else {
+		if (_s63sSettings->GetDozenColumnType() == System63Settings::DozenColumnTypeColumn) {
+			_qwsSettingsWidget.qrbColumn->setChecked(true);
+		} else {
+			_qwsSettingsWidget.qrbBoth->setChecked(true);
+		} // if else
+	} // if else
+	_qwsSettingsWidget.qcbDozen3x->setChecked(_s63sSettings->GetDozen3x());
+	_qwsSettingsWidget.qcbColumn3x->setChecked(_s63sSettings->GetColumn3x());
+
 	_qwsSettingsWidget.qsbSameDozenColumnBeforeBet->setValue(_s63sSettings->GetSameDozenColumnBeforeBet());
 
 	if (_s63sSettings->GetProgressionType() == System63Settings::ProgressionTypeAuto) {
@@ -21,6 +34,36 @@ const void System63SettingsWidget::LoadSettings() const
 	_qwsSettingsWidget.qsbSameDozenColumnProgression->setValue(_s63sSettings->GetSameDozenColumnProgression());
 	_qwsSettingsWidget.qcbProgressionDozenColumnNotChanged->setChecked(_s63sSettings->GetProgressionDozenColumnNotChanged());
 } // LoadSettings
+
+const void System63SettingsWidget::on_qrbBetOnDozenColumn_toggled(bool checked) const
+{
+	_qwsSettingsWidget.qgbDozenColumn->setEnabled(checked);
+} // on_qrbBetOnDozenColumn_clicked
+
+const void System63SettingsWidget::on_qrbBetOnRandom_toggled(bool checked) const
+{
+	_qwsSettingsWidget.qgbDozenColumn->setEnabled(!checked);
+} // on_qrbBetOnRandom_clicked
+
+const void System63SettingsWidget::on_qrbBoth_toggled(bool checked) const
+{
+	if (checked) {
+		_qwsSettingsWidget.qcbDozen3x->setEnabled(true);
+		_qwsSettingsWidget.qcbColumn3x->setEnabled(true);
+	} // if
+} // on_qrbBoth_toggled
+
+const void System63SettingsWidget::on_qrbColumn_toggled(bool checked) const
+{
+	_qwsSettingsWidget.qcbDozen3x->setEnabled(!checked);
+	_qwsSettingsWidget.qcbColumn3x->setEnabled(checked);
+} // on_qrbColumn_toggled
+
+const void System63SettingsWidget::on_qrbDozen_toggled(bool checked) const
+{
+	_qwsSettingsWidget.qcbDozen3x->setEnabled(checked);
+	_qwsSettingsWidget.qcbColumn3x->setEnabled(!checked);
+} // on_qrbDozen_toggled
 
 const void System63SettingsWidget::on_qrbProgressionAuto_clicked(bool checked /* false */) const
 {
@@ -57,6 +100,19 @@ const void System63SettingsWidget::SaveSettings() const
 	} else {
 		_s63sSettings->SetBetOn(System63Settings::BetOnRandom);
 	} // if else
+
+	if (_qwsSettingsWidget.qrbDozen->isChecked()) {
+		_s63sSettings->SetDozenColumnType(System63Settings::DozenColumnTypeDozen);
+	} else {
+		if (_qwsSettingsWidget.qrbColumn->isChecked()) {
+			_s63sSettings->SetDozenColumnType(System63Settings::DozenColumnTypeColumn);
+		} else {
+			_s63sSettings->SetDozenColumnType(System63Settings::DozenColumnTypeBoth);
+		} // if else
+	} // if else
+	_s63sSettings->SetDozen3x(_qwsSettingsWidget.qcbDozen3x->isChecked());
+	_s63sSettings->SetColumn3x(_qwsSettingsWidget.qcbColumn3x->isChecked());
+
 	_s63sSettings->SetSameDozenColumnBeforeBet(_qwsSettingsWidget.qsbSameDozenColumnBeforeBet->value());
 
 	if (_qwsSettingsWidget.qrbProgressionAuto->isChecked()) {
