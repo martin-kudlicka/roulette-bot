@@ -2,8 +2,8 @@
 
 const void System63SettingsWidget::LoadSettings() const
 {
-	if (_s63sSettings->GetBetOn() == System63Settings::BetOnColumn) {
-		_qwsSettingsWidget.qrbBetOnColumn->setChecked(true);
+	if (_s63sSettings->GetBetOn() == System63Settings::BetOnDozenColumn) {
+		_qwsSettingsWidget.qrbBetOnDozenColumn->setChecked(true);
 	} else {
 		_qwsSettingsWidget.qrbBetOnRandom->setChecked(true);
 	} // if else
@@ -52,8 +52,8 @@ const void System63SettingsWidget::on_qsbProgression_valueChanged(int i) const
 
 const void System63SettingsWidget::SaveSettings() const
 {
-	if (_qwsSettingsWidget.qrbBetOnColumn->isChecked()) {
-		_s63sSettings->SetBetOn(System63Settings::BetOnColumn);
+	if (_qwsSettingsWidget.qrbBetOnDozenColumn->isChecked()) {
+		_s63sSettings->SetBetOn(System63Settings::BetOnDozenColumn);
 	} else {
 		_s63sSettings->SetBetOn(System63Settings::BetOnRandom);
 	} // if else

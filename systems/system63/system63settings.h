@@ -7,8 +7,7 @@ class System63Settings
 {
 	public:
 		enum eBetOn {
-			BetOnColumn,
-			BetOnDozen,
+			BetOnDozenColumn,
 			BetOnRandom
 		}; // eBetOn
 		enum eProgressionType {
