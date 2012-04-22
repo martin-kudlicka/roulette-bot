@@ -148,6 +148,8 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 				_bStop = true;
 			} // if
 		} // if else
+
+		QCoreApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	} // while
 
 	_qdcCasinoDialog.qpteLog->appendPlainText(tr("Game stopped."));
