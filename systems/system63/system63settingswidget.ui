@@ -50,9 +50,9 @@
      <item row="0" column="1">
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QRadioButton" name="qrbBetOnColumn">
+        <widget class="QRadioButton" name="qrbBetOnDozenColumn">
          <property name="text">
-          <string>Column</string>
+          <string>Dozen / column</string>
          </property>
         </widget>
        </item>
