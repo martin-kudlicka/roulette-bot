@@ -23,6 +23,11 @@ class System63SettingsWidget : public QWidget
 		const void LoadSettings() const;
 
 	private slots:
+		const void on_qrbBetOnDozenColumn_toggled(bool checked) const;
+		const void on_qrbBetOnRandom_toggled(bool checked) const;
+		const void on_qrbBoth_toggled(bool checked) const;
+		const void on_qrbColumn_toggled(bool checked) const;
+		const void on_qrbDozen_toggled(bool checked) const;
 		const void on_qrbProgressionAuto_clicked(bool checked = false) const;
 		const void on_qrbProgressionManual_clicked(bool checked = false) const;
 		const void on_qsbProgression_valueChanged(int i) const;

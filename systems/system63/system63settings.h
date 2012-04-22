@@ -10,6 +10,11 @@ class System63Settings
 			BetOnDozenColumn,
 			BetOnRandom
 		}; // eBetOn
+		enum eDozenColumnType {
+			DozenColumnTypeDozen,
+			DozenColumnTypeColumn,
+			DozenColumnTypeBoth
+		}; // eDozenColumnType
 		enum eProgressionType {
 			ProgressionTypeAuto,
 			ProgressionTypeManual
@@ -18,6 +23,9 @@ class System63Settings
 		System63Settings();
 
 		const eBetOn GetBetOn() const;
+		const bool GetColumn3x() const;
+		const bool GetDozen3x() const;
+		const eDozenColumnType GetDozenColumnType() const;
 		const int GetProgressionAutoValue() const;
 		const bool GetProgressionDozenColumnNotChanged() const;
 		const QString GetProgressionManualSequence() const;
@@ -25,6 +33,9 @@ class System63Settings
 		const int GetSameDozenColumnBeforeBet() const;
 		const int GetSameDozenColumnProgression() const;
 		const void SetBetOn(const eBetOn &pBetOn);
+		const void SetColumn3x(const bool &pEnabled);
+		const void SetDozen3x(const bool &pEnabled);
+		const void SetDozenColumnType(const eDozenColumnType &pType);
 		const void SetProgressionAutoValue(const int &pValue);
 		const void SetProgressionDozenColumnNotChanged(const bool &pValue);
 		const void SetProgressionManualSequence(const QString &pSequence);

@@ -1,6 +1,9 @@
 #include "system63settings.h"
 
 const QString BET_ON = "BetOn";
+const QString COLUMN_3X = "Column3x";
+const QString DOZEN_3X = "Dozen3x";
+const QString DOZEN_COLUMN_TYPE = "DozenColumnType";
 const QString PROGRESSION_AUTO_VALUE = "ProgressionAutoValue";
 const QString PROGRESSION_DOZEN_COLUMN_NOT_CHANGED = "ProgressionDozenColumnNotChanged";
 const QString PROGRESSION_MANUAL_SEQUENCE = "ProgressionManualSequence";
@@ -10,12 +13,27 @@ const QString SAME_DOZEN_COLUMN_PROGRESSION = "SameDozenColumnProgression";
 
 const System63Settings::eBetOn System63Settings::GetBetOn() const
 {
-	return static_cast<eBetOn>(_ssSettings.value(BET_ON, BetOnColumn).toInt());
+	return static_cast<eBetOn>(_ssSettings.value(BET_ON, BetOnDozenColumn).toInt());
 } // GetBetOn
+
+const bool System63Settings::GetColumn3x() const
+{
+	return _ssSettings.value(COLUMN_3X, false).toBool();
+} // GetColumn3x
+
+const bool System63Settings::GetDozen3x() const
+{
+	return _ssSettings.value(DOZEN_3X, false).toBool();
+} // GetDozen3x
+
+const System63Settings::eDozenColumnType System63Settings::GetDozenColumnType() const
+{
+	return static_cast<eDozenColumnType>(_ssSettings.value(DOZEN_COLUMN_TYPE, DozenColumnTypeColumn).toInt());
+} // GetDozenColumnType
 
 const int System63Settings::GetProgressionAutoValue() const
 {
-	return _ssSettings.value(PROGRESSION_AUTO_VALUE, 2).toInt();
+	return _ssSettings.value(PROGRESSION_AUTO_VALUE, 4).toInt();
 } // GetProgressionAutoValue
 
 const bool System63Settings::GetProgressionDozenColumnNotChanged() const
@@ -25,7 +43,7 @@ const bool System63Settings::GetProgressionDozenColumnNotChanged() const
 
 const QString System63Settings::GetProgressionManualSequence() const
 {
-	return _ssSettings.value(PROGRESSION_MANUAL_SEQUENCE, "1;3").toString();
+	return _ssSettings.value(PROGRESSION_MANUAL_SEQUENCE, "1;3;9;27").toString();
 } // GetProgressionManualSequence
 
 const System63Settings::eProgressionType System63Settings::GetProgressionType() const
@@ -47,6 +65,21 @@ const void System63Settings::SetBetOn(const eBetOn &pBetOn)
 {
 	_ssSettings.setValue(BET_ON, pBetOn);
 } // SetBetOn
+
+const void System63Settings::SetColumn3x(const bool &pEnabled)
+{
+	_ssSettings.setValue(COLUMN_3X, pEnabled);
+} // SetColumn3x
+
+const void System63Settings::SetDozen3x(const bool &pEnabled)
+{
+	_ssSettings.setValue(DOZEN_3X, pEnabled);
+} // SetDozen3x
+
+const void System63Settings::SetDozenColumnType(const eDozenColumnType &pType)
+{
+	_ssSettings.setValue(DOZEN_COLUMN_TYPE, pType);
+} // SetDozenColumnType
 
 const void System63Settings::SetProgressionAutoValue(const int &pValue)
 {
