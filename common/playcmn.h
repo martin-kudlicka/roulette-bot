@@ -13,11 +13,15 @@ class PlayCmn
 			BetPositionColorRed,
 			BetPositionColumn1,
 			BetPositionColumn2,
-			BetPositionColumn3
+			BetPositionColumn3,
+			BetPositionDozen1,
+			BetPositionDozen2,
+			BetPositionDozen3
 		}; // eBetPosition
 		enum eSpinResultType {
-			SpinResultTypeNoBet = 1,
-			SpinResultTypeWon = 2,
+			SpinResultTypeNone,
+			SpinResultTypeNoBet,
+			SpinResultTypeWon,
 			SpinResultTypeLost = 4,
 			SpinResultTypeProgression = 8
 		}; // eSpinResultType

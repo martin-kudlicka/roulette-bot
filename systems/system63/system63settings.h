@@ -11,7 +11,7 @@ class System63Settings
 			BetOnRandom
 		}; // eBetOn
 		enum eDozenColumnType {
-			DozenColumnTypeDozen,
+			DozenColumnTypeDozen = 1,
 			DozenColumnTypeColumn,
 			DozenColumnTypeBoth
 		}; // eDozenColumnType
