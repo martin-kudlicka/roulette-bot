@@ -23,8 +23,8 @@ class MartingaleSettingsWidget : public QWidget
 		const void LoadSettings() const;
 
 	private slots:
-		const void on_qrbProgressionAuto_clicked(bool checked = false) const;
-		const void on_qrbProgressionManual_clicked(bool checked = false) const;
+		const void on_qrbProgressionAuto_toggled(bool checked) const;
+		const void on_qrbProgressionManual_toggled(bool checked) const;
 		const void on_qsbProgression_valueChanged(int i) const;
 }; // MartingaleSettingsWidget
 
