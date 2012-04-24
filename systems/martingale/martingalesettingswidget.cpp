@@ -35,14 +35,14 @@ const void MartingaleSettingsWidget::on_qrbProgressionManual_toggled(bool checke
 const void MartingaleSettingsWidget::on_qsbProgression_valueChanged(int i) const
 {
 	QString qsSequence;
-	int iProgression = 1;
-	for (int iValue = 0; iValue < i; iValue++) {
+	quint8 qui8Progression = 1;
+	for (quint8 qui8Value = 0; qui8Value < i; qui8Value++) {
 		if (!qsSequence.isEmpty()) {
 			qsSequence += PROGRESSION_SEQUENCE_SEPARATOR;
 		} // if
 
-		qsSequence += QString::number(iProgression);
-		iProgression *= 2;
+		qsSequence += QString::number(qui8Progression);
+		qui8Progression *= 2;
 	} // for
 
 	_qwsSettingsWidget.qleProgression->setText(qsSequence);

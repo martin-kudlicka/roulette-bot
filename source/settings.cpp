@@ -8,22 +8,22 @@ const QString MAX_WIN_TO_PLAY = "maxwintoplay";
 const QString STOP_ON_LOSS = "stoponloss";
 const QString TOKENS_PER_BET = "TokensPerBet";
 
-const int Settings::GetMaxLossToPlay()
+const quint8 Settings::GetMaxLossToPlay()
 {
 	_qsSettings.beginGroup(GROUP_GENERAL);
-	int iMaxLoss = _qsSettings.value(MAX_LOSS_TO_PLAY, 1).toInt();
+	quint8 qui8MaxLoss = _qsSettings.value(MAX_LOSS_TO_PLAY, 1).toUInt();
 	_qsSettings.endGroup();
 
-	return iMaxLoss;
+	return qui8MaxLoss;
 } // GetMaxLossToPlay
 
-const int Settings::GetMaxWinToPlay()
+const quint8 Settings::GetMaxWinToPlay()
 {
 	_qsSettings.beginGroup(GROUP_GENERAL);
-	int iMaxWin = _qsSettings.value(MAX_WIN_TO_PLAY, 10).toInt();
+	quint8 qui8MaxWin = _qsSettings.value(MAX_WIN_TO_PLAY, 10).toUInt();
 	_qsSettings.endGroup();
 
-	return iMaxWin;
+	return qui8MaxWin;
 } // GetMaxWinToPlay
 
 const bool Settings::GetStopOnLoss()
@@ -35,23 +35,23 @@ const bool Settings::GetStopOnLoss()
 	return bStop;
 } // GetStopOnLoss
 
-const int Settings::GetTokensPerBet()
+const quint8 Settings::GetTokensPerBet()
 {
 	_qsSettings.beginGroup(GROUP_GENERAL);
-	int iTokens = _qsSettings.value(TOKENS_PER_BET, 1).toInt();
+	quint8 qui8Tokens = _qsSettings.value(TOKENS_PER_BET, 1).toUInt();
 	_qsSettings.endGroup();
 
-	return iTokens;
+	return qui8Tokens;
 } // GetTokensPerBet
 
-const void Settings::SetMaxLossToPlay(const int &pValue)
+const void Settings::SetMaxLossToPlay(const quint8 &pValue)
 {
 	_qsSettings.beginGroup(GROUP_GENERAL);
 	_qsSettings.setValue(MAX_LOSS_TO_PLAY, pValue);
 	_qsSettings.endGroup();
 } // SetMaxLossToPlay
 
-const void Settings::SetMaxWinToPlay(const int &pValue)
+const void Settings::SetMaxWinToPlay(const quint8 &pValue)
 {
 	_qsSettings.beginGroup(GROUP_GENERAL);
 	_qsSettings.setValue(MAX_WIN_TO_PLAY, pValue);
@@ -69,7 +69,7 @@ Settings::Settings() : _qsSettings(ORGANIZATION, APPLICATION)
 {
 } // Settings
 
-const void Settings::SetTokensPerBet(const int &pTokens)
+const void Settings::SetTokensPerBet(const quint8 &pTokens)
 {
 	_qsSettings.beginGroup(GROUP_GENERAL);
 	_qsSettings.setValue(TOKENS_PER_BET, pTokens);

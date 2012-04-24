@@ -2,7 +2,7 @@
 
 const void System63StatisticsWidget::Increment(QLabel *pLabel) const
 {
-	pLabel->setText(QString::number(pLabel->text().toInt() + 1));
+	pLabel->setText(QString::number(pLabel->text().toUInt() + 1));
 } // Increment
 
 const void System63StatisticsWidget::Increment(const eCounter &pCounter) const
@@ -43,7 +43,7 @@ const void System63StatisticsWidget::Reset() const
 	_qws63swWidget.qlMaxSameDozenColumnInRow->setText("0");
 } // Reset
 
-const void System63StatisticsWidget::SetMaxSameInRow(const int &pValue) const
+const void System63StatisticsWidget::SetMaxSameInRow(const quint8 &pValue) const
 {
 	_qws63swWidget.qlMaxSameDozenColumnInRow->setText(QString::number(pValue));
 } // SetMaxSameInRow

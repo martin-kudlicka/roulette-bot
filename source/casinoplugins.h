@@ -6,8 +6,8 @@
 class CasinoPlugins
 {
 	public:
-		CasinoInterface *GetCasino(const int &pIndex) const;
-		const int GetCount() const;
+		CasinoInterface *GetCasino(const quint8 &pIndex) const;
+		const quint8 GetCount() const;
 		const void Load();
 
 	private:

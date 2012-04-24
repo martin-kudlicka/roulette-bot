@@ -8,8 +8,8 @@ class SpinGeneratorSettings
 	public:
 		SpinGeneratorSettings();
 
-		const int GetStartingCash() const;
-		const void SetStartingCash(const int &pCash);
+		const quint8 GetStartingCash() const;
+		const void SetStartingCash(const quint8 &pCash);
 
 	private:
 		CasinoSettings _csSettings;

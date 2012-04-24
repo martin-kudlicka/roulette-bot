@@ -18,19 +18,19 @@ class MartingaleSettings
 		MartingaleSettings();
 
 		const eBetStyle GetBetStyle() const;
-		const int GetProgressionAutoValue() const;
+		const quint8 GetProgressionAutoValue() const;
 		const bool GetProgressionColorNotChanged() const;
 		const QString GetProgressionManualSequence() const;
 		const eProgressionType GetProgressionType() const;
-		const int GetSameColorBeforeBet() const;
-		const int GetSameColorProgression() const;
+		const quint8 GetSameColorBeforeBet() const;
+		const quint8 GetSameColorProgression() const;
 		const void SetBetStyle(const eBetStyle &pBetStyle);
-		const void SetProgressionAutoValue(const int &pValue);
+		const void SetProgressionAutoValue(const quint8 &pValue);
 		const void SetProgressionColorNotChanged(const bool &pValue);
 		const void SetProgressionManualSequence(const QString &pSequence);
 		const void SetProgressionType(const eProgressionType &pType);
-		const void SetSameColorBeforeBet(const int &pCount);
-		const void SetSameColorProgression(const int &pCount);
+		const void SetSameColorBeforeBet(const quint8 &pCount);
+		const void SetSameColorProgression(const quint8 &pCount);
 
 	private:
 		SystemSettings _ssSettings;

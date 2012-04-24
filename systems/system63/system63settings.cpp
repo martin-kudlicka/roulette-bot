@@ -31,9 +31,9 @@ const System63Settings::eDozenColumnType System63Settings::GetDozenColumnType() 
 	return static_cast<eDozenColumnType>(_ssSettings.value(DOZEN_COLUMN_TYPE, DozenColumnTypeColumn).toInt());
 } // GetDozenColumnType
 
-const int System63Settings::GetProgressionAutoValue() const
+const quint8 System63Settings::GetProgressionAutoValue() const
 {
-	return _ssSettings.value(PROGRESSION_AUTO_VALUE, 4).toInt();
+	return _ssSettings.value(PROGRESSION_AUTO_VALUE, 4).toUInt();
 } // GetProgressionAutoValue
 
 const bool System63Settings::GetProgressionDozenColumnNotChanged() const
@@ -51,14 +51,14 @@ const System63Settings::eProgressionType System63Settings::GetProgressionType() 
 	return static_cast<eProgressionType>(_ssSettings.value(PROGRESSION_TYPE, ProgressionTypeAuto).toInt());
 } // GetProgressionType
 
-const int System63Settings::GetSameDozenColumnBeforeBet() const
+const quint8 System63Settings::GetSameDozenColumnBeforeBet() const
 {
-	return _ssSettings.value(SAME_DOZEN_COLUMN_BEFORE_BET, 2).toInt();
+	return _ssSettings.value(SAME_DOZEN_COLUMN_BEFORE_BET, 2).toUInt();
 } // GetSameDozenColumnBeforeBet
 
-const int System63Settings::GetSameDozenColumnProgression() const
+const quint8 System63Settings::GetSameDozenColumnProgression() const
 {
-	return _ssSettings.value(SAME_DOZEN_COLUMN_PROGRESSION, 2).toInt();
+	return _ssSettings.value(SAME_DOZEN_COLUMN_PROGRESSION, 2).toUInt();
 } // GetSameDozenColumnProgression
 
 const void System63Settings::SetBetOn(const eBetOn &pBetOn)
@@ -81,7 +81,7 @@ const void System63Settings::SetDozenColumnType(const eDozenColumnType &pType)
 	_ssSettings.setValue(DOZEN_COLUMN_TYPE, pType);
 } // SetDozenColumnType
 
-const void System63Settings::SetProgressionAutoValue(const int &pValue)
+const void System63Settings::SetProgressionAutoValue(const quint8 &pValue)
 {
 	_ssSettings.setValue(PROGRESSION_AUTO_VALUE, pValue);
 } // SetProgressionAutoValue
@@ -101,12 +101,12 @@ const void System63Settings::SetProgressionType(const eProgressionType &pType)
 	_ssSettings.setValue(PROGRESSION_TYPE, pType);
 } // SetProgressionType
 
-const void System63Settings::SetSameDozenColumnBeforeBet(const int &pCount)
+const void System63Settings::SetSameDozenColumnBeforeBet(const quint8 &pCount)
 {
 	_ssSettings.setValue(SAME_DOZEN_COLUMN_BEFORE_BET, pCount);
 } // SetSameDozenColumnBeforeBet
 
-const void System63Settings::SetSameDozenColumnProgression(const int &pCount)
+const void System63Settings::SetSameDozenColumnProgression(const quint8 &pCount)
 {
 	_ssSettings.setValue(SAME_DOZEN_COLUMN_PROGRESSION, pCount);
 } // SetSameDozenColumnProgression

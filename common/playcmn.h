@@ -29,10 +29,10 @@ class PlayCmn
 
 		struct sSpinResult {
 			qfSpinResultTypes esrtType;
-			int iBetProfit;
+			quint8 qui8BetProfit;
 		}; // sSpinResult
 
-		typedef QHash<eBetPosition, int> tBetHash;
+		typedef QHash<eBetPosition, quint8> tBetHash;
 }; // PlayCmn
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(PlayCmn::qfSpinResultTypes)

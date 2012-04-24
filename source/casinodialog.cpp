@@ -27,8 +27,8 @@ CasinoDialog::CasinoDialog(CasinoInterface *pCasino, const SystemPlugins *pSyste
 
 const void CasinoDialog::IncreaseCounter(QLabel *pCounter) const
 {
-	int iCount = pCounter->text().toInt() + 1;
-	pCounter->setText(QString::number(iCount));
+	quint16 qui16Count = pCounter->text().toUInt() + 1;
+	pCounter->setText(QString::number(qui16Count));
 } // IncreaseCounter
 
 const void CasinoDialog::IncreaseProgressionCounter(const quint8 &pProgression) const
@@ -59,9 +59,9 @@ const void CasinoDialog::IncreaseProgressionCounter(const quint8 &pProgression) 
 
 const void CasinoDialog::InitSettings() const
 {
-	for (int iSystem = 0; iSystem < _spSystems->GetCount(); iSystem++) {
-		const SystemInterface *siSystem = _spSystems->GetSystem(iSystem);
-		_qdcCasinoDialog.qcbSystems->addItem(siSystem->GetName(), reinterpret_cast<unsigned int>(siSystem));
+	for (quint8 qui8System = 0; qui8System < _spSystems->GetCount(); qui8System++) {
+		const SystemInterface *siSystem = _spSystems->GetSystem(qui8System);
+		_qdcCasinoDialog.qcbSystems->addItem(siSystem->GetName(), reinterpret_cast<quintptr>(siSystem));
 	} // for
 } // InitSettings
 

@@ -8,14 +8,14 @@ class Settings
 	public:
 		Settings();
 
-		const int GetMaxLossToPlay();
-		const int GetMaxWinToPlay();
+		const quint8 GetMaxLossToPlay();
+		const quint8 GetMaxWinToPlay();
 		const bool GetStopOnLoss();
-		const int GetTokensPerBet();
-		const void SetMaxLossToPlay(const int &pValue);
-		const void SetMaxWinToPlay(const int &pValue);
+		const quint8 GetTokensPerBet();
+		const void SetMaxLossToPlay(const quint8 &pValue);
+		const void SetMaxWinToPlay(const quint8 &pValue);
 		const void SetStopOnLoss(const bool &pStop);
-		const void SetTokensPerBet(const int &pTokens);
+		const void SetTokensPerBet(const quint8 &pTokens);
 
 	private:
 		QSettings _qsSettings;

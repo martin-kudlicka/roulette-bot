@@ -13,14 +13,14 @@ class Martingale : public SystemInterface
 	private:
 		PlayCmn::eBetPosition _ebpLastPosition;
 		PlayCmn::eBetPosition _ebpLastProgressionPosition;
-		int _iMaxSameInRow;
-		int _iSameColorBeforeBet;
-		int _iSameColorProgression;
-		int _iSameInRow;
 		MartingaleSettings _msSettings;
 		MartingaleStatisticsWidget _mswStatistics;
 		QList<quint8> _qlProgressionSequence;
+		quint8 _qui8MaxSameInRow;
 		quint8 _qui8ProgressionIndex;
+		quint8 _qui8SameColorBeforeBet;
+		quint8 _qui8SameColorProgression;
+		quint8 _qui8SameInRow;
 		PlayCmn::tBetHash _tbhLastBet;
 
 		virtual const PlayCmn::sSpinResult AnalyzeSpin(const quint8 &pSpin);
