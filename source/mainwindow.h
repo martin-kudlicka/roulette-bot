@@ -16,14 +16,14 @@ class MainWindow : public QMainWindow
 	private:
 		CasinoModel _cmCasinos;
 		CasinoPlugins _cpCasinos;
-		QHash<int, CasinoDialog *> _qhOpenedCasinos;
+		QHash<quint8, CasinoDialog *> _qhOpenedCasinos;
 		Settings _sSettings;
 		SystemPlugins _spSystems;
 		Ui::qmwMain _qmwmMainWindow;
 
 	private slots:
 		const void on_cdCasinoDialog_finished(int result);
-		const void on_cmCasinos_ActiveChanged(const int &pRow, const bool &pActive) const;
+		const void on_cmCasinos_ActiveChanged(const quint8 &pRow, const bool &pActive) const;
 		const void on_qaSettings_triggered(bool checked = false);
 		const void on_qpbPlay_clicked(bool checked = false);
 		const void on_qtvCasinos_doubleClicked(const QModelIndex &index);

@@ -11,34 +11,34 @@ const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 		if (_tbhLastBet.isEmpty()) {
 			// no bet made
 			srResult.esrtType = PlayCmn::SpinResultTypeNoBet;
-			srResult.iBetProfit = 0;
+			srResult.qui8BetProfit = 0;
 
-			if (_iSameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
+			if (_qui8SameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
 				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
-					_iSameColorBeforeBet++;
+					_qui8SameColorBeforeBet++;
 				} else {
-					_iSameColorBeforeBet = 1;
+					_qui8SameColorBeforeBet = 1;
 				} // if else
 
 				break;
 			} // if
 
-			if (_iSameColorProgression < _msSettings.GetSameColorProgression()) {
+			if (_qui8SameColorProgression < _msSettings.GetSameColorProgression()) {
 				if (_msSettings.GetProgressionColorNotChanged()) {
 					if (_ebpLastPosition == ebpPosition) {
-						_iSameColorProgression++;
+						_qui8SameColorProgression++;
 					} else {
 						srResult.esrtType |= PlayCmn::SpinResultTypeLost;
-						_iSameColorBeforeBet = 1;
-						_iSameColorProgression = 0;
+						_qui8SameColorBeforeBet = 1;
+						_qui8SameColorProgression = 0;
 						_qui8ProgressionIndex = 0;
 					} // if else
 				} else {
-					if (_iSameColorProgression == 0 || _ebpLastProgressionPosition != ebpPosition) {
+					if (_qui8SameColorProgression == 0 || _ebpLastProgressionPosition != ebpPosition) {
 						_ebpLastProgressionPosition = ebpPosition;
-						_iSameColorProgression = 1;
+						_qui8SameColorProgression = 1;
 					} else {
-						_iSameColorProgression++;
+						_qui8SameColorProgression++;
 					} // if else
 				} // if else
 
@@ -49,46 +49,46 @@ const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 			if (_tbhLastBet.contains(ebpPosition)) {
 				// won
 				srResult.esrtType = PlayCmn::SpinResultTypeWon;
-				srResult.iBetProfit = _tbhLastBet.value(ebpPosition) * 2;
+				srResult.qui8BetProfit = _tbhLastBet.value(ebpPosition) * 2;
 
-				_iSameColorBeforeBet = 0;
-				_iSameColorProgression = 0;
+				_qui8SameColorBeforeBet = 0;
+				_qui8SameColorProgression = 0;
 				_qui8ProgressionIndex = 0;
 
 				break;
 			} else {
 				// lost or progression
-				_iSameColorProgression = 0;
+				_qui8SameColorProgression = 0;
 
 				if (_qui8ProgressionIndex == _qlProgressionSequence.size() - 1) {
 					srResult.esrtType = PlayCmn::SpinResultTypeLost;
 
-					_iSameColorBeforeBet = 0;
+					_qui8SameColorBeforeBet = 0;
 					_qui8ProgressionIndex = 0;
 				} else {
 					srResult.esrtType = PlayCmn::SpinResultTypeProgression;
 
 					_qui8ProgressionIndex++;
 				} // if else
-				srResult.iBetProfit = 0;
+				srResult.qui8BetProfit = 0;
 
 				break;
 			} // if else
 		} // if else
 	} while (false);
 
-	_iSameInRow++;
+	_qui8SameInRow++;
 	if (_ebpLastPosition != ebpPosition) {
-		if (_iMaxSameInRow < _iSameInRow) {
-			_mswStatistics.SetMaxSameInRow(_iSameInRow);
-			_iMaxSameInRow = _iSameInRow;
+		if (_qui8MaxSameInRow < _qui8SameInRow) {
+			_mswStatistics.SetMaxSameInRow(_qui8SameInRow);
+			_qui8MaxSameInRow = _qui8SameInRow;
 		} // if
-		if (_iSameInRow < MartingaleStatisticsWidget::CounterMoreSameInRow) {
-			_mswStatistics.Increment(static_cast<MartingaleStatisticsWidget::eCounter>(MartingaleStatisticsWidget::Counter1SameInRow + _iSameInRow - 1));
+		if (_qui8SameInRow < MartingaleStatisticsWidget::CounterMoreSameInRow) {
+			_mswStatistics.Increment(static_cast<MartingaleStatisticsWidget::eCounter>(MartingaleStatisticsWidget::Counter1SameInRow + _qui8SameInRow - 1));
 		} else {
 			_mswStatistics.Increment(MartingaleStatisticsWidget::CounterMoreSameInRow);
 		} // if else
-		_iSameInRow = 0;
+		_qui8SameInRow = 0;
 
 		_ebpLastPosition = ebpPosition;
 	} // if else
@@ -138,11 +138,11 @@ const PlayCmn::tBetHash Martingale::GetBet()
 {
 	_tbhLastBet.clear();
 
-	if (_iSameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
+	if (_qui8SameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
 		return _tbhLastBet;
 	} // if
 
-	if (_qui8ProgressionIndex > 0 && _iSameColorProgression < _msSettings.GetSameColorProgression()) {
+	if (_qui8ProgressionIndex > 0 && _qui8SameColorProgression < _msSettings.GetSameColorProgression()) {
 		return _tbhLastBet;
 	} // if
 
@@ -184,10 +184,10 @@ const void Martingale::Reset(const qfResetContents &pResetContents)
 	if (pResetContents & ResetContentCore) {
 		_ebpLastPosition = PlayCmn::BetPositionNone;
 		_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
-		_iMaxSameInRow = 0;
-		_iSameColorBeforeBet = 0;
-		_iSameColorProgression = 0;
-		_iSameInRow = 0;
+		_qui8MaxSameInRow = 0;
+		_qui8SameColorBeforeBet = 0;
+		_qui8SameColorProgression = 0;
+		_qui8SameInRow = 0;
 
 		_qlProgressionSequence.clear();
 		QStringList qslProgressionSequence = _msSettings.GetProgressionManualSequence().split(PROGRESSION_SEQUENCE_SEPARATOR);
@@ -198,7 +198,7 @@ const void Martingale::Reset(const qfResetContents &pResetContents)
 	} // if
 
 	if (pResetContents & ResetContentStatistics) {
-		_iMaxSameInRow;
+		_qui8MaxSameInRow;
 		_mswStatistics.Reset();
 	} // if
 } // Reset

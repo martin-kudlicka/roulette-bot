@@ -30,7 +30,7 @@ class CasinoModel : public QAbstractItemModel
 		virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;
 
 	signals:
-		void ActiveChanged(const int &pRow, const bool &pActive);
+		void ActiveChanged(const quint8 &pRow, const bool &pActive);
 
 	private slots:
 		const void on_ciCasino_GameActiveChanged(const bool &pActive);

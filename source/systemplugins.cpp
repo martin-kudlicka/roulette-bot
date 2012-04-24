@@ -6,12 +6,12 @@
 
 const QString DIR_SYSTEMS = "systems";
 
-const int SystemPlugins::GetCount() const
+const quint8 SystemPlugins::GetCount() const
 {
 	return _qlSystems.size();
 } // GetCount
 
-SystemInterface *SystemPlugins::GetSystem(const int &pIndex) const
+SystemInterface *SystemPlugins::GetSystem(const quint8 &pIndex) const
 {
 	return _qlSystems.at(pIndex);
 } // GetCasino

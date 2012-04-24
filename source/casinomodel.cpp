@@ -50,11 +50,11 @@ QModelIndex CasinoModel::index(int row, int column, const QModelIndex &parent /*
 
 const void CasinoModel::on_ciCasino_GameActiveChanged(const bool &pActive)
 {
-	for (int iRow = 0; iRow < rowCount(); iRow++) {
-		QModelIndex qmiIndex = index(iRow, ColumnActive);
+	for (quint8 qui8Row = 0; qui8Row < rowCount(); qui8Row++) {
+		QModelIndex qmiIndex = index(qui8Row, ColumnActive);
 		if (qmiIndex.internalPointer() == sender()) {
 			emit dataChanged(qmiIndex, qmiIndex);
-			emit ActiveChanged(iRow, pActive);
+			emit ActiveChanged(qui8Row, pActive);
 		} // if
 	} // for
 } // on_ciCasino_GameActiveChanged
@@ -79,8 +79,8 @@ const void CasinoModel::SetCasinos(const CasinoPlugins *pCasinos)
 
 	_cpCasinos = pCasinos;
 
-	for (int iCasino = 0; iCasino < pCasinos->GetCount(); iCasino++) {
-		const CasinoInterface *ciCasino = pCasinos->GetCasino(iCasino);
+	for (quint8 qui8Casino = 0; qui8Casino < pCasinos->GetCount(); qui8Casino++) {
+		const CasinoInterface *ciCasino = pCasinos->GetCasino(qui8Casino);
 		connect(ciCasino, SIGNAL(GameActiveChanged(const bool &)), SLOT(on_ciCasino_GameActiveChanged(const bool &)));
 	} // for
 

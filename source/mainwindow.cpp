@@ -12,19 +12,19 @@ MainWindow::MainWindow(QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 
 
 	_spSystems.Load();
 
-	connect(&_cmCasinos, SIGNAL(ActiveChanged(const int &, const bool &)), SLOT(on_cmCasinos_ActiveChanged(const int &, const bool &)));
+	connect(&_cmCasinos, SIGNAL(ActiveChanged(const quint8 &, const bool &)), SLOT(on_cmCasinos_ActiveChanged(const quint8 &, const bool &)));
 	connect(_qmwmMainWindow.qtvCasinos->selectionModel(), SIGNAL(selectionChanged(const QItemSelection &, const QItemSelection &)), SLOT(on_qtvCasinosSelectionModel_selectionChanged(const QItemSelection &, const QItemSelection &)));
 } // MainWindow
 
 const void MainWindow::on_cdCasinoDialog_finished(int result)
 {
 	CasinoDialog *cdCasino = qobject_cast<CasinoDialog *>(sender());
-	int iRow = _qhOpenedCasinos.key(cdCasino);
-	_qhOpenedCasinos.remove(iRow);
+	quint8 qui8Row = _qhOpenedCasinos.key(cdCasino);
+	_qhOpenedCasinos.remove(qui8Row);
 	cdCasino->deleteLater();
 } // on_cdCasinoDialog_finished
 
-const void MainWindow::on_cmCasinos_ActiveChanged(const int &pRow, const bool &pActive) const
+const void MainWindow::on_cmCasinos_ActiveChanged(const quint8 &pRow, const bool &pActive) const
 {
 	if (_qmwmMainWindow.qtvCasinos->selectionModel()->hasSelection() && _qmwmMainWindow.qtvCasinos->currentIndex().row() == pRow) {
 		_qmwmMainWindow.qpbPlay->setEnabled(pActive);
@@ -39,19 +39,19 @@ const void MainWindow::on_qaSettings_triggered(bool checked /* false */)
 
 const void MainWindow::on_qpbPlay_clicked(bool checked /* false */)
 {
-	int iRow = _qmwmMainWindow.qtvCasinos->currentIndex().row();
+	quint8 qui8Row = _qmwmMainWindow.qtvCasinos->currentIndex().row();
 
 	CasinoDialog *cdCasino;
-	if (_qhOpenedCasinos.contains(iRow)) {
-		cdCasino = _qhOpenedCasinos.value(iRow);
+	if (_qhOpenedCasinos.contains(qui8Row)) {
+		cdCasino = _qhOpenedCasinos.value(qui8Row);
 		cdCasino->raise();
 	} else {
-		CasinoInterface *ciCasino = _cpCasinos.GetCasino(iRow);
+		CasinoInterface *ciCasino = _cpCasinos.GetCasino(qui8Row);
 		cdCasino = new CasinoDialog(ciCasino, &_spSystems, &_sSettings, this);
 
 		connect(cdCasino, SIGNAL(finished(int)), SLOT(on_cdCasinoDialog_finished(int)));
 
-		_qhOpenedCasinos.insert(iRow, cdCasino);
+		_qhOpenedCasinos.insert(qui8Row, cdCasino);
 
 		cdCasino->show();
 	} // if else

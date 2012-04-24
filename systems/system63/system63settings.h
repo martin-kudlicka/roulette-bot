@@ -26,22 +26,22 @@ class System63Settings
 		const bool GetColumn3x() const;
 		const bool GetDozen3x() const;
 		const eDozenColumnType GetDozenColumnType() const;
-		const int GetProgressionAutoValue() const;
+		const quint8 GetProgressionAutoValue() const;
 		const bool GetProgressionDozenColumnNotChanged() const;
 		const QString GetProgressionManualSequence() const;
 		const eProgressionType GetProgressionType() const;
-		const int GetSameDozenColumnBeforeBet() const;
-		const int GetSameDozenColumnProgression() const;
+		const quint8 GetSameDozenColumnBeforeBet() const;
+		const quint8 GetSameDozenColumnProgression() const;
 		const void SetBetOn(const eBetOn &pBetOn);
 		const void SetColumn3x(const bool &pEnabled);
 		const void SetDozen3x(const bool &pEnabled);
 		const void SetDozenColumnType(const eDozenColumnType &pType);
-		const void SetProgressionAutoValue(const int &pValue);
+		const void SetProgressionAutoValue(const quint8 &pValue);
 		const void SetProgressionDozenColumnNotChanged(const bool &pValue);
 		const void SetProgressionManualSequence(const QString &pSequence);
 		const void SetProgressionType(const eProgressionType &pType);
-		const void SetSameDozenColumnBeforeBet(const int &pCount);
-		const void SetSameDozenColumnProgression(const int &pCount);
+		const void SetSameDozenColumnBeforeBet(const quint8 &pCount);
+		const void SetSameDozenColumnProgression(const quint8 &pCount);
 
 	private:
 		SystemSettings _ssSettings;

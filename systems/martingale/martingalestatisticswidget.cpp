@@ -2,7 +2,7 @@
 
 const void MartingaleStatisticsWidget::Increment(QLabel *pLabel) const
 {
-	pLabel->setText(QString::number(pLabel->text().toInt() + 1));
+	pLabel->setText(QString::number(pLabel->text().toUInt() + 1));
 } // Increment
 
 const void MartingaleStatisticsWidget::Increment(const eCounter &pCounter) const
@@ -55,7 +55,7 @@ const void MartingaleStatisticsWidget::Reset() const
 	_qwmswWidget.qlMaxSameColorInRow->setText("0");
 } // Reset
 
-const void MartingaleStatisticsWidget::SetMaxSameInRow(const int &pValue) const
+const void MartingaleStatisticsWidget::SetMaxSameInRow(const quint8 &pValue) const
 {
 	_qwmswWidget.qlMaxSameColorInRow->setText(QString::number(pValue));
 } // SetMaxSameInRow

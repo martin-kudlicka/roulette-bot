@@ -23,21 +23,21 @@ BOOL WINAPI DllMain(__in HINSTANCE hinstDLL, __in DWORD fdwReason, __in LPVOID l
 } // DllMain
 #endif
 
-const int Unibet::CheckForTournaments(const QPixmap &pPixmap) const
+const quint16 Unibet::CheckForTournaments(const QPixmap &pPixmap) const
 {
 	QImage qiImage = pPixmap.toImage();
 
-	int iTournaments = 0;
+	quint16 qui16Tournaments = 0;
 	do {
-		QRgb qrgbRgb = qiImage.pixel(qiImage.width() - iTournaments - 1, qiImage.height() / 2);
+		QRgb qrgbRgb = qiImage.pixel(qiImage.width() - qui16Tournaments - 1, qiImage.height() / 2);
 		if (qrgbRgb == 0xFF1F1F1F) {
-			iTournaments++;
+			qui16Tournaments++;
 		} else {
 			break;
 		} // if else
 	} while (true);
 
-	return iTournaments;
+	return qui16Tournaments;
 } // CheckForTournaments
 
 const void Unibet::CloseSettings(const QWidget *pSettings, const bool &pSave) const
@@ -68,10 +68,10 @@ const float Unibet::GetCash() const
 const bool Unibet::GameReady(const WId &pWindow) const
 {
 	QPixmap qpAll = QPixmap::grabWindow(pWindow);
-	int iTournamentsWidth = CheckForTournaments(qpAll);
+	quint16 qui16TournamentsWidth = CheckForTournaments(qpAll);
 
-	int iX = PercentCount(qpAll.width() - iTournamentsWidth, 81.5);
-	int iY = PercentCount(qpAll.height(), 88.5);
+	quint16 iX = PercentCount(qpAll.width() - qui16TournamentsWidth, 81.5);
+	quint16 iY = PercentCount(qpAll.height(), 88.5);
 
 	QImage qiImage = qpAll.toImage();
 	QRgb qrgbRgb = qiImage.pixel(iX, iY);
@@ -93,30 +93,30 @@ QWidget *Unibet::GetSettings()
 const QPixmap Unibet::GrabWindow(const eGrab &pPart) const
 {
 	QPixmap qpAll = QPixmap::grabWindow(_sadActiveData.wiRouletteChild);
-	int iTournamentsWidth = CheckForTournaments(qpAll);
+	quint16 qui16TournamentsWidth = CheckForTournaments(qpAll);
 
-	int iPartHeight, iPartWidth, iPartX, iPartY;
+	quint16 qui16PartHeight, qui16PartWidth, qui16PartX, qui16PartY;
 	switch (pPart) {
 		case GrabCash:
-			iPartX = PercentCount(qpAll.width() - iTournamentsWidth, 39.4);
-			iPartY = PercentCount(qpAll.height(), 90.5);
-			iPartWidth = PercentCount(qpAll.width() - iTournamentsWidth, 5.1);
-			iPartHeight = PercentCount(qpAll.height(), 2.5);
+			qui16PartX = PercentCount(qpAll.width() - qui16TournamentsWidth, 39.4);
+			qui16PartY = PercentCount(qpAll.height(), 90.5);
+			qui16PartWidth = PercentCount(qpAll.width() - qui16TournamentsWidth, 5.1);
+			qui16PartHeight = PercentCount(qpAll.height(), 2.5);
 			break;
 		case GrabSpinResult:
-			iPartX = PercentCount(qpAll.width() - iTournamentsWidth, 13);
-			iPartY = PercentCount(qpAll.height(), 59);
-			iPartWidth = PercentCount(qpAll.width() - iTournamentsWidth, 9.5);
-			iPartHeight = PercentCount(qpAll.height(), 7.2);
+			qui16PartX = PercentCount(qpAll.width() - qui16TournamentsWidth, 13);
+			qui16PartY = PercentCount(qpAll.height(), 59);
+			qui16PartWidth = PercentCount(qpAll.width() - qui16TournamentsWidth, 9.5);
+			qui16PartHeight = PercentCount(qpAll.height(), 7.2);
 	} // switch
 
-	return qpAll.copy(iPartX, iPartY, iPartWidth, iPartHeight);
+	return qpAll.copy(qui16PartX, qui16PartY, qui16PartWidth, qui16PartHeight);
 } // GrabWindow
 
-const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet)
+const void Unibet::MakeBet(const PlayCmn::tBetHash &pBet, const quint8 &pTokensPerBet)
 {
 	for (PlayCmn::tBetHash::const_iterator ciBet = pBet.constBegin(); ciBet != pBet.constEnd(); ciBet++) {
-		for (int iToken = 0; iToken < pTokensPerBet * ciBet.value(); iToken++) {
+		for (quint8 qui8Token = 0; qui8Token < pTokensPerBet * ciBet.value(); qui8Token++) {
 			switch (ciBet.key()) {
 				case PlayCmn::BetPositionColumn1:
 					MouseClick(ClickPositionColumn1);
@@ -147,66 +147,66 @@ const quint8 Unibet::MakeSpin() const
 const void Unibet::MouseClick(const eClick &pClickOn) const
 {
 	QPixmap qpAll = QPixmap::grabWindow(_sadActiveData.wiRouletteChild);
-	int iTournamentsWidth = CheckForTournaments(qpAll);
+	quint16 qui16TournamentsWidth = CheckForTournaments(qpAll);
 
-	int iX, iY;
+	quint16 qui16X, qui16Y;
 	switch (pClickOn) {
 		case ClickFastSpin:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 45);
-			iY = PercentCount(qpAll.height(), 83);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 45);
+			qui16Y = PercentCount(qpAll.height(), 83);
 			break;
 		case ClickPositionColumn1:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 88.5);
-			iY = PercentCount(qpAll.height(), 71.5);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 88.5);
+			qui16Y = PercentCount(qpAll.height(), 71.5);
 			break;
 		case ClickPositionColumn2:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 92);
-			iY = PercentCount(qpAll.height(), 67);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 92);
+			qui16Y = PercentCount(qpAll.height(), 67);
 			break;
 		case ClickPositionColumn3:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 95);
-			iY = PercentCount(qpAll.height(), 61);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 95);
+			qui16Y = PercentCount(qpAll.height(), 61);
 			break;
 		case ClickRemoveBet:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 66);
-			iY = PercentCount(qpAll.height(), 83);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 66);
+			qui16Y = PercentCount(qpAll.height(), 83);
 			break;
 		case ClickTokensLeft:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 77.5);
-			iY = PercentCount(qpAll.height(), 90);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 77.5);
+			qui16Y = PercentCount(qpAll.height(), 90);
 			break;
 		case ClickTokensRight:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 98.5);
-			iY = PercentCount(qpAll.height(), 90);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 98.5);
+			qui16Y = PercentCount(qpAll.height(), 90);
 			break;
 		case ClickTokenPosition1:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 81);
-			iY = PercentCount(qpAll.height(), 90);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 81);
+			qui16Y = PercentCount(qpAll.height(), 90);
 			break;
 		case ClickTokenPosition2:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 86);
-			iY = PercentCount(qpAll.height(), 90);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 86);
+			qui16Y = PercentCount(qpAll.height(), 90);
 			break;
 		case ClickTokenPosition3:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 91); // 580
-			iY = PercentCount(qpAll.height(), 90);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 91); // 580
+			qui16Y = PercentCount(qpAll.height(), 90);
 			break;
 		case ClickTokenPosition4:
-			iX = PercentCount(qpAll.width() - iTournamentsWidth, 95.5); // 610
-			iY = PercentCount(qpAll.height(), 90);
+			qui16X = PercentCount(qpAll.width() - qui16TournamentsWidth, 95.5); // 610
+			qui16Y = PercentCount(qpAll.height(), 90);
 	} // switch
 
 #ifdef Q_WS_WIN
 	/*SendMessage(_sadActiveData.wiRouletteChild, WM_MOUSEACTIVATE, reinterpret_cast<WPARAM>(_sadActiveData.hwTopLevel), MAKELONG(HTCLIENT, WM_LBUTTONDOWN));
 	SendMessage(_sadActiveData.wiRouletteChild, WM_SETCURSOR, reinterpret_cast<WPARAM>(_sadActiveData.wiRouletteChild), MAKELONG(HTCLIENT, WM_LBUTTONDOWN));
-	PostMessage(_sadActiveData.wiRouletteChild, WM_LBUTTONDOWN, MK_LBUTTON, MAKELONG(iX, iY));
+	PostMessage(_sadActiveData.wiRouletteChild, WM_LBUTTONDOWN, MK_LBUTTON, MAKELONG(qui16X, qui16Y));
 	Wait(50, 100);
-	PostMessage(_sadActiveData.wiRouletteChild, WM_LBUTTONUP, 0, MAKELONG(iX, iY));*/
+	PostMessage(_sadActiveData.wiRouletteChild, WM_LBUTTONUP, 0, MAKELONG(qui16X, qui16Y));*/
 	POINT pOldPos;
 	GetCursorPos(&pOldPos);
 	POINT pPos;
-	pPos.x = iX;
-	pPos.y = iY;
+	pPos.x = qui16X;
+	pPos.y = qui16Y;
 	ClientToScreen(_sadActiveData.wiRouletteChild, &pPos);
 	SetCursorPos(pPos.x, pPos.y);
 	HWND hwForegroundWindow = GetForegroundWindow();
@@ -259,12 +259,12 @@ const void Unibet::on_uacChecker_GameActive(const UnibetActiveChecker::sActiveDa
 } // on_uacChecker_ActiveChanged
 #endif
 
-const int Unibet::PercentCount(const int &pValue, const float &pPercent) const
+const quint16 Unibet::PercentCount(const quint16 &pValue, const float &pPercent) const
 {
 	return static_cast<float>(pValue) / 100 * pPercent;
 } // PercentCount
 
-const void Unibet::ProcessSpinResult(const PlayCmn::sSpinResult &pResult, const int &pTokensPerBet)
+const void Unibet::ProcessSpinResult(const PlayCmn::sSpinResult &pResult, const quint8 &pTokensPerBet)
 {
 } // ProcessSpinResult
 
@@ -351,10 +351,10 @@ Unibet::Unibet() : CasinoInterface()
 } // Unibet
 #endif
 
-const void Unibet::Wait(const int &pMin, const int &pMax) const
+const void Unibet::Wait(const quint16 &pMin, const quint16 &pMax) const
 {
-	int iWait = (qrand() % (pMax - pMin)) + pMin;
-	QTest::qWait(iWait);
+	quint16 qui16Wait = (qrand() % (pMax - pMin)) + pMin;
+	QTest::qWait(qui16Wait);
 } // Wait
 
 Q_EXPORT_PLUGIN2(unibet, Unibet)

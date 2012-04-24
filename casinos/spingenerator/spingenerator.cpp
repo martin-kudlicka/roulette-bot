@@ -33,12 +33,12 @@ QWidget *SpinGenerator::GetSettings()
 	return new SpinGeneratorSettingsWidget(&_sgsSettings);
 } // GetSettings
 
-const void SpinGenerator::MakeBet(const PlayCmn::tBetHash &pBet, const int &pTokensPerBet)
+const void SpinGenerator::MakeBet(const PlayCmn::tBetHash &pBet, const quint8 &pTokensPerBet)
 {
-	_iBet = 0;
+	_qui8Bet = 0;
 
 	for (PlayCmn::tBetHash::const_iterator ciBet = pBet.constBegin(); ciBet != pBet.constEnd(); ciBet++) {
-		_iBet += ciBet.value() * pTokensPerBet;
+		_qui8Bet += ciBet.value() * pTokensPerBet;
 	} // for
 } // MakeBet
 
@@ -47,12 +47,12 @@ const quint8 SpinGenerator::MakeSpin() const
 	return qrand() % 37;
 } // MakeSpin
 
-const void SpinGenerator::ProcessSpinResult(const PlayCmn::sSpinResult &pResult, const int &pTokensPerBet)
+const void SpinGenerator::ProcessSpinResult(const PlayCmn::sSpinResult &pResult, const quint8 &pTokensPerBet)
 {
-	_fCash -= _iBet;
+	_fCash -= _qui8Bet;
 
 	if (pResult.esrtType & PlayCmn::SpinResultTypeWon) {
-		_fCash += pResult.iBetProfit * pTokensPerBet;
+		_fCash += pResult.qui8BetProfit * pTokensPerBet;
 	} // if
 } // ProcessSpinResult
 

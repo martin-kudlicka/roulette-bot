@@ -23,7 +23,7 @@ class System63StatisticsWidget : public QWidget
 
 		const void Increment(const eCounter &pCounter) const;
 		const void Reset() const;
-		const void SetMaxSameInRow(const int &pValue) const;
+		const void SetMaxSameInRow(const quint8 &pValue) const;
 
 	private:
 		Ui::qwSystem63StatisticsWidget _qws63swWidget;

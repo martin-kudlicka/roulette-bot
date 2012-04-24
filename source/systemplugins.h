@@ -6,8 +6,8 @@
 class SystemPlugins
 {
 	public:
-		const int GetCount() const;
-		SystemInterface *GetSystem(const int &pIndex) const;
+		const quint8 GetCount() const;
+		SystemInterface *GetSystem(const quint8 &pIndex) const;
 		const void Load();
 
 	private:

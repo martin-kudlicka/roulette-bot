@@ -9,12 +9,12 @@
 
 const QString DIR_CASINOS = "casinos";
 
-CasinoInterface *CasinoPlugins::GetCasino(const int &pIndex) const
+CasinoInterface *CasinoPlugins::GetCasino(const quint8 &pIndex) const
 {
 	return _qlCasinos.at(pIndex);
 } // GetCasino
 
-const int CasinoPlugins::GetCount() const
+const quint8 CasinoPlugins::GetCount() const
 {
 	return _qlCasinos.size();
 } // GetCount
