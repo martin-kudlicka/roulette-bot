@@ -28,8 +28,8 @@ class System63SettingsWidget : public QWidget
 		const void on_qrbBoth_toggled(bool checked) const;
 		const void on_qrbColumn_toggled(bool checked) const;
 		const void on_qrbDozen_toggled(bool checked) const;
-		const void on_qrbProgressionAuto_clicked(bool checked = false) const;
-		const void on_qrbProgressionManual_clicked(bool checked = false) const;
+		const void on_qrbProgressionAuto_toggled(bool checked) const;
+		const void on_qrbProgressionManual_toggled(bool checked) const;
 		const void on_qsbProgression_valueChanged(int i) const;
 }; // System63SettingsWidget
 

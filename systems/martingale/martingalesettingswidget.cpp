@@ -11,10 +11,8 @@ const void MartingaleSettingsWidget::LoadSettings() const
 
 	if (_msSettings->GetProgressionType() == MartingaleSettings::ProgressionTypeAuto) {
 		_qwsSettingsWidget.qrbProgressionAuto->setChecked(true);
-		on_qrbProgressionAuto_clicked();
 	} else {
 		_qwsSettingsWidget.qrbProgressionManual->setChecked(true);
-		on_qrbProgressionManual_clicked();
 	} // if else
 	_qwsSettingsWidget.qsbProgression->setValue(_msSettings->GetProgressionAutoValue());
 	_qwsSettingsWidget.qleProgression->setText(_msSettings->GetProgressionManualSequence());
@@ -22,16 +20,16 @@ const void MartingaleSettingsWidget::LoadSettings() const
 	_qwsSettingsWidget.qcbProgressionColorNotChanged->setChecked(_msSettings->GetProgressionColorNotChanged());
 } // LoadSettings
 
-const void MartingaleSettingsWidget::on_qrbProgressionAuto_clicked(bool checked /* false */) const
+const void MartingaleSettingsWidget::on_qrbProgressionAuto_toggled(bool checked) const
 {
-	_qwsSettingsWidget.qsbProgression->setEnabled(true);
-	_qwsSettingsWidget.qleProgression->setEnabled(false);
+	_qwsSettingsWidget.qsbProgression->setEnabled(checked);
+	_qwsSettingsWidget.qleProgression->setEnabled(!checked);
 } // on_qrbProgressionAuto_clicked
 
-const void MartingaleSettingsWidget::on_qrbProgressionManual_clicked(bool checked /* false */) const
+const void MartingaleSettingsWidget::on_qrbProgressionManual_toggled(bool checked) const
 {
-	_qwsSettingsWidget.qsbProgression->setEnabled(false);
-	_qwsSettingsWidget.qleProgression->setEnabled(true);
+	_qwsSettingsWidget.qsbProgression->setEnabled(!checked);
+	_qwsSettingsWidget.qleProgression->setEnabled(checked);
 } // on_qrbProgressionManual_clicked
 
 const void MartingaleSettingsWidget::on_qsbProgression_valueChanged(int i) const
