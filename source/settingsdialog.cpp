@@ -2,10 +2,10 @@
 
 const void SettingsDialog::CloseCasinoSettings(const bool &pSave) const
 {
-	for (quint8 qui8Casino = _csmCasinos.rowCount() - 1; qui8Casino >= 0 ; qui8Casino--) {
-		QModelIndex qmiIndex = _csmCasinos.index(qui8Casino, CasinoSettingsModel::ColumnName);
+	for (qint8 qi8Casino = _csmCasinos.rowCount() - 1; qi8Casino >= 0 ; qi8Casino--) {
+		QModelIndex qmiIndex = _csmCasinos.index(qi8Casino, CasinoSettingsModel::ColumnName);
 		const CasinoInterface *ciCasino = static_cast<const CasinoInterface *>(qmiIndex.internalPointer());
-		const QWidget *qwSettings = _qdsSettingsDialog.qswCasinoSettings->widget(qui8Casino);
+		const QWidget *qwSettings = _qdsSettingsDialog.qswCasinoSettings->widget(qi8Casino);
 
 		ciCasino->CloseSettings(qwSettings, pSave);
 	} // for
@@ -13,10 +13,10 @@ const void SettingsDialog::CloseCasinoSettings(const bool &pSave) const
 
 const void SettingsDialog::CloseSystemSettings(const bool &pSave) const
 {
-	for (quint8 qui8System = _ssmSystems.rowCount() - 1; qui8System >= 0; qui8System--) {
-		QModelIndex qmiIndex = _ssmSystems.index(qui8System, SystemSettingsModel::ColumnName);
+	for (qint8 qi8System = _ssmSystems.rowCount() - 1; qi8System >= 0; qi8System--) {
+		QModelIndex qmiIndex = _ssmSystems.index(qi8System, SystemSettingsModel::ColumnName);
 		const SystemInterface *siSystem = static_cast<const SystemInterface *>(qmiIndex.internalPointer());
-		const QWidget *qwSettings = _qdsSettingsDialog.qswSystemSettings->widget(qui8System);
+		const QWidget *qwSettings = _qdsSettingsDialog.qswSystemSettings->widget(qi8System);
 
 		siSystem->CloseSettings(qwSettings, pSave);
 	} // for
