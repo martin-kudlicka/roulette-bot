@@ -4,7 +4,8 @@
 
 const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 {
-	PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin);
+	PlayCmn::qfBetPositions qfbpPosition = GetSpinPosition(pSpin);
+	qfbpPosition &= PlayCmn::BetPositionColorBlack | PlayCmn::BetPositionColorRed;
 
 	PlayCmn::sSpinResult srResult;
 	do {
@@ -14,7 +15,7 @@ const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 			srResult.qui8BetProfit = 0;
 
 			if (_qui8SameColorBeforeBet < _msSettings.GetSameColorBeforeBet()) {
-				if (_ebpLastPosition == ebpPosition || _ebpLastPosition == PlayCmn::BetPositionNone) {
+				if (_qfbpLastPosition & qfbpPosition || _qfbpLastPosition == PlayCmn::BetPositionNone) {
 					_qui8SameColorBeforeBet++;
 				} else {
 					_qui8SameColorBeforeBet = 1;
@@ -25,7 +26,7 @@ const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 
 			if (_qui8SameColorProgression < _msSettings.GetSameColorProgression()) {
 				if (_msSettings.GetProgressionColorNotChanged()) {
-					if (_ebpLastPosition == ebpPosition) {
+					if (_qfbpLastPosition & qfbpPosition) {
 						_qui8SameColorProgression++;
 					} else {
 						srResult.esrtType |= PlayCmn::SpinResultTypeLost;
@@ -34,8 +35,8 @@ const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 						_qui8ProgressionIndex = 0;
 					} // if else
 				} else {
-					if (_qui8SameColorProgression == 0 || _ebpLastProgressionPosition != ebpPosition) {
-						_ebpLastProgressionPosition = ebpPosition;
+					if (_qui8SameColorProgression == 0 || !(_qfbpLastProgressionPosition & qfbpPosition)) {
+						_qfbpLastProgressionPosition = qfbpPosition;
 						_qui8SameColorProgression = 1;
 					} else {
 						_qui8SameColorProgression++;
@@ -46,10 +47,10 @@ const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 			} // if
 		} else {
 			// bet made
-			if (_tbhLastBet.contains(ebpPosition)) {
+			if (LastBetContains(qfbpPosition)) {
 				// won
 				srResult.esrtType = PlayCmn::SpinResultTypeWon;
-				srResult.qui8BetProfit = _tbhLastBet.value(ebpPosition) * 2;
+				srResult.qui8BetProfit = LastBetValue(qfbpPosition) * 2;
 
 				_qui8SameColorBeforeBet = 0;
 				_qui8SameColorProgression = 0;
@@ -78,7 +79,7 @@ const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 	} while (false);
 
 	_qui8SameInRow++;
-	if (_ebpLastPosition != ebpPosition) {
+	if (!(_qfbpLastPosition & qfbpPosition)) {
 		if (_qui8MaxSameInRow < _qui8SameInRow) {
 			_mswStatistics.SetMaxSameInRow(_qui8SameInRow);
 			_qui8MaxSameInRow = _qui8SameInRow;
@@ -90,7 +91,7 @@ const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 		} // if else
 		_qui8SameInRow = 0;
 
-		_ebpLastPosition = ebpPosition;
+		_qfbpLastPosition = qfbpPosition;
 	} // if else
 
 	return srResult;
@@ -123,7 +124,7 @@ const PlayCmn::tBetHash Martingale::CreateBet() const
 	if (_msSettings.GetBetStyle() == MartingaleSettings::BetStyleRandom) {
 		ebpPosition = static_cast<PlayCmn::eBetPosition>((qrand() % (PlayCmn::BetPositionColorRed - PlayCmn::BetPositionColorBlack + 1)) + PlayCmn::BetPositionColorBlack);
 	} else {
-		if (_ebpLastPosition == PlayCmn::BetPositionColorBlack) {
+		if (_qfbpLastPosition == PlayCmn::BetPositionColorBlack) {
 			ebpPosition = PlayCmn::BetPositionColorRed;
 		} else {
 			ebpPosition = PlayCmn::BetPositionColorBlack;
@@ -161,19 +162,6 @@ QWidget *Martingale::GetSettings()
 	return new MartingaleSettingsWidget(&_msSettings);
 } // GetSettings
 
-const PlayCmn::eBetPosition Martingale::GetSpinPosition(const quint8 &pSpin) const
-{
-	if (pSpin == 0) {
-		return PlayCmn::BetPosition0;
-	} // if
-
-	if (pSpin == 2 || pSpin == 4 || pSpin == 6 || pSpin == 8 || pSpin == 10 || pSpin == 11 || pSpin == 13 || pSpin == 15 || pSpin == 17 || pSpin == 20 || pSpin == 22 || pSpin == 24 || pSpin == 26 || pSpin == 28 || pSpin == 29 || pSpin == 31 || pSpin == 33 || pSpin == 35) {
-		return PlayCmn::BetPositionColorBlack;
-	} // if
-
-	return PlayCmn::BetPositionColorRed;
-} // GetSpinPosition
-
 const void Martingale::OpenStatistics(QVBoxLayout *pLayout)
 {
 	pLayout->insertWidget(0, &_mswStatistics);
@@ -182,8 +170,8 @@ const void Martingale::OpenStatistics(QVBoxLayout *pLayout)
 const void Martingale::Reset(const qfResetContents &pResetContents)
 {
 	if (pResetContents & ResetContentCore) {
-		_ebpLastPosition = PlayCmn::BetPositionNone;
-		_ebpLastProgressionPosition = PlayCmn::BetPositionNone;
+		_qfbpLastPosition = PlayCmn::BetPositionNone;
+		_qfbpLastProgressionPosition = PlayCmn::BetPositionNone;
 		_qui8MaxSameInRow = 0;
 		_qui8SameColorBeforeBet = 0;
 		_qui8SameColorProgression = 0;

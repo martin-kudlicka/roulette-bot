@@ -11,17 +11,16 @@ class Martingale : public SystemInterface
 	Q_INTERFACES(SystemInterface)
 
 	private:
-		PlayCmn::eBetPosition _ebpLastPosition;
-		PlayCmn::eBetPosition _ebpLastProgressionPosition;
 		MartingaleSettings _msSettings;
 		MartingaleStatisticsWidget _mswStatistics;
+		PlayCmn::qfBetPositions _qfbpLastPosition;
+		PlayCmn::qfBetPositions _qfbpLastProgressionPosition;
 		QList<quint8> _qlProgressionSequence;
 		quint8 _qui8MaxSameInRow;
 		quint8 _qui8ProgressionIndex;
 		quint8 _qui8SameColorBeforeBet;
 		quint8 _qui8SameColorProgression;
 		quint8 _qui8SameInRow;
-		PlayCmn::tBetHash _tbhLastBet;
 
 		virtual const PlayCmn::sSpinResult AnalyzeSpin(const quint8 &pSpin);
 		virtual const void CloseSettings(const QWidget *pSettings, const bool &pSave) const;
@@ -30,7 +29,6 @@ class Martingale : public SystemInterface
 		virtual const PlayCmn::tBetHash GetBet();
 		virtual const QString GetName() const;
 		virtual QWidget *GetSettings();
-		const PlayCmn::eBetPosition GetSpinPosition(const quint8 &pSpin) const;
 		virtual const void OpenStatistics(QVBoxLayout *pLayout);
 		virtual const void Reset(const qfResetContents &pResetContents);
 }; // Martingale

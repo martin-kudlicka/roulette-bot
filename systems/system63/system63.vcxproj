@@ -103,6 +103,7 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\system63\moc_systeminterface.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\common\systeminterface.cpp" />
     <ClCompile Include="..\common\systemsettings.cpp" />
     <ClCompile Include="system63.cpp" />
     <ClCompile Include="system63settings.cpp" />
@@ -134,6 +135,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\common\settingscmn.h" />
     <ClInclude Include="..\..\temp\GeneratedFiles\system63\ui_system63settingswidget.h" />
     <ClInclude Include="..\..\temp\GeneratedFiles\system63\ui_system63statisticswidget.h" />
     <ClInclude Include="..\common\systemsettings.h" />

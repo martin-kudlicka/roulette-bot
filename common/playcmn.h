@@ -10,20 +10,21 @@ class PlayCmn
 			BetPositionNone,
 			BetPosition0,
 			BetPositionColorBlack,
-			BetPositionColorRed,
-			BetPositionColumn1,
-			BetPositionColumn2,
-			BetPositionColumn3,
-			BetPositionDozen1,
-			BetPositionDozen2,
-			BetPositionDozen3
+			BetPositionColorRed		= 4,
+			BetPositionColumn1		= 8,
+			BetPositionColumn2		= 16,
+			BetPositionColumn3		= 32,
+			BetPositionDozen1			= 64,
+			BetPositionDozen2			= 128,
+			BetPositionDozen3			= 256
 		}; // eBetPosition
+		Q_DECLARE_FLAGS(qfBetPositions, eBetPosition)
 		enum eSpinResultType {
 			SpinResultTypeNone,
 			SpinResultTypeNoBet,
 			SpinResultTypeWon,
-			SpinResultTypeLost = 4,
-			SpinResultTypeProgression = 8
+			SpinResultTypeLost			= 4,
+			SpinResultTypeProgression	= 8
 		}; // eSpinResultType
 		Q_DECLARE_FLAGS(qfSpinResultTypes, eSpinResultType)
 
@@ -35,6 +36,7 @@ class PlayCmn
 		typedef QHash<eBetPosition, quint8> tBetHash;
 }; // PlayCmn
 
+Q_DECLARE_OPERATORS_FOR_FLAGS(PlayCmn::qfBetPositions)
 Q_DECLARE_OPERATORS_FOR_FLAGS(PlayCmn::qfSpinResultTypes)
 
 #endif // PLAYCMN_H
