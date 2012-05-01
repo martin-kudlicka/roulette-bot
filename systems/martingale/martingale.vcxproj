@@ -103,6 +103,7 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\martingale\moc_systeminterface.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\common\systeminterface.cpp" />
     <ClCompile Include="..\common\systemsettings.cpp" />
     <ClCompile Include="martingale.cpp" />
     <ClCompile Include="martingalesettings.cpp" />

@@ -26,6 +26,15 @@ class SystemInterface : public QObject
 		virtual QWidget *GetSettings() = 0;
 		virtual const void OpenStatistics(QVBoxLayout *pLayout) = 0;
 		virtual const void Reset(const qfResetContents &pResetContents) = 0;
+
+	protected:
+		PlayCmn::tBetHash _tbhLastBet;
+
+		const bool BetContains(const PlayCmn::tBetHash &pBet, const PlayCmn::qfBetPositions &pPosition) const;
+		const quint8 BetValue(const PlayCmn::tBetHash &pBet, const PlayCmn::qfBetPositions &pPosition) const;
+		const PlayCmn::qfBetPositions GetSpinPosition(const quint8 &pSpin) const;
+		const bool LastBetContains(const PlayCmn::qfBetPositions &pPosition) const;
+		const quint8 LastBetValue(const PlayCmn::qfBetPositions &pPosition) const;
 }; // SystemInterface
 
 Q_DECLARE_OPERATORS_FOR_FLAGS(SystemInterface::qfResetContents)

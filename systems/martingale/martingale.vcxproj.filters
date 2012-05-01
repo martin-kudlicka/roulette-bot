@@ -74,6 +74,9 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\martingale\moc_martingalestatisticswidget.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\systeminterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\common\systemsettings.h">

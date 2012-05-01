@@ -74,6 +74,9 @@
     <ClCompile Include="..\..\temp\GeneratedFiles\Release\system63\moc_system63statisticswidget.cpp">
       <Filter>Generated Files\Release</Filter>
     </ClCompile>
+    <ClCompile Include="..\common\systeminterface.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="system63.h">
@@ -107,6 +110,9 @@
     </ClInclude>
     <ClInclude Include="..\..\temp\GeneratedFiles\system63\ui_system63statisticswidget.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\common\settingscmn.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -23,7 +23,7 @@ const void System63::AddToResult(PlayCmn::sSpinResult *pResult, const PlayCmn::s
 	pResult->qui8BetProfit += pAdd.qui8BetProfit;
 } // AddToResult
 
-const PlayCmn::sSpinResult System63::AnalyzeSpin(const PlayCmn::tBetHash &pBet, const PlayCmn::eBetPosition pPosition, quint8 *pSameBeforeBet, const PlayCmn::eBetPosition &pCheckToLastPosition, PlayCmn::eBetPosition *pLastPosition, quint8 *pSameProgression, PlayCmn::eBetPosition *pLastProgressionPosition, quint8 *pProgressionIndex, quint8 *pSameInRow, quint8 *pMaxSameInRow)
+const PlayCmn::sSpinResult System63::AnalyzeSpin(const PlayCmn::tBetHash &pBet, const PlayCmn::qfBetPositions pPosition, quint8 *pSameBeforeBet, const PlayCmn::qfBetPositions &pCheckToLastPosition, PlayCmn::qfBetPositions *pLastPosition, quint8 *pSameProgression, PlayCmn::qfBetPositions *pLastProgressionPosition, quint8 *pProgressionIndex, quint8 *pSameInRow, quint8 *pMaxSameInRow)
 {
 	PlayCmn::sSpinResult srResult;
 
@@ -34,10 +34,10 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const PlayCmn::tBetHash &pBet, 
 			srResult.qui8BetProfit = 0;
 
 			if (*pSameBeforeBet < _s63sSettings.GetSameDozenColumnBeforeBet()) {
-				if (pCheckToLastPosition == pPosition || pCheckToLastPosition == PlayCmn::BetPositionNone) {
+				if (pCheckToLastPosition & pPosition || pCheckToLastPosition == PlayCmn::BetPositionNone) {
 					(*pSameBeforeBet)++;
 				} else {
-					if (pCheckToLastPosition != pPosition) {
+					if (!(pCheckToLastPosition & pPosition)) {
 						*pSameBeforeBet = 0;
 					} else {
 						*pSameBeforeBet = 1;
@@ -49,11 +49,11 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const PlayCmn::tBetHash &pBet, 
 
 			if (*pSameProgression < _s63sSettings.GetSameDozenColumnProgression()) {
 				if (_s63sSettings.GetProgressionDozenColumnNotChanged()) {
-					if (pCheckToLastPosition == pPosition) {
+					if (pCheckToLastPosition & pPosition) {
 						(*pSameProgression)++;
 					} else {
 						srResult.esrtType |= PlayCmn::SpinResultTypeLost;
-						if (pCheckToLastPosition != pPosition) {
+						if (!(pCheckToLastPosition & pPosition)) {
 							*pSameBeforeBet = 0;
 						} else {
 							*pSameBeforeBet = 1;
@@ -62,9 +62,9 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const PlayCmn::tBetHash &pBet, 
 						*pProgressionIndex = 0;
 					} // if else
 				} else {
-					if (*pSameProgression == 0 || *pLastProgressionPosition != pPosition) {
+					if (*pSameProgression == 0 || !(*pLastProgressionPosition & pPosition)) {
 						*pLastProgressionPosition = pPosition;
-						if (pCheckToLastPosition != pPosition) {
+						if (!(pCheckToLastPosition & pPosition)) {
 							*pSameProgression = 0;
 						} else {
 							*pSameProgression = 1;
@@ -78,10 +78,10 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const PlayCmn::tBetHash &pBet, 
 			} // if
 		} else {
 			// bet made
-			if (pBet.contains(pPosition)) {
+			if (BetContains(pBet, pPosition)) {
 				// won
 				srResult.esrtType = PlayCmn::SpinResultTypeWon;
-				srResult.qui8BetProfit = pBet.value(pPosition) * 3;
+				srResult.qui8BetProfit = BetValue(pBet, pPosition) * 3;
 
 				*pSameBeforeBet = 0;
 				*pSameProgression = 0;
@@ -110,7 +110,7 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const PlayCmn::tBetHash &pBet, 
 	} while (false);
 
 	(*pSameInRow)++;
-	if (*pLastPosition != pPosition) {
+	if (!(*pLastPosition & pPosition)) {
 		if (*pMaxSameInRow < *pSameInRow) {
 			_s63swStatistics.SetMaxSameInRow(*pSameInRow);
 			*pMaxSameInRow = *pSameInRow;
@@ -134,25 +134,26 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
 	srResult.esrtType = PlayCmn::SpinResultTypeNone;
 	srResult.qui8BetProfit = 0;
 
+	PlayCmn::qfBetPositions qfbpPosition = GetSpinPosition(pSpin);
+
 	if (_s63sSettings.GetBetOn() == System63Settings::BetOnRandom) {
-		PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin, _edctLastBetRandom);
-		srResult = AnalyzeSpin(_tbhLastBet, ebpPosition, &_qui8SameRandomBeforeBet, _ebpLastPositionRandom, &_ebpLastPositionRandom, &_qui8SameRandomProgression, &_ebpLastProgressionPositionRandom,  &_qui8ProgressionIndexRandom, &_qui8SameInRowRandom, &_qui8MaxSameInRowRandom);
+		srResult = AnalyzeSpin(_tbhLastBet, qfbpPosition, &_qui8SameRandomBeforeBet, _qfbpLastPositionRandom, &_qfbpLastPositionRandom, &_qui8SameRandomProgression, &_qfbpLastProgressionPositionRandom,  &_qui8ProgressionIndexRandom, &_qui8SameInRowRandom, &_qui8MaxSameInRowRandom);
 	} else {
 		if (_s63sSettings.GetDozenColumnType() & System63Settings::DozenColumnTypeDozen) {
-			PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin, System63Settings::DozenColumnTypeDozen);
+			qfbpPosition &= PlayCmn::BetPositionDozen1 | PlayCmn::BetPositionDozen2 | PlayCmn::BetPositionDozen3;
 			quint8 qui8Max = _s63sSettings.GetDozen3x() ? THREEX_COUNT : 1;
 			for (quint8 qui8Index = 0; qui8Index < qui8Max; qui8Index++) {
-				PlayCmn::eBetPosition ebpCheckToPosition = _s63sSettings.GetDozen3x() ? static_cast<PlayCmn::eBetPosition>(PlayCmn::BetPositionDozen1 + qui8Index) : _ebpLastPositionDozen[qui8Index];
-				PlayCmn::sSpinResult srSpin = AnalyzeSpin(_tbhLastDozenBet[qui8Index], ebpPosition, &_qui8SameDozenBeforeBet[qui8Index], ebpCheckToPosition, &_ebpLastPositionDozen[qui8Index], &_qui8SameDozenProgression[qui8Index], &_ebpLastProgressionPositionDozen[qui8Index], &_qui8ProgressionIndexDozen[qui8Index], &_qui8SameDozenInRow[qui8Index], &_qui8MaxSameDozenInRow[qui8Index]);
+				PlayCmn::qfBetPositions qfbpCheckToPosition = _s63sSettings.GetDozen3x() ? static_cast<PlayCmn::eBetPosition>(PlayCmn::BetPositionDozen1 + qui8Index) : _qfbpLastPositionDozen[qui8Index];
+				PlayCmn::sSpinResult srSpin = AnalyzeSpin(_tbhLastDozenBet[qui8Index], qfbpPosition, &_qui8SameDozenBeforeBet[qui8Index], qfbpCheckToPosition, &_qfbpLastPositionDozen[qui8Index], &_qui8SameDozenProgression[qui8Index], &_qfbpLastProgressionPositionDozen[qui8Index], &_qui8ProgressionIndexDozen[qui8Index], &_qui8SameDozenInRow[qui8Index], &_qui8MaxSameDozenInRow[qui8Index]);
 				AddToResult(&srResult, srSpin);
 			} // for
 		} // if
 		if (_s63sSettings.GetDozenColumnType() & System63Settings::DozenColumnTypeColumn) {
-			PlayCmn::eBetPosition ebpPosition = GetSpinPosition(pSpin, System63Settings::DozenColumnTypeColumn);
+			qfbpPosition &= PlayCmn::BetPositionColumn1 | PlayCmn::BetPositionColumn2 | PlayCmn::BetPositionColumn3;
 			quint8 qui8Max = _s63sSettings.GetColumn3x() ? THREEX_COUNT : 1;
 			for (quint8 qui8Index = 0; qui8Index < qui8Max; qui8Index++) {
-				PlayCmn::eBetPosition ebpCheckToPosition = _s63sSettings.GetColumn3x() ? static_cast<PlayCmn::eBetPosition>(PlayCmn::BetPositionColumn1 + qui8Index) : _ebpLastPositionColumn[qui8Index];
-				PlayCmn::sSpinResult srSpin = AnalyzeSpin(_tbhLastColumnBet[qui8Index], ebpPosition, &_qui8SameColumnBeforeBet[qui8Index], ebpCheckToPosition, &_ebpLastPositionColumn[qui8Index], &_qui8SameColumnProgression[qui8Index], &_ebpLastProgressionPositionColumn[qui8Index], &_qui8ProgressionIndexColumn[qui8Index], &_qui8SameColumnInRow[qui8Index], &_qui8MaxSameColumnInRow[qui8Index]);
+				PlayCmn::qfBetPositions qfbpCheckToPosition = _s63sSettings.GetColumn3x() ? static_cast<PlayCmn::eBetPosition>(PlayCmn::BetPositionColumn1 + qui8Index) : _qfbpLastPositionColumn[qui8Index];
+				PlayCmn::sSpinResult srSpin = AnalyzeSpin(_tbhLastColumnBet[qui8Index], qfbpPosition, &_qui8SameColumnBeforeBet[qui8Index], qfbpCheckToPosition, &_qfbpLastPositionColumn[qui8Index], &_qui8SameColumnProgression[qui8Index], &_qfbpLastProgressionPositionColumn[qui8Index], &_qui8ProgressionIndexColumn[qui8Index], &_qui8SameColumnInRow[qui8Index], &_qui8MaxSameColumnInRow[qui8Index]);
 				AddToResult(&srResult, srSpin);
 			} // for
 		} // if
@@ -180,7 +181,7 @@ const void System63::CloseStatistics() const
 	qwWidget->setParent(NULL);
 } // CloseStatistics
 
-const PlayCmn::tBetHash System63::CreateBet(const quint8 &pSameBeforeBet, const quint8 &pSameBeforeProgression, const quint8 &pProgressionIndex, const System63Settings::eDozenColumnType &pType, const PlayCmn::eBetPosition &pLastPosition) const
+const PlayCmn::tBetHash System63::CreateBet(const quint8 &pSameBeforeBet, const quint8 &pSameBeforeProgression, const quint8 &pProgressionIndex, const System63Settings::eDozenColumnType &pType, const PlayCmn::qfBetPositions &pLastPosition) const
 {
 	PlayCmn::tBetHash tbhBet;
 
@@ -194,13 +195,31 @@ const PlayCmn::tBetHash System63::CreateBet(const quint8 &pSameBeforeBet, const 
 	for (quint8 qui8Bet = 0; qui8Bet < 2; qui8Bet++) {
 		do {
 			PlayCmn::eBetPosition ebpPosition;
-			if (pType == System63Settings::DozenColumnTypeDozen) {
-				ebpPosition = static_cast<PlayCmn::eBetPosition>((qrand() % (PlayCmn::BetPositionDozen3 - PlayCmn::BetPositionDozen1 + 1)) + PlayCmn::BetPositionDozen1);
-			} else {
-				ebpPosition = static_cast<PlayCmn::eBetPosition>((qrand() % (PlayCmn::BetPositionColumn3 - PlayCmn::BetPositionColumn1 + 1)) + PlayCmn::BetPositionColumn1);
-			} // if else
+			int iPosition = qrand() % 3;
+			switch (iPosition) {
+				case 0:
+					if (pType == System63Settings::DozenColumnTypeDozen) {
+						ebpPosition = PlayCmn::BetPositionDozen1;
+					} else {
+						ebpPosition = PlayCmn::BetPositionColumn1;
+					}
+					break;
+				case 1:
+					if (pType == System63Settings::DozenColumnTypeDozen) {
+						ebpPosition = PlayCmn::BetPositionDozen2;
+					} else {
+						ebpPosition = PlayCmn::BetPositionColumn2;
+					}
+					break;
+				case 2:
+					if (pType == System63Settings::DozenColumnTypeDozen) {
+						ebpPosition = PlayCmn::BetPositionDozen3;
+					} else {
+						ebpPosition = PlayCmn::BetPositionColumn3;
+					}
+			} // switch
 
-			if (ebpPosition != pLastPosition && !tbhBet.contains(ebpPosition)) {
+			if (!(ebpPosition & pLastPosition) && !tbhBet.contains(ebpPosition)) {
 				tbhBet.insert(ebpPosition, _qlProgressionSequence.at(pProgressionIndex));
 				break;
 			} // if
@@ -228,16 +247,16 @@ const PlayCmn::tBetHash System63::GetBet()
 		if (_s63sSettings.GetDozenColumnType() & System63Settings::DozenColumnTypeDozen) {
 			quint8 qui8Max = _s63sSettings.GetDozen3x() ? THREEX_COUNT : 1;
 			for (quint8 qui8Index = 0; qui8Index < qui8Max; qui8Index++) {
-				PlayCmn::eBetPosition ebpPosition = _s63sSettings.GetDozen3x() ? static_cast<PlayCmn::eBetPosition>(PlayCmn::BetPositionDozen1 + qui8Index) : _ebpLastPositionDozen[qui8Index];
-				_tbhLastDozenBet[qui8Index] = CreateBet(_qui8SameDozenBeforeBet[qui8Index], _qui8SameDozenProgression[qui8Index], _qui8ProgressionIndexDozen[qui8Index], System63Settings::DozenColumnTypeDozen, ebpPosition);
+				PlayCmn::qfBetPositions qfbpPosition = _s63sSettings.GetDozen3x() ? static_cast<PlayCmn::qfBetPositions>(PlayCmn::BetPositionDozen1 + qui8Index) : _qfbpLastPositionDozen[qui8Index];
+				_tbhLastDozenBet[qui8Index] = CreateBet(_qui8SameDozenBeforeBet[qui8Index], _qui8SameDozenProgression[qui8Index], _qui8ProgressionIndexDozen[qui8Index], System63Settings::DozenColumnTypeDozen, qfbpPosition);
 				AddToLastBet(_tbhLastDozenBet[qui8Index]);
 			} // for
 		} // if
 		if (_s63sSettings.GetDozenColumnType() & System63Settings::DozenColumnTypeColumn) {
 			quint8 qui8Max = _s63sSettings.GetColumn3x() ? THREEX_COUNT : 1;
 			for (quint8 qui8Index = 0; qui8Index < qui8Max; qui8Index++) {
-				PlayCmn::eBetPosition ebpPosition = _s63sSettings.GetColumn3x() ? static_cast<PlayCmn::eBetPosition>(PlayCmn::BetPositionColumn1 + qui8Index) : _ebpLastPositionColumn[qui8Index];
-				_tbhLastColumnBet[qui8Index] = CreateBet(_qui8SameColumnBeforeBet[qui8Index], _qui8SameColumnProgression[qui8Index], _qui8ProgressionIndexColumn[qui8Index], System63Settings::DozenColumnTypeColumn, ebpPosition);
+				PlayCmn::qfBetPositions qfbpPosition = _s63sSettings.GetColumn3x() ? static_cast<PlayCmn::qfBetPositions>(PlayCmn::BetPositionColumn1 + qui8Index) : _qfbpLastPositionColumn[qui8Index];
+				_tbhLastColumnBet[qui8Index] = CreateBet(_qui8SameColumnBeforeBet[qui8Index], _qui8SameColumnProgression[qui8Index], _qui8ProgressionIndexColumn[qui8Index], System63Settings::DozenColumnTypeColumn, qfbpPosition);
 				AddToLastBet(_tbhLastColumnBet[qui8Index]);
 			} // for
 		} // if
@@ -245,35 +264,6 @@ const PlayCmn::tBetHash System63::GetBet()
 
 	return _tbhLastBet;
 } // GetBet
-
-const PlayCmn::eBetPosition System63::GetSpinPosition(const quint8 &pSpin, const System63Settings::eDozenColumnType &pType) const
-{
-	if (pSpin == 0) {
-		return PlayCmn::BetPosition0;
-	} // if
-
-	if (pType == System63Settings::DozenColumnTypeDozen) {
-		if (pSpin < 13) {
-			return PlayCmn::BetPositionDozen1;
-		} // if
-
-		if (pSpin < 25) {
-			return PlayCmn::BetPositionDozen2;
-		} // if
-
-		return PlayCmn::BetPositionDozen3;
-	} else {
-		if (pSpin == 1 || pSpin == 4 || pSpin == 7 || pSpin == 10 || pSpin == 13 || pSpin == 16 || pSpin == 19 || pSpin == 22 || pSpin == 25 || pSpin == 28 || pSpin == 31 || pSpin == 34) {
-			return PlayCmn::BetPositionColumn1;
-		} // if
-
-		if (pSpin == 2 || pSpin == 5 || pSpin == 8 || pSpin == 11 || pSpin == 14 || pSpin == 17 || pSpin == 20 || pSpin == 23 || pSpin == 26 || pSpin == 29 || pSpin == 32 || pSpin == 35) {
-			return PlayCmn::BetPositionColumn2;
-		} // if
-
-		return PlayCmn::BetPositionColumn3;
-	} // if else
-} // GetBetPosition
 
 const QString System63::GetName() const
 {
@@ -293,8 +283,8 @@ const void System63::OpenStatistics(QVBoxLayout *pLayout)
 const void System63::Reset(const qfResetContents &pResetContents)
 {
 	if (pResetContents & ResetContentCore) {
-		_ebpLastPositionRandom = PlayCmn::BetPositionNone;
-		_ebpLastProgressionPositionRandom = PlayCmn::BetPositionNone;
+		_qfbpLastPositionRandom = PlayCmn::BetPositionNone;
+		_qfbpLastProgressionPositionRandom = PlayCmn::BetPositionNone;
 		_qui8MaxSameInRowRandom = 0;
 		_qui8SameRandomBeforeBet = 0;
 		_qui8SameRandomProgression = 0;
@@ -308,10 +298,10 @@ const void System63::Reset(const qfResetContents &pResetContents)
 		_qui8ProgressionIndexRandom = 0;
 
 		for (quint8 qui8Index = 0; qui8Index < THREEX_COUNT; qui8Index++) {
-			_ebpLastPositionColumn[qui8Index] = PlayCmn::BetPositionNone;
-			_ebpLastPositionDozen[qui8Index] = PlayCmn::BetPositionNone;
-			_ebpLastProgressionPositionColumn[qui8Index] = PlayCmn::BetPositionNone;
-			_ebpLastProgressionPositionDozen[qui8Index] = PlayCmn::BetPositionNone;
+			_qfbpLastPositionColumn[qui8Index] = PlayCmn::BetPositionNone;
+			_qfbpLastPositionDozen[qui8Index] = PlayCmn::BetPositionNone;
+			_qfbpLastProgressionPositionColumn[qui8Index] = PlayCmn::BetPositionNone;
+			_qfbpLastProgressionPositionDozen[qui8Index] = PlayCmn::BetPositionNone;
 			_qui8MaxSameColumnInRow[qui8Index] = 0;
 			_qui8MaxSameDozenInRow[qui8Index] = 0;
 			_qui8SameColumnBeforeBet[qui8Index] = 0;
