@@ -5,7 +5,7 @@
 const PlayCmn::sSpinResult Martingale::AnalyzeSpin(const quint8 &pSpin)
 {
 	PlayCmn::qfBetPositions qfbpPosition = GetSpinPosition(pSpin);
-	qfbpPosition &= PlayCmn::BetPositionColorBlack | PlayCmn::BetPositionColorRed;
+	qfbpPosition &= PlayCmn::BetPositionNumbers | PlayCmn::BetPositionColorBlack | PlayCmn::BetPositionColorRed;
 
 	PlayCmn::sSpinResult srResult;
 	do {
