@@ -37,7 +37,7 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const PlayCmn::tBetHash &pBet, 
 				if (pCheckToLastPosition & pPosition || pCheckToLastPosition == PlayCmn::BetPositionNone) {
 					(*pSameBeforeBet)++;
 				} else {
-					if (!(pCheckToLastPosition & pPosition)) {
+					if (!(pCheckToLastPosition & pPosition) && !(pCheckToLastPosition & *pLastPosition)) {
 						*pSameBeforeBet = 0;
 					} else {
 						*pSameBeforeBet = 1;
@@ -64,7 +64,7 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const PlayCmn::tBetHash &pBet, 
 				} else {
 					if (*pSameProgression == 0 || !(*pLastProgressionPosition & pPosition)) {
 						*pLastProgressionPosition = pPosition;
-						if (!(pCheckToLastPosition & pPosition)) {
+						if (!(pCheckToLastPosition & pPosition) && !(pCheckToLastPosition & *pLastPosition)) {
 							*pSameProgression = 0;
 						} else {
 							*pSameProgression = 1;
@@ -140,7 +140,7 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
 		srResult = AnalyzeSpin(_tbhLastBet, qfbpPosition, &_qui8SameRandomBeforeBet, _qfbpLastPositionRandom, &_qfbpLastPositionRandom, &_qui8SameRandomProgression, &_qfbpLastProgressionPositionRandom,  &_qui8ProgressionIndexRandom, &_qui8SameInRowRandom, &_qui8MaxSameInRowRandom);
 	} else {
 		if (_s63sSettings.GetDozenColumnType() & System63Settings::DozenColumnTypeDozen) {
-			qfbpPosition &= PlayCmn::BetPositionDozen1 | PlayCmn::BetPositionDozen2 | PlayCmn::BetPositionDozen3;
+			qfbpPosition &= PlayCmn::BetPositionNumbers | PlayCmn::BetPositionDozen1 | PlayCmn::BetPositionDozen2 | PlayCmn::BetPositionDozen3;
 			quint8 qui8Max = _s63sSettings.GetDozen3x() ? THREEX_COUNT : 1;
 			for (quint8 qui8Index = 0; qui8Index < qui8Max; qui8Index++) {
 				PlayCmn::qfBetPositions qfbpCheckToPosition = _s63sSettings.GetDozen3x() ? static_cast<PlayCmn::eBetPosition>(PlayCmn::BetPositionDozen1 + qui8Index) : _qfbpLastPositionDozen[qui8Index];
@@ -149,7 +149,7 @@ const PlayCmn::sSpinResult System63::AnalyzeSpin(const quint8 &pSpin)
 			} // for
 		} // if
 		if (_s63sSettings.GetDozenColumnType() & System63Settings::DozenColumnTypeColumn) {
-			qfbpPosition &= PlayCmn::BetPositionColumn1 | PlayCmn::BetPositionColumn2 | PlayCmn::BetPositionColumn3;
+			qfbpPosition &= PlayCmn::BetPositionNumbers | PlayCmn::BetPositionColumn1 | PlayCmn::BetPositionColumn2 | PlayCmn::BetPositionColumn3;
 			quint8 qui8Max = _s63sSettings.GetColumn3x() ? THREEX_COUNT : 1;
 			for (quint8 qui8Index = 0; qui8Index < qui8Max; qui8Index++) {
 				PlayCmn::qfBetPositions qfbpCheckToPosition = _s63sSettings.GetColumn3x() ? static_cast<PlayCmn::eBetPosition>(PlayCmn::BetPositionColumn1 + qui8Index) : _qfbpLastPositionColumn[qui8Index];
