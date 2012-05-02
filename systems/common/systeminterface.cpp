@@ -30,31 +30,31 @@ const PlayCmn::qfBetPositions SystemInterface::GetSpinPosition(const quint8 &pSp
 
 	if (pSpin == 0) {
 		qfbpPositions |= PlayCmn::BetPosition0;
-	} // if
-
-	if (pSpin == 2 || pSpin == 4 || pSpin == 6 || pSpin == 8 || pSpin == 10 || pSpin == 11 || pSpin == 13 || pSpin == 15 || pSpin == 17 || pSpin == 20 || pSpin == 22 || pSpin == 24 || pSpin == 26 || pSpin == 28 || pSpin == 29 || pSpin == 31 || pSpin == 33 || pSpin == 35) {
-		qfbpPositions |= PlayCmn::BetPositionColorBlack;
 	} else {
-		qfbpPositions |= PlayCmn::BetPositionColorRed;
-	} // if else
-
-	if (pSpin == 1 || pSpin == 4 || pSpin == 7 || pSpin == 10 || pSpin == 13 || pSpin == 16 || pSpin == 19 || pSpin == 22 || pSpin == 25 || pSpin == 28 || pSpin == 31 || pSpin == 34) {
-		qfbpPositions |= PlayCmn::BetPositionColumn1;
-	} else {
-		if (pSpin == 2 || pSpin == 5 || pSpin == 8 || pSpin == 11 || pSpin == 14 || pSpin == 17 || pSpin == 20 || pSpin == 23 || pSpin == 26 || pSpin == 29 || pSpin == 32 || pSpin == 35) {
-			qfbpPositions |= PlayCmn::BetPositionColumn2;
+		if (pSpin == 2 || pSpin == 4 || pSpin == 6 || pSpin == 8 || pSpin == 10 || pSpin == 11 || pSpin == 13 || pSpin == 15 || pSpin == 17 || pSpin == 20 || pSpin == 22 || pSpin == 24 || pSpin == 26 || pSpin == 28 || pSpin == 29 || pSpin == 31 || pSpin == 33 || pSpin == 35) {
+			qfbpPositions |= PlayCmn::BetPositionColorBlack;
 		} else {
-			qfbpPositions |= PlayCmn::BetPositionColumn3;
+			qfbpPositions |= PlayCmn::BetPositionColorRed;
 		} // if else
-	} // if else
 
-	if (pSpin < 13) {
-		qfbpPositions |= PlayCmn::BetPositionDozen1;
-	} else {
-		if (pSpin < 25) {
-			qfbpPositions |= PlayCmn::BetPositionDozen2;
+		if (pSpin == 1 || pSpin == 4 || pSpin == 7 || pSpin == 10 || pSpin == 13 || pSpin == 16 || pSpin == 19 || pSpin == 22 || pSpin == 25 || pSpin == 28 || pSpin == 31 || pSpin == 34) {
+			qfbpPositions |= PlayCmn::BetPositionColumn1;
 		} else {
-			qfbpPositions |= PlayCmn::BetPositionDozen3;
+			if (pSpin == 2 || pSpin == 5 || pSpin == 8 || pSpin == 11 || pSpin == 14 || pSpin == 17 || pSpin == 20 || pSpin == 23 || pSpin == 26 || pSpin == 29 || pSpin == 32 || pSpin == 35) {
+				qfbpPositions |= PlayCmn::BetPositionColumn2;
+			} else {
+				qfbpPositions |= PlayCmn::BetPositionColumn3;
+			} // if else
+		} // if else
+
+		if (pSpin < 13) {
+			qfbpPositions |= PlayCmn::BetPositionDozen1;
+		} else {
+			if (pSpin < 25) {
+				qfbpPositions |= PlayCmn::BetPositionDozen2;
+			} else {
+				qfbpPositions |= PlayCmn::BetPositionDozen3;
+			} // if else
 		} // if else
 	} // if else
 
