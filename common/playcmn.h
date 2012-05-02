@@ -9,6 +9,7 @@ class PlayCmn
 		enum eBetPosition {
 			BetPositionNone,
 			BetPosition0,
+			BetPositionNumbers		= BetPosition0,
 			BetPositionColorBlack,
 			BetPositionColorRed		= 4,
 			BetPositionColumn1		= 8,
