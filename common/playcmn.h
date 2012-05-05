@@ -5,6 +5,9 @@
 
 class PlayCmn
 {
+	Q_ENUMS(eBetPosition)
+	Q_ENUMS(eSpinResultType)
+
 	public:
 		enum eBetPosition {
 			BetPositionNone,

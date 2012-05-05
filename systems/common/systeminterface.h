@@ -10,6 +10,7 @@ static const char *SYSTEM_INTERFACE = "System Interface 1.0";
 class SystemInterface : public QObject
 {
 	Q_OBJECT
+	Q_ENUMS(eResetContent)
 
 	public:
 		enum eResetContent {

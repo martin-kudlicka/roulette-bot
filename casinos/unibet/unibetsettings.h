@@ -5,6 +5,8 @@
 
 class UnibetSettings
 {
+	Q_ENUMS(eTokenValue)
+
 	public:
 		enum eTokenValue {
 			TokenValue1,

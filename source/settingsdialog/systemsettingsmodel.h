@@ -6,6 +6,8 @@
 
 class SystemSettingsModel : public QAbstractItemModel
 {
+	Q_ENUMS(eColumn)
+
 	public:
 		enum eColumn {
 			ColumnName,
