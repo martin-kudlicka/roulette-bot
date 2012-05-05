@@ -5,6 +5,9 @@
 
 class MartingaleSettings
 {
+	Q_ENUMS(eBetStyle)
+	Q_ENUMS(eProgressionType)
+
 	public:
 		enum eBetStyle {
 			BetStyleKeepColor,

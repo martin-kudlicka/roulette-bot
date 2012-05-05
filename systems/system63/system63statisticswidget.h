@@ -6,6 +6,7 @@
 class System63StatisticsWidget : public QWidget
 {
 	Q_OBJECT
+	Q_ENUMS(eCounter)
 
 	public:
 		enum eCounter {

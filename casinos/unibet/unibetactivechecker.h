@@ -11,6 +11,7 @@ class UnibetActiveChecker : public QThread
 {
 #ifdef Q_WS_WIN
 	Q_OBJECT
+	Q_ENUMS(eBrowser)
 
 	public:
 		enum eBrowser {

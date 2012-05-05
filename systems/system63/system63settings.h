@@ -5,6 +5,10 @@
 
 class System63Settings
 {
+	Q_ENUMS(eBetOn)
+	Q_ENUMS(eDozenColumnType)
+	Q_ENUMS(eProgressionType)
+
 	public:
 		enum eBetOn {
 			BetOnDozenColumn,
