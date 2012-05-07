@@ -63,6 +63,8 @@ const void SettingsDialog::LoadSettings() const
 	_qdsSettingsDialog.qcbMaxLossToPlay->setChecked(_sSettings->GetMaxLossToPlayEnabled());
 	_qdsSettingsDialog.qsbMaxLossToPlay->setValue(_sSettings->GetMaxLossToPlay());
 	_qdsSettingsDialog.qcbStopOnLoss->setChecked(_sSettings->GetStopOnLoss());
+	_qdsSettingsDialog.qcbMaxPlayTime->setChecked(_sSettings->GetMaxPlayTimeEnabled());
+	_qdsSettingsDialog.qteMaxPlayTime->setTime(_sSettings->GetMaxPlayTime());
 } // LoadSettings
 
 const void SettingsDialog::on_csmCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const
@@ -82,6 +84,11 @@ const void SettingsDialog::on_qcbMaxLossToPlay_toggled(bool checked) const
 	_qdsSettingsDialog.qsbMaxLossToPlay->setEnabled(checked);
 } // on_qcbMaxLossToPlay_toggled
 
+const void SettingsDialog::on_qcbMaxPlayTime_toggled(bool checked) const
+{
+	_qdsSettingsDialog.qteMaxPlayTime->setEnabled(checked);
+} // on_qcbMaxPlayTime_toggled
+
 const void SettingsDialog::on_qcbMaxWinToPlay_toggled(bool checked) const
 {
 	_qdsSettingsDialog.qsbMaxWinToPlay->setEnabled(checked);
@@ -95,6 +102,8 @@ const void SettingsDialog::SaveSettings() const
 	_sSettings->SetMaxLossToPlayEnabled(_qdsSettingsDialog.qcbMaxLossToPlay->isChecked());
 	_sSettings->SetMaxLossToPlay(_qdsSettingsDialog.qsbMaxLossToPlay->value());
 	_sSettings->SetStopOnLoss(_qdsSettingsDialog.qcbStopOnLoss->isChecked());
+	_sSettings->SetMaxPlayTimeEnabled(_qdsSettingsDialog.qcbMaxPlayTime->isChecked());
+	_sSettings->SetMaxPlayTime(_qdsSettingsDialog.qteMaxPlayTime->time());
 } // SaveSettings
 
 SettingsDialog::SettingsDialog(Settings *pSettings, const CasinoPlugins *pCasinos, const SystemPlugins *pSystems, QWidget *pParent /* NULL */, Qt::WindowFlags pFlags /* 0 */) : QDialog(pParent, pFlags), _csmCasinos(pCasinos), _ssmSystems(pSystems)

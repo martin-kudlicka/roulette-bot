@@ -5,6 +5,8 @@
 const QString GROUP_GENERAL = "general";
 const QString MAX_LOSS_TO_PLAY = "maxlosstoplay";
 const QString MAX_LOSS_TO_PLAY_ENABLED = "maxlosstoplayenabled";
+const QString MAX_PLAY_TIME = "maxplaytime";
+const QString MAX_PLAY_TIME_ENABLED = "maxplaytimeenabled";
 const QString MAX_WIN_TO_PLAY = "maxwintoplay";
 const QString MAX_WIN_TO_PLAY_ENABLED = "maxwintoplayenabled";
 const QString STOP_ON_LOSS = "stoponloss";
@@ -27,6 +29,24 @@ const bool Settings::GetMaxLossToPlayEnabled()
 
 	return bEnabled;
 } // GetMaxLossToPlayEnabled
+
+const QTime Settings::GetMaxPlayTime()
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	QTime qtTime = _qsSettings.value(MAX_PLAY_TIME, QTime(0, 20)).toTime();
+	_qsSettings.endGroup();
+
+	return qtTime;
+} // GetMaxPlayTime
+
+const bool Settings::GetMaxPlayTimeEnabled()
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	bool bEnabled = _qsSettings.value(MAX_PLAY_TIME_ENABLED, true).toBool();
+	_qsSettings.endGroup();
+
+	return bEnabled;
+} // GetMaxPlayTimeEnabled
 
 const quint8 Settings::GetMaxWinToPlay()
 {
@@ -77,6 +97,20 @@ const void Settings::SetMaxLossToPlayEnabled(const bool &pEnable)
 	_qsSettings.setValue(MAX_LOSS_TO_PLAY_ENABLED, pEnable);
 	_qsSettings.endGroup();
 } // SetMaxLossToPlayEnabled
+
+const void Settings::SetMaxPlayTime(const QTime &pTime)
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	_qsSettings.setValue(MAX_PLAY_TIME, pTime);
+	_qsSettings.endGroup();
+} // SetMaxPlayTime
+
+const void Settings::SetMaxPlayTimeEnabled(const bool &pEnable)
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	_qsSettings.setValue(MAX_PLAY_TIME_ENABLED, pEnable);
+	_qsSettings.endGroup();
+} // SetMaxPlayTimeEnabled
 
 const void Settings::SetMaxWinToPlay(const quint8 &pValue)
 {
