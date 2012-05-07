@@ -139,11 +139,11 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 	while (!_bStop) {
 		PlayRound();
 
-		if (_qdcCasinoDialog.qlCash->text().toFloat() - _fStartingCash >= _sSettings->GetMaxWinToPlay()) {
+		if (_sSettings->GetMaxWinToPlayEnabled() && _qdcCasinoDialog.qlCash->text().toFloat() - _fStartingCash >= _sSettings->GetMaxWinToPlay()) {
 			_qdcCasinoDialog.qpteLog->appendPlainText(tr("Maximum win reached."));
 			_bStop = true;
 		} else {
-			if (_fStartingCash - _qdcCasinoDialog.qlCash->text().toFloat() >= _sSettings->GetMaxLossToPlay()) {
+			if (_sSettings->GetMaxLossToPlayEnabled() && _fStartingCash - _qdcCasinoDialog.qlCash->text().toFloat() >= _sSettings->GetMaxLossToPlay()) {
 				_qdcCasinoDialog.qpteLog->appendPlainText(tr("Maximum lost reached."));
 				_bStop = true;
 			} // if
