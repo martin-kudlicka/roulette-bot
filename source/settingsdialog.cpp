@@ -58,7 +58,9 @@ const void SettingsDialog::GetSystemSettings() const
 const void SettingsDialog::LoadSettings() const
 {
 	_qdsSettingsDialog.qsbTokensPerBet->setValue(_sSettings->GetTokensPerBet());
+	_qdsSettingsDialog.qcbMaxWinToPlay->setChecked(_sSettings->GetMaxWinToPlayEnabled());
 	_qdsSettingsDialog.qsbMaxWinToPlay->setValue(_sSettings->GetMaxWinToPlay());
+	_qdsSettingsDialog.qcbMaxLossToPlay->setChecked(_sSettings->GetMaxLossToPlayEnabled());
 	_qdsSettingsDialog.qsbMaxLossToPlay->setValue(_sSettings->GetMaxLossToPlay());
 	_qdsSettingsDialog.qcbStopOnLoss->setChecked(_sSettings->GetStopOnLoss());
 } // LoadSettings
@@ -75,10 +77,22 @@ const void SettingsDialog::on_csmSystemsSelectionModel_selectionChanged(const QI
 	_qdsSettingsDialog.qswSystemSettings->setCurrentIndex(qmiIndex.row());
 } // on_csmSystemsSelectionModel_selectionChanged
 
+const void SettingsDialog::on_qcbMaxLossToPlay_toggled(bool checked) const
+{
+	_qdsSettingsDialog.qsbMaxLossToPlay->setEnabled(checked);
+} // on_qcbMaxLossToPlay_toggled
+
+const void SettingsDialog::on_qcbMaxWinToPlay_toggled(bool checked) const
+{
+	_qdsSettingsDialog.qsbMaxWinToPlay->setEnabled(checked);
+} // on_qcbMaxWinToPlay_toggled
+
 const void SettingsDialog::SaveSettings() const
 {
 	_sSettings->SetTokensPerBet(_qdsSettingsDialog.qsbTokensPerBet->value());
+	_sSettings->SetMaxWinToPlayEnabled(_qdsSettingsDialog.qcbMaxWinToPlay->isChecked());
 	_sSettings->SetMaxWinToPlay(_qdsSettingsDialog.qsbMaxWinToPlay->value());
+	_sSettings->SetMaxLossToPlayEnabled(_qdsSettingsDialog.qcbMaxLossToPlay->isChecked());
 	_sSettings->SetMaxLossToPlay(_qdsSettingsDialog.qsbMaxLossToPlay->value());
 	_sSettings->SetStopOnLoss(_qdsSettingsDialog.qcbStopOnLoss->isChecked());
 } // SaveSettings

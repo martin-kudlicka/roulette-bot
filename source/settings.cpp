@@ -4,7 +4,9 @@
 
 const QString GROUP_GENERAL = "general";
 const QString MAX_LOSS_TO_PLAY = "maxlosstoplay";
+const QString MAX_LOSS_TO_PLAY_ENABLED = "maxlosstoplayenabled";
 const QString MAX_WIN_TO_PLAY = "maxwintoplay";
+const QString MAX_WIN_TO_PLAY_ENABLED = "maxwintoplayenabled";
 const QString STOP_ON_LOSS = "stoponloss";
 const QString TOKENS_PER_BET = "TokensPerBet";
 
@@ -17,6 +19,15 @@ const quint8 Settings::GetMaxLossToPlay()
 	return qui8MaxLoss;
 } // GetMaxLossToPlay
 
+const bool Settings::GetMaxLossToPlayEnabled()
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	bool bEnabled = _qsSettings.value(MAX_LOSS_TO_PLAY_ENABLED, true).toBool();
+	_qsSettings.endGroup();
+
+	return bEnabled;
+} // GetMaxLossToPlayEnabled
+
 const quint8 Settings::GetMaxWinToPlay()
 {
 	_qsSettings.beginGroup(GROUP_GENERAL);
@@ -25,6 +36,15 @@ const quint8 Settings::GetMaxWinToPlay()
 
 	return qui8MaxWin;
 } // GetMaxWinToPlay
+
+const bool Settings::GetMaxWinToPlayEnabled()
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	bool bEnabled = _qsSettings.value(MAX_WIN_TO_PLAY_ENABLED, false).toBool();
+	_qsSettings.endGroup();
+
+	return bEnabled;
+} // GetMaxWinToPlayEnabled
 
 const bool Settings::GetStopOnLoss()
 {
@@ -51,12 +71,26 @@ const void Settings::SetMaxLossToPlay(const quint8 &pValue)
 	_qsSettings.endGroup();
 } // SetMaxLossToPlay
 
+const void Settings::SetMaxLossToPlayEnabled(const bool &pEnable)
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	_qsSettings.setValue(MAX_LOSS_TO_PLAY_ENABLED, pEnable);
+	_qsSettings.endGroup();
+} // SetMaxLossToPlayEnabled
+
 const void Settings::SetMaxWinToPlay(const quint8 &pValue)
 {
 	_qsSettings.beginGroup(GROUP_GENERAL);
 	_qsSettings.setValue(MAX_WIN_TO_PLAY, pValue);
 	_qsSettings.endGroup();
 } // SetMaxWinToPlay
+
+const void Settings::SetMaxWinToPlayEnabled(const bool &pEnable)
+{
+	_qsSettings.beginGroup(GROUP_GENERAL);
+	_qsSettings.setValue(MAX_WIN_TO_PLAY_ENABLED, pEnable);
+	_qsSettings.endGroup();
+} // SetMaxWinToPlayEnabled
 
 const void Settings::SetStopOnLoss(const bool &pStop)
 {
