@@ -44,6 +44,30 @@
          </property>
         </widget>
        </item>
+       <item row="1" column="0">
+        <widget class="QCheckBox" name="qcbMaxWinToPlay">
+         <property name="text">
+          <string>Max &amp;win to play</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="qsbMaxWinToPlay">
+         <property name="enabled">
+          <bool>false</bool>
+         </property>
+         <property name="minimum">
+          <number>1</number>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QCheckBox" name="qcbMaxLossToPlay">
+         <property name="text">
+          <string>Max &amp;loss to play</string>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="1">
         <widget class="QSpinBox" name="qsbMaxLossToPlay">
          <property name="enabled">
@@ -68,27 +92,31 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="1">
-        <widget class="QSpinBox" name="qsbMaxWinToPlay">
+       <item row="4" column="0">
+        <widget class="QCheckBox" name="qcbMaxPlayTime">
+         <property name="text">
+          <string>Max &amp;play time</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QTimeEdit" name="qteMaxPlayTime">
          <property name="enabled">
           <bool>false</bool>
          </property>
-         <property name="minimum">
-          <number>1</number>
+         <property name="time">
+          <time>
+           <hour>0</hour>
+           <minute>0</minute>
+           <second>1</second>
+          </time>
          </property>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QCheckBox" name="qcbMaxWinToPlay">
-         <property name="text">
-          <string>Max &amp;win to play</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QCheckBox" name="qcbMaxLossToPlay">
-         <property name="text">
-          <string>Max &amp;loss to play</string>
+         <property name="minimumTime">
+          <time>
+           <hour>0</hour>
+           <minute>0</minute>
+           <second>1</second>
+          </time>
          </property>
         </widget>
        </item>

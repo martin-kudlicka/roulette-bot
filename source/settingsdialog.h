@@ -34,6 +34,7 @@ class SettingsDialog : public QDialog
 		const void on_csmCasinosSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;
 		const void on_csmSystemsSelectionModel_selectionChanged(const QItemSelection &selected, const QItemSelection &deselected) const;
 		const void on_qcbMaxLossToPlay_toggled(bool checked) const;
+		const void on_qcbMaxPlayTime_toggled(bool checked) const;
 		const void on_qcbMaxWinToPlay_toggled(bool checked) const;
 }; // SettingsDialog
 
