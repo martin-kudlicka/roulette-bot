@@ -19,6 +19,7 @@ class CasinoDialog : public QDialog
 		bool _bStop;
 		CasinoInterface *_ciCasino;
 		float _fStartingCash;
+		QTime _qtPlayTime;
 		quint8 _qui8MaxProgression;
 		Settings *_sSettings;
 		SystemInterface *_siSystem;

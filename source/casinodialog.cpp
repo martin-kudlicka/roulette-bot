@@ -103,6 +103,7 @@ const void CasinoDialog::on_qpbResetStatistics_clicked(bool checked /* false */)
 const void CasinoDialog::on_qpbResetStatus_clicked(bool checked /* false */)
 {
 	_fStartingCash = _ciCasino->GetCash();
+	_qtPlayTime.start();
 
 	_qdcCasinoDialog.qlWon->setText("0");
 	_qdcCasinoDialog.qlLost->setText("0");
@@ -148,6 +149,14 @@ const void CasinoDialog::on_qpbStart_clicked(bool checked /* false */)
 				_bStop = true;
 			} // if
 		} // if else
+
+		if (_sSettings->GetMaxPlayTimeEnabled() && _qdcCasinoDialog.qlInProgression->text().toUInt() == 0) {
+			QTime qtElapsed = QTime().addMSecs(_qtPlayTime.elapsed());
+			if (qtElapsed > _sSettings->GetMaxPlayTime()) {
+				_qdcCasinoDialog.qpteLog->appendPlainText(tr("Maximum play time reached."));
+				_bStop = true;
+			} // if
+		} // if
 
 		QCoreApplication::processEvents(QEventLoop::ExcludeSocketNotifiers);
 	} // while
@@ -274,4 +283,5 @@ const void CasinoDialog::RefreshStatus() const
 
 	_qdcCasinoDialog.qlCash->setText(QString::number(fCash));
 	_qdcCasinoDialog.qlProfit->setText(QString::number(fCash - _fStartingCash));
+	_qdcCasinoDialog.qlPlayTime->setText(QTime().addMSecs(_qtPlayTime.elapsed()).toString());
 } // RefreshStatus
